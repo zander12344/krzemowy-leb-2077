@@ -117,8 +117,6 @@
   /* --- WIDOK ZALEŻNY OD ROLI --- */
   body[data-role="seba"] [data-only="alex"]{display:none !important;}
   body[data-role="alex"] [data-only="seba"]{display:none !important;}
-  body[data-role="seba"] table.msg{display:none !important;}
-  body[data-role="seba"] .signal-block{display:none !important;}
   .role-note{margin:6pt 0 0;padding:5pt 8pt;border-left:3pt solid var(--c);background:rgba(0,0,0,.35);font-size:9.5pt;line-height:1.45;}
   .role-note b{color:var(--c);}
   .role-note ul{margin:3pt 0 0 14pt;padding:0;}
@@ -159,7 +157,7 @@
 
   <div class="tabs">
     <button data-t="start" class="act">00 START &amp; BUDŻET</button>
-    <button data-t="zakupy" data-only="alex">01 ZAKUPY (LINKI)</button>
+    <button data-t="zakupy">01 ZAKUPY (LINKI)</button>
     <button data-t="mamy">02 Z KOPARKI (ZDJĘCIA)</button>
     <button data-t="montaz">03 MONTAŻ &amp; MAPA PŁYTY</button>
     <button data-t="bios">04 BIOS</button>
@@ -261,7 +259,7 @@
 <!-- ======================================================= -->
 <!-- 01 ZAKUPY -->
 <!-- ======================================================= -->
-<div class="pane" id="zakupy" data-only="alex">
+<div class="pane" id="zakupy">
 
 <p class="ui dim">Kliknij ☐ albo przycisk <b>Kupione ✔</b> przy części, kiedy ją zamówisz. Możesz też kliknąć <b>Wysłano pytanie</b> i wpisać w notatce, co odpisał sprzedawca — zobaczę to u siebie na żywo.</p>
 
@@ -877,14 +875,14 @@ https://allegro.pl/oferta/tasma-riser-pci-e-pcie-3-0-express-x16-x16-30cm-124323
   var whoSel = document.getElementById('whoSel');
   var ROLE_OF = { 'Seba LBL': 'seba', 'Alex (RZ)': 'alex' };
   var ROLE_NOTES = {
-    seba: '<b>WIDOK: SEBA LBL (Frampol) — robisz przy sprzęcie.</b><ul>' +
-          '<li>Twoje zakładki: <b>00 START</b>, <b>02 Z KOPARKI</b>, <b>03 MONTAŻ</b>, <b>04 BIOS</b>, <b>05 SYSTEM</b>, <b>06 Q-CODE</b>.</li>' +
-          '<li>Ukryte u Ciebie: <b>01 ZAKUPY</b> (aukcje, linki i negocjacje prowadzi Alex) oraz <b>07 TEKSTY SIGNAL</b>.</li>' +
-          '<li>Jeśli paczka przyszła albo czegoś brakuje — zmień „Kto teraz klika” na <b>Alex (RZ)</b>, odhacz to i wróć na swoje imię. Nic nie zginie.</li>' +
+    seba: '<b>WIDOK: SEBA LBL (Frampol) — kupujecie razem u Ciebie, Ty składasz zamówienia.</b><ul>' +
+          '<li>Widzisz <b>01 ZAKUPY</b> z linkami, ofertami zapasowymi i wiadomościami do sprzedawców — po to, żeby zamawiać razem z Alexem.</li>' +
+          '<li>Twoje zakładki przy sprzęcie: <b>00 START</b>, <b>02 Z KOPARKI</b>, <b>03 MONTAŻ</b>, <b>04 BIOS</b>, <b>05 SYSTEM</b>, <b>06 Q-CODE</b>.</li>' +
+          '<li>Ukryty u Ciebie jest tylko <b>07 TEKSTY SIGNAL</b> (skróty do wysyłania na komunikatorze — to narzędzie Alexa).</li>' +
           '<li>Każde Twoje kliknięcie i notatka lecą do Alexa na żywo — nie musisz nic dodatkowo zgłaszać.</li></ul>',
-    alex: '<b>WIDOK: ALEX (RZ) — prowadzisz zakupy i zdalne wdrożenie.</b><ul>' +
-          '<li>Widzisz całą stronę: <b>01 ZAKUPY</b> z linkami, wiadomościami do sprzedawców i <b>07 TEKSTY SIGNAL</b>.</li>' +
-          '<li>Fizyczne kroki (02, 03, 04, 06) robi Seba — czytasz jego statusy i notatki na żywo.</li>' +
+    alex: '<b>WIDOK: ALEX (RZ) — prowadzisz listę, zamówienia i zdalne wdrożenie.</b><ul>' +
+          '<li>Widzisz całą stronę, w tym <b>01 ZAKUPY</b> i <b>07 TEKSTY SIGNAL</b>.</li>' +
+          '<li>Fizyczne kroki (02, 03, 04, 06) robicie razem u Seby w Frampolu — czytasz jego statusy i notatki na żywo.</li>' +
           '<li>Od <b>05 SYSTEM</b> wchodzisz zdalnie przez Tailscale/SSH.</li></ul>'
   };
   function currentRole(){ return ROLE_OF[whoSel.value] || 'alex'; }
