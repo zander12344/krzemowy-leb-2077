@@ -113,6 +113,16 @@
   body.docs .pane{display:block;}
   body.docs .ui{display:none !important;}
   @media print{.ui{display:none !important;} .pane{display:block !important;}}
+
+  /* --- WIDOK ZALEŻNY OD ROLI --- */
+  body[data-role="seba"] [data-only="alex"]{display:none !important;}
+  body[data-role="alex"] [data-only="seba"]{display:none !important;}
+  body[data-role="seba"] table.msg{display:none !important;}
+  body[data-role="seba"] .signal-block{display:none !important;}
+  .role-note{margin:6pt 0 0;padding:5pt 8pt;border-left:3pt solid var(--c);background:rgba(0,0,0,.35);font-size:9.5pt;line-height:1.45;}
+  .role-note b{color:var(--c);}
+  .role-note ul{margin:3pt 0 0 14pt;padding:0;}
+  .role-note li{margin:1pt 0;}
   .toast{position:fixed;bottom:16pt;left:50%;transform:translateX(-50%);background:var(--g);color:#05050A;font-family:'Oxanium',sans-serif;font-weight:bold;padding:6pt 14pt;display:none;z-index:30;box-shadow:0 0 12px var(--g);}
 </style>
 </head>
@@ -141,8 +151,8 @@
     <div style="display:flex;align-items:center;gap:6pt;">
       <span class="mono dim" style="font-size:9pt;">Kto teraz klika:</span>
       <select class="who-sel" id="whoSel">
-        <option value="Seba LBL">Seba LBL</option>
         <option value="Alex (RZ)">Alex (RZ)</option>
+        <option value="Seba LBL">Seba LBL</option>
       </select>
     </div>
   </div>
@@ -155,7 +165,7 @@
     <button data-t="bios">04 BIOS</button>
     <button data-t="system">05 SYSTEM &amp; ZDALNY</button>
     <button data-t="problemy">06 Q-CODE &amp; PROBLEMY</button>
-    <button data-t="signal">07 TEKSTY SIGNAL</button>
+    <button data-t="signal" data-only="alex">07 TEKSTY SIGNAL</button>
   </div>
   <div style="margin-top:6pt;display:flex;gap:6pt;flex-wrap:wrap;align-items:center;justify-content:space-between;">
     <div style="display:flex;gap:6pt;flex-wrap:wrap;align-items:center;">
@@ -172,6 +182,8 @@
 <!-- 00 START & SYMULATOR BUDŻETU -->
 <!-- ======================================================= -->
 <div class="pane show" id="start">
+
+<div class="role-note" id="roleNote" style="display:none;"></div>
 
 <table class="blk"><tr><td class="hd hc">00 // KALKULATOR BUDŻETU NA ŻYWO</td></tr><tr><td class="bd bc">
 <p><span class="g ox">✔ MAMY Z KOPARKI (0 zł):</span> 4× RTX 3070, aluminiowy stelaż, przycisk włączania na kablu, śrubki/dystanse.</p>
@@ -766,7 +778,7 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
 <!-- ======================================================= -->
 <!-- 07 GOTOWE WIADOMOŚCI NA SIGNAL -->
 <!-- ======================================================= -->
-<div class="pane" id="signal">
+<div class="pane" id="signal" data-only="alex">
 
 <table class="blk"><tr><td class="hd hc">07 // GOTOWE WIADOMOŚCI PODSUMOWUJĄCE NA SIGNAL (1-KLIK KOPIUJ)</td></tr><tr><td class="bd bc">
 <p>Jeśli chcesz przesłać komuś skrót zakupów na komunikatorze Signal/WhatsApp, kliknij <b>KOPIUJ</b> przy wybranej części:</p>
@@ -863,6 +875,34 @@ https://allegro.pl/oferta/tasma-riser-pci-e-pcie-3-0-express-x16-x16-30cm-124323
   state.updatedBy = normName(state.updatedBy);
 
   var whoSel = document.getElementById('whoSel');
+  var ROLE_OF = { 'Seba LBL': 'seba', 'Alex (RZ)': 'alex' };
+  var ROLE_NOTES = {
+    seba: '<b>WIDOK: SEBA LBL (Frampol) — robisz przy sprzęcie.</b><ul>' +
+          '<li>Twoje zakładki: <b>00 START</b>, <b>02 Z KOPARKI</b>, <b>03 MONTAŻ</b>, <b>04 BIOS</b>, <b>06 Q-CODE</b>.</li>' +
+          '<li><b>01 ZAKUPY</b> czytasz tylko po to, żeby wiedzieć, co przyszło i co odhaczyć — aukcje i negocjacje prowadzi Alex.</li>' +
+          '<li>Ukryte u Ciebie: wiadomości do sprzedawców oraz <b>07 TEKSTY SIGNAL</b> (to narzędzia Alexa).</li>' +
+          '<li>Każde kliknięcie i notatka lecą do Alexa na żywo — nie musisz nic dodatkowo zgłaszać.</li></ul>',
+    alex: '<b>WIDOK: ALEX (RZ) — prowadzisz zakupy i zdalne wdrożenie.</b><ul>' +
+          '<li>Widzisz całą stronę, w tym wiadomości do sprzedawców i <b>07 TEKSTY SIGNAL</b>.</li>' +
+          '<li>Fizyczne kroki (02, 03, 04, 06) robi Seba — czytasz jego statusy i notatki na żywo.</li>' +
+          '<li>Od <b>05 SYSTEM</b> wchodzisz zdalnie przez Tailscale/SSH.</li></ul>'
+  };
+  function currentRole(){ return ROLE_OF[whoSel.value] || 'alex'; }
+  function applyRole(){
+    var role = currentRole();
+    document.body.dataset.role = role;
+    var note = document.getElementById('roleNote');
+    if (note) {
+      note.innerHTML = ROLE_NOTES[role] || '';
+      note.style.display = ROLE_NOTES[role] ? 'block' : 'none';
+    }
+    var activeTab = document.querySelector('.tabs button.act');
+    if (activeTab && activeTab.getAttribute('data-only') &&
+        activeTab.getAttribute('data-only') !== role) {
+      switchTab('start');
+    }
+  }
+
   try {
     var savedWho = localStorage.getItem(WHO_KEY);
     if (savedWho) {
@@ -873,7 +913,9 @@ https://allegro.pl/oferta/tasma-riser-pci-e-pcie-3-0-express-x16-x16-30cm-124323
   } catch (e) {}
   whoSel.addEventListener('change', function(){
     try { localStorage.setItem(WHO_KEY, whoSel.value); } catch (e) {}
+    applyRole();
   });
+  applyRole();
 
   function saveLocal(){
     try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch (e) {}
