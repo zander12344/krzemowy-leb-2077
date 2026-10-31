@@ -1187,7 +1187,14 @@ https://allegro.pl/oferta/tasma-riser-pci-e-pcie-3-0-express-x16-x16-30cm-124323
   });
 
   // Nawigacja zakładek
+  function tabAllowed(tabId){
+    var btn = document.querySelector('.tabs button[data-t="' + tabId + '"]');
+    if (!btn) return false;
+    var only = btn.getAttribute('data-only');
+    return !only || only === document.body.dataset.role;
+  }
   function switchTab(tabId){
+    if (!tabAllowed(tabId)) tabId = 'start';
     document.querySelectorAll('.tabs button').forEach(function(x){
       x.classList.toggle('act', x.dataset.t === tabId);
     });
