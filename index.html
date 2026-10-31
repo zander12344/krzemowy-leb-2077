@@ -159,7 +159,7 @@
 
   <div class="tabs">
     <button data-t="start" class="act">00 START &amp; BUDŻET</button>
-    <button data-t="zakupy">01 ZAKUPY (LINKI)</button>
+    <button data-t="zakupy" data-only="alex">01 ZAKUPY (LINKI)</button>
     <button data-t="mamy">02 Z KOPARKI (ZDJĘCIA)</button>
     <button data-t="montaz">03 MONTAŻ &amp; MAPA PŁYTY</button>
     <button data-t="bios">04 BIOS</button>
@@ -261,7 +261,7 @@
 <!-- ======================================================= -->
 <!-- 01 ZAKUPY -->
 <!-- ======================================================= -->
-<div class="pane" id="zakupy">
+<div class="pane" id="zakupy" data-only="alex">
 
 <p class="ui dim">Kliknij ☐ albo przycisk <b>Kupione ✔</b> przy części, kiedy ją zamówisz. Możesz też kliknąć <b>Wysłano pytanie</b> i wpisać w notatce, co odpisał sprzedawca — zobaczę to u siebie na żywo.</p>
 
@@ -878,12 +878,12 @@ https://allegro.pl/oferta/tasma-riser-pci-e-pcie-3-0-express-x16-x16-30cm-124323
   var ROLE_OF = { 'Seba LBL': 'seba', 'Alex (RZ)': 'alex' };
   var ROLE_NOTES = {
     seba: '<b>WIDOK: SEBA LBL (Frampol) — robisz przy sprzęcie.</b><ul>' +
-          '<li>Twoje zakładki: <b>00 START</b>, <b>02 Z KOPARKI</b>, <b>03 MONTAŻ</b>, <b>04 BIOS</b>, <b>06 Q-CODE</b>.</li>' +
-          '<li><b>01 ZAKUPY</b> czytasz tylko po to, żeby wiedzieć, co przyszło i co odhaczyć — aukcje i negocjacje prowadzi Alex.</li>' +
-          '<li>Ukryte u Ciebie: wiadomości do sprzedawców oraz <b>07 TEKSTY SIGNAL</b> (to narzędzia Alexa).</li>' +
-          '<li>Każde kliknięcie i notatka lecą do Alexa na żywo — nie musisz nic dodatkowo zgłaszać.</li></ul>',
+          '<li>Twoje zakładki: <b>00 START</b>, <b>02 Z KOPARKI</b>, <b>03 MONTAŻ</b>, <b>04 BIOS</b>, <b>05 SYSTEM</b>, <b>06 Q-CODE</b>.</li>' +
+          '<li>Ukryte u Ciebie: <b>01 ZAKUPY</b> (aukcje, linki i negocjacje prowadzi Alex) oraz <b>07 TEKSTY SIGNAL</b>.</li>' +
+          '<li>Jeśli paczka przyszła albo czegoś brakuje — zmień „Kto teraz klika” na <b>Alex (RZ)</b>, odhacz to i wróć na swoje imię. Nic nie zginie.</li>' +
+          '<li>Każde Twoje kliknięcie i notatka lecą do Alexa na żywo — nie musisz nic dodatkowo zgłaszać.</li></ul>',
     alex: '<b>WIDOK: ALEX (RZ) — prowadzisz zakupy i zdalne wdrożenie.</b><ul>' +
-          '<li>Widzisz całą stronę, w tym wiadomości do sprzedawców i <b>07 TEKSTY SIGNAL</b>.</li>' +
+          '<li>Widzisz całą stronę: <b>01 ZAKUPY</b> z linkami, wiadomościami do sprzedawców i <b>07 TEKSTY SIGNAL</b>.</li>' +
           '<li>Fizyczne kroki (02, 03, 04, 06) robi Seba — czytasz jego statusy i notatki na żywo.</li>' +
           '<li>Od <b>05 SYSTEM</b> wchodzisz zdalnie przez Tailscale/SSH.</li></ul>'
   };
