@@ -141,8 +141,8 @@
     <div style="display:flex;align-items:center;gap:6pt;">
       <span class="mono dim" style="font-size:9pt;">Kto teraz klika:</span>
       <select class="who-sel" id="whoSel">
-        <option value="Kolega (Frampol)">Kolega (Frampol)</option>
-        <option value="Alex (Rzeszów)">Alex (Rzeszów)</option>
+        <option value="Seba LBL">Seba LBL</option>
+        <option value="Alex (RZ)">Alex (RZ)</option>
       </select>
     </div>
   </div>
@@ -852,16 +852,24 @@ https://allegro.pl/oferta/tasma-riser-pci-e-pcie-3-0-express-x16-x16-30cm-124323
     };
   }
 
+  var LEGACY_NAMES = { 'Kolega (Frampol)': 'Seba LBL', 'Alex (Rzeszów)': 'Alex (RZ)' };
+  function normName(n){ return LEGACY_NAMES[n] || n; }
+
   var state = defaultState();
   try {
     var saved = JSON.parse(localStorage.getItem(LS_KEY) || 'null');
     if (saved && typeof saved === 'object') state = Object.assign(defaultState(), saved);
   } catch (e) {}
+  state.updatedBy = normName(state.updatedBy);
 
   var whoSel = document.getElementById('whoSel');
   try {
     var savedWho = localStorage.getItem(WHO_KEY);
-    if (savedWho) whoSel.value = savedWho;
+    if (savedWho) {
+      var mapped = normName(savedWho);
+      whoSel.value = mapped;
+      if (mapped !== savedWho) localStorage.setItem(WHO_KEY, mapped);
+    }
   } catch (e) {}
   whoSel.addEventListener('change', function(){
     try { localStorage.setItem(WHO_KEY, whoSel.value); } catch (e) {}
@@ -917,7 +925,7 @@ https://allegro.pl/oferta/tasma-riser-pci-e-pcie-3-0-express-x16-x16-30cm-124323
     var upd = document.getElementById('lastUpd');
     if (online) {
       dot.className = 'sync-dot live';
-      txt.textContent = 'LIVE SYNC AKTYWNY (Rzeszów ↔ Frampol)' + (count ? ' • ' + count + ' online' : '');
+      txt.textContent = 'LIVE SYNC AKTYWNY (RZ ↔ Frampol)' + (count ? ' • ' + count + ' online' : '');
     } else {
       dot.className = 'sync-dot off';
       txt.textContent = 'ZAPIS LOKALNY W PRZEGLĄDARCE';
@@ -935,6 +943,7 @@ https://allegro.pl/oferta/tasma-riser-pci-e-pcie-3-0-express-x16-x16-30cm-124323
   function applyIncoming(srv){
     if (!srv || typeof srv !== 'object' || !srv.checks) return;
     if ((srv.updatedAt || 0) <= (state.updatedAt || 0)) return;
+    srv.updatedBy = normName(srv.updatedBy);
     state = Object.assign(defaultState(), srv);
     saveLocal();
     render();
