@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KRZEMOWY ŁEB 2077 // Interaktywny Poradnik Budowy Serwera AI</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&amp;family=Chakra+Petch:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap">
+<style>
+  :root{
+    --bg:#080810; --panel:#12121F; --panel2:#0D0D18; --border:#2A2A44;
+    --c:#00F0FF; --m:#FF2BD6; --y:#FCEE0A; --g:#39FF14; --r:#FF3864;
+    --txt:#E8E8F2; --dim:#9A9AB4;
+  }
+  *{box-sizing:border-box;}
+  body{background:var(--bg);margin:0;padding:10pt;color:var(--txt);font-family:'Chakra Petch',sans-serif;font-size:11pt;line-height:1.48;}
+  .wrap{max-width:940px;margin:0 auto;}
+  a{color:var(--c);font-weight:bold;text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  b{color:#FFFFFF;}
+  p{margin:0 0 6pt 0;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .ox{font-family:'Oxanium',sans-serif;font-weight:bold;}
+  .dim{color:var(--dim);font-size:10.2pt;}
+  .c{color:var(--c);} .m{color:var(--m);} .y{color:var(--y);} .g{color:var(--g);} .r{color:var(--r);font-weight:bold;}
+
+  table.blk{width:100%;border-collapse:collapse;margin:0 0 13pt 0;}
+  td.hd{padding:6pt 10pt;font-family:'Oxanium',sans-serif;font-size:12.5pt;font-weight:bold;color:#05050A;letter-spacing:.4pt;}
+  td.bd{background:var(--panel);padding:10pt;}
+  .hc{background:var(--c);border:1pt solid var(--c);} .bc{border:1pt solid var(--c);}
+  .hm{background:var(--m);border:1pt solid var(--m);} .bm{border:1pt solid var(--m);}
+  .hy{background:var(--y);border:1pt solid var(--y);} .by{border:1pt solid var(--y);}
+  .hg{background:var(--g);border:1pt solid var(--g);} .bg{border:1pt solid var(--g);}
+  .hx{background:#232338;border:1pt solid var(--dim);color:var(--txt) !important;} .bx{border:1pt solid var(--dim);}
+  .tag{font-family:'Oxanium',sans-serif;font-size:9pt;font-weight:bold;padding:1pt 5pt;background:#05050A;border:1pt solid currentColor;display:inline-block;margin-bottom:2pt;}
+
+  table.msg{width:100%;border-collapse:collapse;margin:8pt 0 6pt 0;}
+  table.msg td{background:#05050A;border:1pt dashed var(--y);padding:8pt;}
+  .mh{font-family:'JetBrains Mono',monospace;font-size:9.8pt;color:var(--y);display:flex;justify-content:space-between;align-items:center;gap:6pt;flex-wrap:wrap;}
+  .mt{font-family:'JetBrains Mono',monospace;font-size:10.2pt;color:var(--txt);white-space:pre-wrap;margin:4pt 0 0 0;}
+  table.cmd{width:100%;border-collapse:collapse;margin:6pt 0 8pt 0;}
+  table.cmd td{background:#05050A;border:1pt solid var(--g);padding:8pt;font-family:'JetBrains Mono',monospace;font-size:9.8pt;color:var(--g);white-space:pre-wrap;}
+
+  table.grid{width:100%;border-collapse:collapse;margin:4pt 0 8pt 0;}
+  table.grid td,table.grid th{border:1pt solid var(--border);padding:5.5pt 8pt;vertical-align:top;background:var(--panel);}
+  table.grid th{background:#05050A;color:var(--c);font-family:'Oxanium',sans-serif;text-align:left;font-size:10.2pt;}
+  table.sum td{font-family:'JetBrains Mono',monospace;font-size:10.5pt;}
+  .num{text-align:right;color:var(--y);white-space:nowrap;}
+
+  .cb{cursor:pointer;color:var(--y);font-size:13.5pt;user-select:none;display:inline-block;min-width:16pt;}
+  .cb.on{color:var(--g);}
+  .done{text-decoration:line-through;opacity:.58;}
+
+  /* ---- pasek nawigacji i live sync ---- */
+  .bar{position:sticky;top:0;z-index:15;background:rgba(8,8,16,0.96);backdrop-filter:blur(6px);padding:6pt 0 8pt 0;border-bottom:1.5pt solid var(--m);margin-bottom:12pt;}
+  .sync-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6pt;margin-bottom:6pt;padding:4pt 8pt;background:#05050A;border:1pt solid var(--border);}
+  .sync-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--y);margin-right:5px;box-shadow:0 0 8px currentColor;}
+  .sync-dot.live{background:var(--g);color:var(--g);}
+  .sync-dot.off{background:var(--r);color:var(--r);}
+  .who-sel{background:#12121F;color:var(--c);border:1pt solid var(--c);font-family:'Oxanium',sans-serif;font-size:9.5pt;font-weight:bold;padding:2pt 6pt;}
+
+  .tabs{display:flex;flex-wrap:wrap;gap:4pt;}
+  .tabs button,.tool{font-family:'Oxanium',sans-serif;font-weight:bold;font-size:9.8pt;background:var(--panel);color:var(--c);border:1pt solid var(--c);padding:5.5pt 8.5pt;cursor:pointer;letter-spacing:.4pt;transition:all .15s;}
+  .tabs button:hover,.tool:hover{background:#1B1B30;}
+  .tabs button.act{background:var(--c);color:#05050A;box-shadow:0 0 10px var(--c);}
+  .tool{color:var(--y);border-color:var(--y);}
+  .cp{font-family:'Oxanium',sans-serif;font-size:9pt;font-weight:bold;background:var(--y);color:#05050A;border:0;padding:3pt 8pt;cursor:pointer;}
+  .cp:hover{background:#fff;}
+  .prog{height:8pt;background:var(--panel);border:1pt solid var(--g);margin:6pt 0 0 0;}
+  .prog i{display:block;height:100%;width:0;background:var(--g);box-shadow:0 0 8px var(--g);transition:width .3s;}
+
+  /* ---- karty KPI i symulator budżetu ---- */
+  .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:8pt;margin:8pt 0 10pt 0;}
+  .kpi{background:#05050A;border:1pt solid var(--border);padding:8pt 10pt;}
+  .kpi .lbl{font-family:'Oxanium',sans-serif;font-size:9pt;color:var(--dim);text-transform:uppercase;}
+  .kpi .val{font-family:'JetBrains Mono',monospace;font-size:15pt;font-weight:bold;margin-top:2pt;}
+  .calc-box{background:#070710;border:1pt solid var(--y);padding:9pt;margin-top:6pt;}
+  .calc-row{display:flex;justify-content:space-between;align-items:center;gap:8pt;padding:4pt 0;border-bottom:1pt dashed #222238;flex-wrap:wrap;}
+  .calc-row:last-child{border-bottom:0;}
+  .calc-row label{cursor:pointer;display:flex;align-items:center;gap:6pt;font-size:10.5pt;}
+  .calc-row input[type="checkbox"]{accent-color:var(--g);width:16px;height:16px;cursor:pointer;}
+  .ram-btn{font-family:'JetBrains Mono',monospace;font-size:9.5pt;background:#12121F;color:var(--txt);border:1pt solid var(--border);padding:2pt 7pt;cursor:pointer;}
+  .ram-btn.on{background:var(--y);color:#05050A;border-color:var(--y);font-weight:bold;}
+
+  /* ---- statusy zakupowe i notatki przy częściach ---- */
+  .st-bar{display:flex;flex-wrap:wrap;gap:4pt;align-items:center;margin:4pt 0 8pt 0;padding:5pt 7pt;background:#070710;border:1pt solid var(--border);}
+  .st-btn{font-family:'Oxanium',sans-serif;font-size:9pt;font-weight:bold;background:#12121F;color:var(--dim);border:1pt solid var(--border);padding:2.5pt 7pt;cursor:pointer;}
+  .st-btn.s-todo.on{background:#2A2A44;color:#FFF;border-color:#9A9AB4;}
+  .st-btn.s-ask.on{background:var(--c);color:#05050A;border-color:var(--c);}
+  .st-btn.s-ord.on{background:var(--y);color:#05050A;border-color:var(--y);}
+  .st-btn.s-got.on{background:var(--g);color:#05050A;border-color:var(--g);}
+  .note-in{width:100%;background:#05050A;color:var(--c);border:1pt solid var(--border);padding:5pt 7pt;font-family:'JetBrains Mono',monospace;font-size:9.8pt;margin-top:5pt;}
+  .note-in:focus{outline:none;border-color:var(--c);}
+  .rig-in{width:100%;background:#05050A;color:var(--y);border:1pt solid var(--border);padding:4.5pt 7pt;font-family:'JetBrains Mono',monospace;font-size:9.8pt;margin-top:3pt;}
+
+  /* ---- interaktywna mapa płyty ASUS X99-E WS ---- */
+  .mb-wrap{display:grid;grid-template-columns:1.15fr 1fr;gap:10pt;align-items:start;}
+  @media(max-width:740px){.mb-wrap{grid-template-columns:1fr;}}
+  .mb-board{background:#06080E;border:2pt solid var(--c);padding:10pt;font-family:'JetBrains Mono',monospace;font-size:9pt;user-select:none;}
+  .mb-spot{border:1pt solid var(--border);padding:5pt 6pt;margin:4pt 0;cursor:pointer;background:#0E1220;transition:all .15s;display:flex;justify-content:space-between;align-items:center;gap:6pt;}
+  .mb-spot:hover,.mb-spot.act{border-color:var(--y);background:#191F36;box-shadow:0 0 8px rgba(252,238,10,0.35);}
+  .mb-spot.ok{border-left:4pt solid var(--g);}
+  .mb-spot.warn{border-left:4pt solid var(--r);}
+  .mb-spot.info{border-left:4pt solid var(--c);}
+  .mb-detail{background:#05050A;border:1.5pt solid var(--y);padding:10pt;min-height:220px;}
+
+  /* ---- dekoder Q-Code ---- */
+  .q-btns{display:flex;flex-wrap:wrap;gap:4pt;margin:6pt 0;}
+  .q-btn{font-family:'JetBrains Mono',monospace;font-size:9.5pt;font-weight:bold;background:#05050A;color:var(--c);border:1pt solid var(--c);padding:3.5pt 8pt;cursor:pointer;}
+  .q-btn:hover,.q-btn.on{background:var(--c);color:#05050A;}
+
+  .pane{display:none;}
+  .pane.show{display:block;}
+  body.docs .pane{display:block;}
+  body.docs .ui{display:none !important;}
+  @media print{.ui{display:none !important;} .pane{display:block !important;}}
+  .toast{position:fixed;bottom:16pt;left:50%;transform:translateX(-50%);background:var(--g);color:#05050A;font-family:'Oxanium',sans-serif;font-weight:bold;padding:6pt 14pt;display:none;z-index:30;box-shadow:0 0 12px var(--g);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ================= TYTUŁ ================= -->
+<table class="blk"><tr><td style="background:#05050A;border:2pt solid #FF2BD6;padding:12pt 12pt;">
+<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6pt;">
+  <span class="mono m" style="font-size:9.8pt;">// PROJEKT KRZEMOWY ŁEB 2077 &nbsp;::&nbsp;FRAMPOL ↔ RZESZÓW &nbsp;::&nbsp; LIVE</span>
+  <span class="mono g" style="font-size:9.5pt;">ASUS X99-E WS + XEON E5-2690 v4 + 128 GB ECC + 4× RTX 3070</span>
+</div>
+<p class="ox c" style="font-size:21pt;margin:2pt 0;">KRZEMOWY ŁEB 2077 — PORADNIK DLA CIEBIE</p>
+<p class="ox y" style="font-size:13pt;margin:0 0 4pt 0;">ZAKUPY + SPRAWDZENIE KOPARKI + MONTAŻ + BIOS + SYSTEM</p>
+<p style="margin:0;">Przerabiamy obecną koparkę na serwer AI. Karty (4× RTX 3070), stelaż i przycisk włączania zostają. Z koparki wyjmujemy płytę Biostar, procesor i RAM, a w ich miejsce wkładamy części z tej listy. Wszystko, co tu klikniesz lub wpiszesz, zapisuje się od razu dla nas obu.</p>
+</td></tr></table>
+
+<!-- ================= PASEK NAWIGACJI + LIVE SYNC ================= -->
+<div class="bar ui">
+  <div class="sync-row">
+    <div>
+      <span class="sync-dot" id="syncDot"></span>
+      <span class="mono" style="font-size:9.5pt;" id="syncTxt">Łączenie z serwerem...</span>
+      <span class="mono dim" style="font-size:9pt;margin-left:6pt;" id="lastUpd"></span>
+    </div>
+    <div style="display:flex;align-items:center;gap:6pt;">
+      <span class="mono dim" style="font-size:9pt;">Kto teraz klika:</span>
+      <select class="who-sel" id="whoSel">
+        <option value="Kolega (Frampol)">Kolega (Frampol)</option>
+        <option value="Alex (Rzeszów)">Alex (Rzeszów)</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button data-t="start" class="act">00 START &amp; BUDŻET</button>
+    <button data-t="zakupy">01 ZAKUPY (LINKI)</button>
+    <button data-t="mamy">02 Z KOPARKI (ZDJĘCIA)</button>
+    <button data-t="montaz">03 MONTAŻ &amp; MAPA PŁYTY</button>
+    <button data-t="bios">04 BIOS</button>
+    <button data-t="system">05 SYSTEM &amp; ZDALNY</button>
+    <button data-t="problemy">06 Q-CODE &amp; PROBLEMY</button>
+    <button data-t="signal">07 TEKSTY SIGNAL</button>
+  </div>
+  <div style="margin-top:6pt;display:flex;gap:6pt;flex-wrap:wrap;align-items:center;justify-content:space-between;">
+    <div style="display:flex;gap:6pt;flex-wrap:wrap;align-items:center;">
+      <button class="tool" id="docsBtn">📄 TRYB DO DRUKU / GOOGLE DOCS</button>
+      <button class="tool" id="resetBtn" style="color:#FF3864;border-color:#FF3864;">⟲ WYCZYŚĆ ODHACZENIA</button>
+    </div>
+    <span class="mono c" style="font-size:10pt;font-weight:bold;" id="progTxt"></span>
+  </div>
+  <div class="prog"><i id="progBar"></i></div>
+</div>
+<div class="dim" id="docsHint" style="display:none;margin-bottom:10pt;border:1pt dashed #FCEE0A;padding:8pt;">» Tryb pełnej strony (wszystkie zakładki pod sobą). Możesz teraz wydrukować (<b>Ctrl+P</b>) lub skopiować całość (<b>Ctrl+A</b>, <b>Ctrl+C</b>) do Google Docs. Kliknij <a href="#" id="docsOff">tutaj</a>, żeby wrócić do zakładek.</div>
+
+<!-- ======================================================= -->
+<!-- 00 START & SYMULATOR BUDŻETU -->
+<!-- ======================================================= -->
+<div class="pane show" id="start">
+
+<table class="blk"><tr><td class="hd hc">00 // KALKULATOR BUDŻETU NA ŻYWO</td></tr><tr><td class="bd bc">
+<p><span class="g ox">✔ MAMY Z KOPARKI (0 zł):</span> 4× RTX 3070, aluminiowy stelaż, przycisk włączania na kablu, śrubki/dystanse.</p>
+
+<div class="kpi-grid">
+  <div class="kpi">
+    <div class="lbl">Koszt części łącznie</div>
+    <div class="val y" id="kpiTotal">4 740 zł</div>
+    <div class="dim" id="kpiSub">pełny zestaw z zasilaczem</div>
+  </div>
+  <div class="kpi">
+    <div class="lbl">Już kupione (odhaczone)</div>
+    <div class="val g" id="kpiSpent">0 zł</div>
+    <div class="dim" id="kpiCount">0 z 18 pozycji</div>
+  </div>
+  <div class="kpi">
+    <div class="lbl">Zostało do wydania</div>
+    <div class="val c" id="kpiLeft">4 740 zł</div>
+    <div class="dim">reszta listy zakupowej</div>
+  </div>
+  <div class="kpi">
+    <div class="lbl">Po sprzedaży starej bazy</div>
+    <div class="val m" id="kpiNet">4 390 zł</div>
+    <div class="dim">odzysk z Biostar + CPU + RAM (~350 zł)</div>
+  </div>
+</div>
+
+<div class="calc-box ui">
+  <p class="ox y" style="margin:0 0 4pt 0;font-size:10.5pt;">⚙ PRZEŁĄCZNIKI OSZCZĘDNOŚCI (kliknij, aby przeliczyć budżet dla nas obu):</p>
+  <div class="calc-row">
+    <label><input type="checkbox" id="cPsu"> <b>Nasz zasilacz z koparki pasuje</b> (ma min. 1000 W i 8 wtyczek PCIe 6+2) — nie kupujemy Corsaira</label>
+    <span class="mono g">− 399 zł</span>
+  </div>
+  <div class="calc-row">
+    <label><input type="checkbox" id="cSsd"> <b>Dysk SSD 1 TB z koparki zostaje</b> (sprawny 2,5" SATA z DRAM) — nie kupujemy Samsunga</label>
+    <span class="mono g">− 300 zł</span>
+  </div>
+  <div class="calc-row">
+    <span><b>Cena za 128 GB RAM na OLX</b> (zależnie od tego, ile utargujemy u p. Grzegorza w Rzeszowie):</span>
+    <div>
+      <button class="ram-btn" data-ram="1600">1 600 zł (utargowane −200 zł)</button>
+      <button class="ram-btn" data-ram="1700">1 700 zł</button>
+      <button class="ram-btn" data-ram="1800">1 800 zł (cena z ogłoszenia)</button>
+    </div>
+  </div>
+  <div class="calc-row">
+    <label><input type="checkbox" id="cApc"> Dodaj opcjonalną <b>listwę przeciwprzepięciową APC 8 gniazd</b></label>
+    <span class="mono y">+ 229 zł</span>
+  </div>
+  <div class="calc-row">
+    <label><input type="checkbox" id="cWifi"> Dodaj opcjonalną <b>kartę Wi-Fi 6 Intel AX210</b> (tylko jeśli nie dociągniemy kabla LAN)</label>
+    <span class="mono y">+ 125 zł</span>
+  </div>
+</div>
+</td></tr></table>
+
+<table class="blk"><tr><td class="hd hm">!! // 3 ŻELAZNE ZASADY ZAKUPÓW</td></tr><tr><td class="bd bm">
+<p><span class="ox m">01</span> &nbsp;<b>Używane części (płyta, procesor, RAM, dysk, zasilacz)</b> → najpierw wysyłasz sprzedawcy gotową wiadomość (klikasz <span class="mono y">KOPIUJ</span> przy części), kupujesz dopiero po jego odpowiedzi. <b>Nowe ze sklepu (chłodzenie, risery, wentylatory, drobiazgi)</b> → kupujesz od razu.</p>
+<p><span class="ox m">02</span> &nbsp;Płać <b>tylko</b> przez Allegro / Przesyłkę OLX / eBay. <span class="r">Nigdy przelewem poza portalem ani BLIK-iem na telefon.</span> Odbiór osobisty (np. RAM w Rzeszowie): gotówka dopiero po obejrzeniu naklejek na kościach.</p>
+<p style="margin:0;"><span class="ox m">03</span> &nbsp;Oferta się sprzedała albo sprzedawca odpisuje coś dziwnego? Wpisz to w pole <b>Notatka</b> przy części albo wrzuć mi screena na Signal — sprawdzę zanim zapłacisz.</p>
+</td></tr></table>
+
+<table class="blk"><tr><td class="hd hy">&gt;&gt; // PLAN DZIAŁANIA KROK PO KROKU</td></tr><tr><td class="bd by">
+<p><span class="cb" data-id="p1">☐</span> &nbsp;<span class="y ox">KROK 1 (DZIŚ)</span> — wyślij pytanie o BIOS i kup <b>płytę główną ASUS X99-E WS z eBaya</b>. Idzie z Chin 2–3 tygodnie, więc musi ruszyć pierwsza.</p>
+<p><span class="cb" data-id="p2">☐</span> &nbsp;<span class="y ox">KROK 2 (DZIŚ)</span> — wyślij gotowe wiadomości do sprzedawców <b>RAM-u (OLX)</b> oraz <b>dysku SSD (OLX)</b>.</p>
+<p><span class="cb" data-id="p3">☐</span> &nbsp;<span class="y ox">KROK 3 (DZIŚ)</span> — zrób <b>5 zdjęć naszej koparki</b> i wpisz dane w zakładce <a href="#" data-go="mamy">02 Z KOPARKI</a> (naklejka zasilacza, wtyczki, tył kart, miarka).</p>
+<p><span class="cb" data-id="p4">☐</span> &nbsp;<span class="c ox">KROK 4 (W TYGODNIU)</span> — zamów <b>procesor Xeon, chłodzenie Fera 5, pastę, risery ×4, wentylatory i drobiazgi montażowe</b>. Przyjdą w 2–3 dni.</p>
+<p><span class="cb" data-id="p5">☐</span> &nbsp;<span class="m ox">KROK 5 (PO SPRAWDZENIU ZDJĘCIA)</span> — jeśli zasilacz z koparki nie ma 1000 W / 8 wtyczek PCIe, zamawiamy <b>Corsair HX1200</b>.</p>
+<p><span class="cb" data-id="p6">☐</span> &nbsp;<span class="c ox">KROK 6 (GDY PRZYJDZIE PŁYTA)</span> — wspólny montaż na wideo wg zakładki <a href="#" data-go="montaz">03 MONTAŻ &amp; MAPA PŁYTY</a>, potem <a href="#" data-go="bios">04 BIOS</a> i <a href="#" data-go="system">05 SYSTEM</a>.</p>
+<p style="margin:0;"><span class="cb" data-id="p7">☐</span> &nbsp;<span class="g ox">KROK 7 (NA KONIEC)</span> — gdy nowy serwer ruszy, wystawiamy starą płytę Biostar + CPU + RAM na OLX (odzysk ~300–450 zł).</p>
+</td></tr></table>
+
+</div>
+
+<!-- ======================================================= -->
+<!-- 01 ZAKUPY -->
+<!-- ======================================================= -->
+<div class="pane" id="zakupy">
+
+<p class="ui dim">Kliknij ☐ albo przycisk <b>Kupione ✔</b> przy części, kiedy ją zamówisz. Możesz też kliknąć <b>Wysłano pytanie</b> i wpisać w notatce, co odpisał sprzedawca — zobaczę to u siebie na żywo.</p>
+
+<!-- 01 PŁYTA -->
+<table class="blk"><tr><td class="hd hc">01 // PŁYTA GŁÓWNA ASUS X99-E WS &nbsp;—&nbsp; ok. 1 340 zł (z VAT)</td></tr><tr><td class="bd bc">
+<p><span class="cb" data-id="mb" data-p="1340">☐</span> &nbsp;<b>KUPIONE</b></p>
+<div class="st-bar ui" data-item="mb">
+  <span class="mono dim" style="font-size:9pt;">STATUS:</span>
+  <button class="st-btn s-todo" data-st="todo">Do kupienia</button>
+  <button class="st-btn s-ask" data-st="ask">Wysłano pytanie</button>
+  <button class="st-btn s-ord" data-st="ord">Zamówione / Płynie</button>
+  <button class="st-btn s-got" data-st="got">Kupione / Na miejscu ✔</button>
+  <input class="note-in" data-note="mb" placeholder="Notatka na żywo (np. jaką wersję BIOS-u podał sprzedawca, numer przesyłki)...">
+</div>
+<p><span class="dim">CO TO:</span> „kręgosłup” serwera. Musi być <b>DOKŁADNIE ASUS X99-E WS</b> (lub <b>X99-E WS/USB 3.1</b>) — ma 7 pełnych slotów na karty i jako jedyna obsługuje nasz serwerowy RAM 32 GB (`2Rx4`). Tańsze płyty (Gigabyte/MSI) z tym RAM-em w ogóle się nie włączą.</p>
+<p>W Polsce jej nie ma (sprawdzone Allegro, OLX, Allegro Lokalnie). Bierzemy z eBaya — idzie z Chin 2–3 tygodnie. Przy odbiorze kurier pobierze <b>VAT 23% + ok. 30 zł</b> odprawy (wliczone w kwotę 1 340 zł). Cła na płyty główne jest 0%.</p>
+<p style="margin-top:8pt;"><span class="tag g">[ KUP TĘ OFERTĘ ]</span><br><a href="https://www.ebay.com/itm/116016463694" target="_blank" rel="noopener">▶ eBay — ASUS X99-E WS/USB 3.1 — 270,95 $, darmowa wysyłka, sprzedawca 99,2% (~5 400 opinii)</a></p>
+<p class="y" style="font-size:10.2pt;">⚠ Przed kliknięciem zapłaty sprawdź w koszyku, czy wysyłka do Polski jest na pewno 0 $ (czasem eBay potrafi przestawić na +38 $).</p>
+<p style="margin-top:6pt;"><span class="tag dim">[ OFERTY ZAPASOWE ]</span><br>
+<a href="https://www.ebay.com/itm/365929450877" target="_blank" rel="noopener" style="font-weight:normal;">▶ eBay — 317,36 $, darmowa wysyłka, sprzedawca 99,6%</a><br>
+<a href="https://www.ebay.com/itm/307142203195" target="_blank" rel="noopener" style="font-weight:normal;">▶ eBay — 315 $ + 10 $ wysyłka, sprzedawca 100%</a></p>
+<p style="margin-top:6pt;"><span class="r">✖ NIE KUPUJ:</span> zwykłej „ASUS X99-E” (bez dopisku <b>WS</b>), „X99-A”, „X99-Deluxe”, „X99-Pro”. W nazwie musi być człon <b>WS</b>.</p>
+<table class="msg"><tr><td>
+<div class="mh"><span>&gt;_ WIADOMOŚĆ DO SPRZEDAWCY NA EBAY (po angielsku)</span> <button class="cp ui">KOPIUJ WIADOMOŚĆ</button></div>
+<p class="mt">Hello,
+
+I'm interested in the ASUS X99-E WS motherboard. Before purchasing, I have two questions:
+
+1. What BIOS version is currently installed on this board?
+2. Would you consider a small discount if I buy today via Buy It Now?
+
+Thank you!</p>
+</td></tr></table>
+<p class="dim" style="margin:0;">Jak odpisze: wersja <b>3002 lub wyższa</b> (np. 3004, 3801, 4001) = idealnie, procesor ruszy od razu. Jeśli niższa lub nie wie = też OK, zaktualizujemy sami z pendrive’a przyciskiem z tyłu płyty (zakładka 04).</p>
+</td></tr></table>
+
+<!-- 02 PROCESOR -->
+<table class="blk"><tr><td class="hd hm">02 // PROCESOR INTEL XEON E5-2690 v4 &nbsp;—&nbsp; 149 zł</td></tr><tr><td class="bd bm">
+<p><span class="cb" data-id="cpu" data-p="149">☐</span> &nbsp;<b>KUPIONE</b></p>
+<div class="st-bar ui" data-item="cpu">
+  <span class="mono dim" style="font-size:9pt;">STATUS:</span>
+  <button class="st-btn s-todo" data-st="todo">Do kupienia</button>
+  <button class="st-btn s-ask" data-st="ask">Wysłano pytanie</button>
+  <button class="st-btn s-ord" data-st="ord">Zamówione</button>
+  <button class="st-btn s-got" data-st="got">Kupione ✔</button>
+  <input class="note-in" data-note="cpu" placeholder="Notatka (np. potwierdzony grawer SR2N2)...">
+</div>
+<p><span class="dim">CO TO:</span> serwerowy procesor 14 rdzeni / 28 wątków (135W). Na metalowej pokrywie musi mieć wygrawerowany kod <b>SR2N2</b>.<br>
+<span class="r">✖ NIE KUPUJ</span>, jeśli na procesorze lub w opisie jest napis „ES”, „QS” albo „Intel Confidential” (to niestabilne próbki testowe).</p>
+<p style="margin-top:8pt;"><span class="tag g">[ KUP TEN ]</span><br><a href="https://allegro.pl/oferta/procesor-intel-xeon-e5-2690v4-sr2n2-14-rdzeni-28-watkow-2-60-ghz-cpu-005-18944729029" target="_blank" rel="noopener">▶ Allegro — Intel Xeon E5-2690 v4 SR2N2 — 149 zł, Super Sprzedawca, 100% poleceń</a></p>
+<p style="margin-top:6pt;"><span class="tag dim">[ ZAPAS ]</span><br><a href="https://allegro.pl/oferta/intel-xeon-14c-e5-2690-v4-2-60-ghz-35m-135w-sr2n2-18795441982" target="_blank" rel="noopener" style="font-weight:normal;">▶ Allegro — Xeon E5-2690 v4 SR2N2 — 147,60 zł, Super Sprzedawca</a></p>
+<table class="msg"><tr><td>
+<div class="mh"><span>&gt;_ WIADOMOŚĆ DO SPRZEDAWCY</span> <button class="cp ui">KOPIUJ WIADOMOŚĆ</button></div>
+<p class="mt">Dzień dobry,
+
+Chciałbym kupić procesor Xeon E5-2690 v4 z Pana oferty. Proszę o potwierdzenie:
+1. Czy na pokrywie jest wygrawerowany kod SR2N2? Mogę prosić o zdjęcie?
+2. Czy procesor jest w pełni sprawny i wszystkie elementy na spodzie są nienaruszone?
+
+Pozdrawiam!</p>
+</td></tr></table>
+</td></tr></table>
+
+<!-- 03 RAM -->
+<table class="blk"><tr><td class="hd hy">03 // PAMIĘĆ RAM 128 GB (4× 32 GB ECC RDIMM 2Rx4) &nbsp;—&nbsp; <span id="ramHdrPrice">1 600 – 1 800 zł</span></td></tr><tr><td class="bd by">
+<p><span class="cb" data-id="ram" data-p="1800" id="ramCb">☐</span> &nbsp;<b>KUPIONE (komplet 4 sztuk = 128 GB)</b></p>
+<div class="st-bar ui" data-item="ram">
+  <span class="mono dim" style="font-size:9pt;">STATUS:</span>
+  <button class="st-btn s-todo" data-st="todo">Do kupienia</button>
+  <button class="st-btn s-ask" data-st="ask">Wysłano pytanie</button>
+  <button class="st-btn s-ord" data-st="ord">Zamówione</button>
+  <button class="st-btn s-got" data-st="got">Kupione ✔</button>
+  <input class="note-in" data-note="ram" placeholder="Notatka (np. utargowana kwota, dokładny kod z naklejki od p. Grzegorza)...">
+</div>
+<p><span class="dim">CO TO:</span> pamięć robocza, w której siedzą eksperci modelu AI 177B. Potrzebujemy 4 identycznych kości po 32 GB od jednego sprzedawcy (tryb 4-kanałowy Quad-Channel).</p>
+<p>Na naklejce kości muszą być <b>DWA oznaczenia</b>: <b>„2Rx4”</b> oraz litera <b>„R”</b> na końcu kodu (np. <span class="mono">PC4-2400T-R</span>).<br>
+<span class="r">✖ NIE KUPUJ</span>, jeśli kod kończy się na „-L” (`LRDIMM`) albo ma „4Rx4”.</p>
+<p style="margin-top:8pt;"><span class="tag g">[ KUP TEN KOMPLET ]</span><br><a href="https://www.olx.pl/d/oferta/4-sztuki-sk-hynix-32gb-ddr4-2400-ecc-rdimm-2rx4-ram-serwerowy-CID99-ID1c5THI.html" target="_blank" rel="noopener">▶ OLX Rzeszów — 4× SK Hynix 32 GB DDR4-2400 ECC RDIMM 2Rx4 — 1 800 zł za komplet</a><br><span class="dim">Sprzedawca p. Grzegorz (na OLX od 2014 r., Rzeszów — możliwy odbiór osobisty albo Przesyłka OLX).</span></p>
+<p style="margin-top:6pt;"><span class="y ox">₿ ARGUMENT DO NEGOCJACJI NA 1 600 ZŁ:</span> Ten sam sprzedawca ma drugie ogłoszenie na 8 takich samych kości za 3 200 zł (czyli dokładnie 400 zł/szt.):<br>
+<a href="https://www.olx.pl/d/oferta/8-sztuk-sk-hynix-32gb-ddr4-2400-ecc-rdimm-2rx4-ram-serwerowy-CID99-ID1d0fEY.html" target="_blank" rel="noopener" style="font-weight:normal;">▶ Jego drugie ogłoszenie: 8× 32 GB za 3 200 zł (400 zł/szt.)</a></p>
+<table class="msg"><tr><td>
+<div class="mh"><span>&gt;_ WIADOMOŚĆ DO SPRZEDAWCY (OLX)</span> <button class="cp ui">KOPIUJ WIADOMOŚĆ</button></div>
+<p class="mt">Dzień dobry,
+
+Chciałbym kupić komplet 4 sztuk pamięci SK Hynix 32GB DDR4 ECC RDIMM z Pana ogłoszenia.
+
+Przed zakupem chciałbym potwierdzić:
+1. Czy na naklejce jest dokładnie 2Rx4 PC4-2400T (Registered RDIMM)? Mogę prosić o wyraźne zdjęcie naklejki z pełnym numerem katalogowym (P/N)?
+2. Czy wszystkie 4 moduły są sprawne i pochodzą z jednej maszyny?
+
+Widzę, że w drugim ogłoszeniu ma Pan 8 sztuk za 3 200 zł, czyli 400 zł za sztukę. Czy sprzeda Pan 4 sztuki w tej samej cenie, czyli 1 600 zł za komplet? Jeśli tak, proszę o ofertę z Przesyłką OLX — opłacam od razu. Mogę też odebrać osobiście w Rzeszowie.
+
+Pozdrawiam!</p>
+</td></tr></table>
+</td></tr></table>
+
+<!-- 04 DYSK -->
+<table class="blk" id="blkSsd"><tr><td class="hd hc">04 // DYSK SSD 1 TB 2,5" SATA (z DRAM) &nbsp;—&nbsp; 300 zł</td></tr><tr><td class="bd bc">
+<p><span class="cb" data-id="ssd" data-p="300">☐</span> &nbsp;<b>KUPIONE</b> <span class="dim" id="ssdSkipBadge"></span></p>
+<div class="st-bar ui" data-item="ssd">
+  <span class="mono dim" style="font-size:9pt;">STATUS:</span>
+  <button class="st-btn s-todo" data-st="todo">Do kupienia</button>
+  <button class="st-btn s-ask" data-st="ask">Wysłano pytanie</button>
+  <button class="st-btn s-ord" data-st="ord">Zamówione</button>
+  <button class="st-btn s-got" data-st="got">Kupione ✔</button>
+  <input class="note-in" data-note="ssd" placeholder="Notatka (np. zdrowie dysku z CrystalDiskInfo)...">
+</div>
+<p><span class="dim">CO TO:</span> dysk na system Ubuntu i pliki modelu AI (~85,5 GB). Wpinamy go zwykłym kablem SATA, żeby nie zabierał linii PCIe kartom graficznym.</p>
+<p style="margin-top:8pt;"><span class="tag g">[ KUP TEN ]</span><br><a href="https://www.olx.pl/d/oferta/dysk-ssd-samsung-870-evo-1tb-sata-2-5-CID99-ID1cXYBJ.html" target="_blank" rel="noopener">▶ OLX Łódź — Samsung 870 EVO 1 TB 2,5" SATA — 300 zł</a></p>
+<p style="margin-top:6pt;"><span class="tag dim">[ PEWNIAK Z GWARANCJĄ I FAKTURĄ ]</span><br><a href="https://www.olx.pl/d/oferta/dysk-ssd-1tb-2-5-sata-sandisk-ultra-3d-sdssdh31000g-dram-stan-95-gwarancja-faktura-vat-marza-CID99-ID1cRAY0.html" target="_blank" rel="noopener" style="font-weight:normal;">▶ OLX — SanDisk Ultra 3D 1 TB 2,5" SATA (z DRAM), stan 95%, gwarancja, Przesyłka OLX — 429 zł</a></p>
+<p style="margin-top:6pt;"><span class="r">✖ NIE KUPUJ tanich zamienników bez DRAM:</span> Goodram CX400, Kingston A400, Crucial BX500, Crucial E100, PNY CS900. Nie kupuj też małej płytki „M.2 SATA” — musi być klasyczny dysk 2,5 cala.</p>
+<table class="msg"><tr><td>
+<div class="mh"><span>&gt;_ WIADOMOŚĆ DO SPRZEDAWCY DYSKU</span> <button class="cp ui">KOPIUJ WIADOMOŚĆ</button></div>
+<p class="mt">Dzień dobry,
+
+Jestem zainteresowany dyskiem SSD 1TB z Pana/Pani ogłoszenia. Czy możliwa jest wysyłka Przesyłką OLX?
+
+Przed zakupem proszę o zrzut ekranu z programu CrystalDiskInfo, na którym widać:
+1. Stan zdrowia dysku (Health Status).
+2. Sumę zapisów (Total Host Writes) i liczbę godzin pracy (Power On Hours).
+
+Jeśli dysk ma zdrowie powyżej 90% i 0 uszkodzonych sektorów, zamawiam od razu.
+
+Pozdrawiam!</p>
+</td></tr></table>
+</td></tr></table>
+
+<!-- 05 CHŁODZENIE -->
+<table class="blk"><tr><td class="hd hm">05 // CHŁODZENIE PROCESORA + PASTA &nbsp;—&nbsp; 150 zł (NOWE)</td></tr><tr><td class="bd bm">
+<div class="st-bar ui" data-item="cool">
+  <span class="mono dim" style="font-size:9pt;">STATUS:</span>
+  <button class="st-btn s-todo" data-st="todo">Do kupienia</button>
+  <button class="st-btn s-ord" data-st="ord">Zamówione</button>
+  <button class="st-btn s-got" data-st="got">Kupione ✔</button>
+  <input class="note-in" data-note="cool" placeholder="Notatka...">
+</div>
+<p><span class="dim">CO TO:</span> nowy radiator z 2 wentylatorami (220W TDP — duży zapas dla нашего Xeona 135W). W nowym pudełku ze sklepu są od razu <b>śruby dystansowe M4 pod nasze gniazdo LGA 2011-3</b> (w używanych chłodzeniach z OLX ludzie prawie zawsze je gubią). <b>Kupujesz od razu bez pisania.</b></p>
+<p><span class="cb" data-id="fera" data-p="129">☐</span> &nbsp;<a href="https://www.morele.net/chlodzenie-cpu-endorfy-fera-5-dual-fan-ey3a006-11788461/" target="_blank" rel="noopener">Morele.net — Endorfy Fera 5 Dual Fan (EY3A006)</a> — <span class="y">129 zł</span> (darmowa dostawa)</p>
+<p style="margin:0;"><span class="cb" data-id="paste" data-p="21">☐</span> &nbsp;<a href="https://allegro.pl/oferta/arctic-mx-4-pasta-termoprzewodzaca-8-5-w-mk-8-g-actcp00008b-18519062422" target="_blank" rel="noopener">Allegro — Duża tubka pasty Arctic MX-4 (8 g)</a> — <span class="y">21,25 zł</span> <span class="dim">(wystarczy na procesor i na ewentualne odświeżenie kart)</span></p>
+</td></tr></table>
+
+<!-- 06 ZASILACZ -->
+<table class="blk" id="blkPsu"><tr><td class="hd hy">06 // ZASILACZ CORSAIR HX1200 (1200W PLATINUM) &nbsp;—&nbsp; 399 zł</td></tr><tr><td class="bd by">
+<p><span class="cb" data-id="psu" data-p="399">☐</span> &nbsp;<b>KUPIONE</b> <span class="dim" id="psuSkipBadge">(albo nie trzeba, jeśli nasz z koparki wystarczy)</span></p>
+<div class="st-bar ui" data-item="psu">
+  <span class="mono dim" style="font-size:9pt;">STATUS:</span>
+  <button class="st-btn s-todo" data-st="todo">Wstrzymane — sprawdzamy nasz z koparki</button>
+  <button class="st-btn s-ask" data-st="ask">Wysłano pytanie</button>
+  <button class="st-btn s-ord" data-st="ord">Zamówione</button>
+  <button class="st-btn s-got" data-st="got">Kupione / Mamy swój ✔</button>
+  <input class="note-in" data-note="psu" placeholder="Notatka (np. jaki zasilacz siedzi teraz w koparce)...">
+</div>
+<p><span class="m ox">⏸ ZANIM KUPISZ:</span> zrób zdjęcie tabliczki naszego zasilacza z koparki (zakładka <a href="#" data-go="mamy">02 Z KOPARKI</a>). Jeśli ma <b>min. 1000 W</b>, <b>8 wtyczek PCIe 8-pin (6+2)</b> do kart i <b>2 wtyczki CPU 8-pin (EPS)</b> — zostaje nasz i oszczędzamy 399 zł!</p>
+<p style="margin-top:8pt;"><span class="tag g">[ KUP TEN, JEŚLI NASZ Z KOPARKI NIE WYSTARCZY ]</span><br><a href="https://allegro.pl/oferta/zasilacz-corsair-hx1200-1200-w-80-plus-platinum-19032704470" target="_blank" rel="noopener">▶ Allegro — Corsair HX1200 1200W 80+ Platinum — 399 zł, Super Sprzedawca</a></p>
+<p style="margin-top:6pt;"><span class="tag dim">[ ZAPAS ]</span><br><a href="https://allegro.pl/oferta/zasilacz-thermaltake-toughpower-1200w-modular-1200-w-80-plus-gold-19052899533" target="_blank" rel="noopener" style="font-weight:normal;">▶ Allegro — Thermaltake Toughpower 1200W 80+ Gold — 469 zł</a></p>
+<p style="margin-top:6pt;"><span class="r">⚠ BARDZO WAŻNE:</span> nigdy nie używaj kabli modularnych od innego zasilacza (mają inne ułożenie żył od strony zasilacza i palą karty). Kupujemy wyłącznie z kompletem oryginalnych kabli.</p>
+<table class="msg"><tr><td>
+<div class="mh"><span>&gt;_ WIADOMOŚĆ DO SPRZEDAWCY ZASILACZA</span> <button class="cp ui">KOPIUJ WIADOMOŚĆ</button></div>
+<p class="mt">Dzień dobry,
+
+Chciałbym kupić zasilacz z Pana oferty. Proszę o potwierdzenie:
+1. Czy w zestawie są wszystkie oryginalne kable modularne — szczególnie 4 podwójne kable PCIe (razem 8 wtyczek 6+2 pin) i 2 kable CPU 8-pin (EPS)?
+2. Czy zasilacz jest w pełni sprawny i ile mniej więcej lat był używany?
+
+Pozdrawiam!</p>
+</td></tr></table>
+</td></tr></table>
+
+<!-- 07 RISERY -->
+<table class="blk"><tr><td class="hd hc">07 // RISERY TAŚMOWE PCIe x16 (4 SZTUKI) &nbsp;—&nbsp; 276 zł (NOWE)</td></tr><tr><td class="bd bc">
+<p><span class="cb" data-id="riser" data-p="276">☐</span> &nbsp;<b>KUPIONE (4 sztuki × 69 zł)</b></p>
+<div class="st-bar ui" data-item="riser">
+  <span class="mono dim" style="font-size:9pt;">STATUS:</span>
+  <button class="st-btn s-todo" data-st="todo">Do kupienia (po pomiarze miarką)</button>
+  <button class="st-btn s-ord" data-st="ord">Zamówione</button>
+  <button class="st-btn s-got" data-st="got">Kupione ✔</button>
+  <input class="note-in" data-note="riser" placeholder="Notatka (np. zmierzona odległość w cm)...">
+</div>
+<p><span class="dim">CO TO:</span> szerokie, 164-żyłowe taśmy łączące płytę główną z 4 kartami na górnej belce stelaża.<br>
+<span class="r">✖ Czerwone risery z kablem USB z naszej koparki odpadają</span> — mają tylko 1 linię PCIe (16× za wolno do przerzucania warstw modelu AI między kartami).</p>
+<p class="y" style="font-size:10.2pt;">⚠ Przed kliknięciem przyłóż miarkę od tacki płyty do dolnej krawędzi najdalszej karty RTX 3070. Jeśli jest do 27–28 cm, poniższe taśmy 30 cm będą idealne.</p>
+<p style="margin-top:8pt;"><span class="tag g">[ KUP 4 SZTUKI ]</span><br><a href="https://allegro.pl/oferta/tasma-riser-pci-e-pcie-3-0-express-x16-x16-30cm-12432322718" target="_blank" rel="noopener">▶ Allegro — Taśma Riser PCIe 3.0 x16-x16 30 cm — 69 zł/szt. (weź 4 szt. = 276 zł)</a></p>
+<p style="margin:6pt 0 0 0;"><span class="tag dim">[ OPCJA PREMIUM ]</span><br><a href="https://www.amazon.de/dp/B09NKQB2QJ" target="_blank" rel="noopener" style="font-weight:normal;">▶ Amazon — EZDIY-FAB PCIe 4.0 x16 ekranowany — ok. 182 zł/szt.</a></p>
+</td></tr></table>
+
+<!-- 08 STELAŻ -->
+<table class="blk"><tr><td class="hd hm">08 // NAWIEW NA KARTY + WTYCZKA DUMMY PLUG &nbsp;—&nbsp; 155 zł (NOWE)</td></tr><tr><td class="bd bm">
+<p>Wszystko nowe, kupujesz od razu. <span class="g">Przycisk włączania już mamy w koparce.</span></p>
+<p><span class="cb" data-id="fans" data-p="110">☐</span> &nbsp;<a href="https://allegro.pl/oferta/wentylator-arctic-p12-pro-pwm-pst-black-120mm-zestaw-5szt-acfan00307a-17977465818" target="_blank" rel="noopener">Wentylatory Arctic P12 Pro PWM PST 120mm (zestaw 5 szt.)</a> — <span class="y">109,99 zł</span> <span class="dim">(stały przewiew między 4 kartami)</span></p>
+<p><span class="cb" data-id="hub" data-p="30">☐</span> &nbsp;<a href="https://allegro.pl/oferta/arctic-case-fan-hub-10-x-pwm-4-pin-acfan00175a-na-10-wentylatorow-17372158716" target="_blank" rel="noopener">Rozdzielacz Arctic Case Fan Hub (na 10 wentylatorów, zasilany z SATA)</a> — <span class="y">29,99 zł</span></p>
+<p style="margin:0;"><span class="cb" data-id="dummy" data-p="15">☐</span> &nbsp;<a href="https://allegro.pl/oferta/emulator-monitora-adapter-hdmi-vga-4k-dummy-plug-14113599868" target="_blank" rel="noopener">Wtyczka HDMI „Dummy Plug” 4K</a> — <span class="y">14,99 zł</span> <span class="dim">(wpinamy w pierwszą kartę, żeby serwer pracował bez monitora)</span></p>
+</td></tr></table>
+
+<!-- 09 MONTAŻ -->
+<table class="blk"><tr><td class="hd hy">09 // DROBIAZGI MONTAŻOWE (ŻEBY NICZEGO NIE ZABRAKŁO) &nbsp;—&nbsp; 166 zł (NOWE)</td></tr><tr><td class="bd by">
+<p>Płyta z eBaya przychodzi sama, bez kabli i baterii. Kup od razu, żebyśmy nie utknęli w połowie składania:</p>
+<p><span class="cb" data-id="usb" data-p="48">☐</span> &nbsp;<a href="https://allegro.pl/oferta/sandisk-pendrive-ultra-flair-32gb-srebrny-18952645229" target="_blank" rel="noopener">Pendrive SanDisk Ultra Flair 32 GB</a> — <span class="y">47,89 zł</span> <span class="dim">(do instalacji Ubuntu i aktualizacji BIOS-u)</span></p>
+<p><span class="cb" data-id="sata" data-p="5">☐</span> &nbsp;<a href="https://allegro.pl/oferta/kabel-gembird-cc-satam-data-13045036934" target="_blank" rel="noopener">Kabel SATA 50 cm (weź 2 sztuki)</a> — <span class="y">5,32 zł</span> <span class="dim">(do połączenia dysku SSD z płytą)</span></p>
+<p><span class="cb" data-id="cr2032" data-p="12">☐</span> &nbsp;<a href="https://allegro.pl/oferta/bateria-litowa-duracell-cr2032-3v-do-pilota-zegarka-guzikowa-5szt-18876839749" target="_blank" rel="noopener">Baterie Duracell CR2032 (5 szt.)</a> — <span class="y">11,99 zł</span> <span class="dim">(nowa bateria do płyty, żeby BIOS nie gubił ustawień)</span></p>
+<p><span class="cb" data-id="lan" data-p="20">☐</span> &nbsp;<a href="https://allegro.pl/oferta/kabel-ethernet-sieciowy-internetowy-patchcord-skretka-lan-rj45-utp-cat6-10m-6855553650" target="_blank" rel="noopener">Kabel sieciowy LAN Cat.6 (10 m)</a> — <span class="y">19,90 zł</span> <span class="dim">(stabilny internet z routera do serwera)</span></p>
+<p><span class="cb" data-id="molex" data-p="4">☐</span> &nbsp;<a href="https://allegro.pl/oferta/adapter-molex-pci-express-akyga-ak-ca-13-0-15-m-17852260888" target="_blank" rel="noopener">Przejściówka 2× Molex → PCIe 6-pin</a> — <span class="y">4,35 zł</span><br><span class="dim">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dodatkowe 6-pinowe zasilanie płyty przy 4 kartach (gniazdo <span class="mono">EZ_PLUG</span> przy slotach PCIe — <span class="r">nie mylić z 8-pin CPU!</span>)</span></p>
+<p><span class="cb" data-id="ipa" data-p="20">☐</span> &nbsp;<a href="https://allegro.pl/oferta/alkohol-izopropylowy-izopropanol-odtluszczacz-ipa-99-9-1l-14274597288" target="_blank" rel="noopener">Alkohol izopropylowy IPA 99,9% (1 litr)</a> — <span class="y">19,99 zł</span> <span class="dim">(odtłuszczenie procesora pod nową pastę)</span></p>
+<p><span class="cb" data-id="air" data-p="9">☐</span> &nbsp;<a href="https://allegro.pl/oferta/sprezone-powietrze-400-ml-17423349480" target="_blank" rel="noopener">Sprężone powietrze 400 ml</a> — <span class="y">9,39 zł</span> <span class="dim">(wydmuchanie kurzu z radiatorów kart RTX 3070)</span></p>
+<p><span class="cb" data-id="esd" data-p="11">☐</span> &nbsp;<a href="https://allegro.pl/oferta/opaska-esd-safe-na-reke-antystatyczna-aele-004-6056599042" target="_blank" rel="noopener">Opaska antystatyczna ESD na rękę</a> — <span class="y">10,90 zł</span> <span class="dim">(ochrona płyty i kości RAM przed przeskokiem iskry z dłoni)</span></p>
+<p><span class="cb" data-id="rzep" data-p="9">☐</span> &nbsp;<a href="https://allegro.pl/oferta/organizer-kabli-baseus-300cm-przewodow-rzep-opaska-czarna-3-m-tasma-rzepowa-18298905862" target="_blank" rel="noopener">Taśma rzepowa do kabli Baseus (3 m)</a> — <span class="y">8,73 zł</span> <span class="dim">(upięcie wiązek na stelażu)</span></p>
+<p style="margin:0;"><span class="cb" data-id="watt" data-p="28">☐</span> &nbsp;<a href="https://allegro.pl/oferta/miernik-energii-greenblue-watomierz-16a-max-3680w-gb620-e-18380000131" target="_blank" rel="noopener">Watomierz do gniazdka GreenBlue GB620</a> — <span class="y">27,53 zł</span> <span class="dim">(pokazuje na żywo pobór W i koszt prądu w zł)</span></p>
+</td></tr></table>
+
+<!-- OPCJONALNE -->
+<table class="blk"><tr><td class="hd hx">+ // OPCJONALNE DODATKI</td></tr><tr><td class="bd bx">
+<p><span class="cb" data-id="apc" data-p="229" data-opt="1">☐</span> &nbsp;<a href="https://allegro.pl/oferta/listwa-zasilajaca-apc-pmf83vt-fr-8-gniazd-3-m-bialy-19044403121" target="_blank" rel="noopener">Listwa przeciwprzepięciowa APC (8 gniazd, 3 m)</a> — <span class="y">229 zł</span> <span class="dim">(ochrona serwera przed przepięciami z sieci)</span></p>
+<p style="margin:0;"><span class="cb" data-id="wifi" data-p="125" data-opt="1">☐</span> &nbsp;<a href="https://allegro.pl/oferta/karta-sieciowa-z-intel-ax210-wifi-6-i-bluetooth-5-3-pci-e-do-komputera-pc-18328437509" target="_blank" rel="noopener">Karta Wi-Fi 6 + BT 5.3 PCIe (Intel AX210)</a> — <span class="y">124,95 zł</span> <span class="dim">(wpinana w wolny slot 2/4/6 — tylko jeśli nie da się podpiąć kabla LAN)</span></p>
+</td></tr></table>
+
+<!-- TABELA PODSUMOWANIA -->
+<table class="blk sum">
+<tr><td colspan="2" class="hd hg">Σ // PODSUMOWANIE KOSZYKA (ceny zweryfikowane 31.10)</td></tr>
+<tr><td style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">01 Płyta główna ASUS X99-E WS (eBay z VAT)</td><td class="num" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">~1 340 zł</td></tr>
+<tr><td style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">02 Procesor Intel Xeon E5-2690 v4 (SR2N2)</td><td class="num" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">149 zł</td></tr>
+<tr><td style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">03 Pamięć RAM 4× 32 GB = 128 GB RDIMM 2Rx4</td><td class="num" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;" id="sumRamCell">1 600 – 1 800 zł</td></tr>
+<tr><td style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">04 Dysk SSD 1 TB 2,5" SATA (Samsung 870 EVO)</td><td class="num" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;" id="sumSsdCell">300 zł</td></tr>
+<tr><td style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">05 Chłodzenie Endorfy Fera 5 Dual + pasta MX-4</td><td class="num" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">150 zł</td></tr>
+<tr><td style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">06 Zasilacz Corsair HX1200 Platinum</td><td class="num" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;" id="sumPsuCell">399 zł (lub 0 zł)</td></tr>
+<tr><td style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">07 Risery taśmowe PCIe x16 30 cm (×4)</td><td class="num" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">276 zł</td></tr>
+<tr><td style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">08 Nawiew stelaża (5× Arctic P12 + Hub + Dummy)</td><td class="num" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">155 zł</td></tr>
+<tr><td style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">09 Pakiet montażowy (pendrive, kable, IPA, watomierz)</td><td class="num" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">166 zł</td></tr>
+<tr><td class="ox g" style="background:#05050A;border:1pt solid #39FF14;padding:7pt 10pt;">RAZEM DO WYDANIA (WG KALKULATORA)</td><td class="ox g" style="background:#05050A;border:1pt solid #39FF14;padding:7pt 10pt;text-align:right;" id="sumTotalCell">4 540 – 4 740 zł</td></tr>
+<tr><td class="dim" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">jeśli zasilacz z koparki wystarczy</td><td class="dim" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;text-align:right;">4 140 – 4 340 zł</td></tr>
+<tr><td class="dim" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">zwrot ze sprzedaży starej płyty Biostar + CPU + RAM</td><td class="dim" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;text-align:right;">− ok. 300 – 450 zł</td></tr>
+</table>
+
+</div>
+
+<!-- ======================================================= -->
+<!-- 02 Z KOPARKI & ZDJĘCIA -->
+<!-- ======================================================= -->
+<div class="pane" id="mamy">
+
+<table class="blk"><tr><td class="hd hy">📷 // ZRÓB 5 ZDJĘĆ Z KOPARKI I WPISZ DANE PONIŻEJ</td></tr><tr><td class="bd by">
+<p>Zanim zamówimy zasilacz, dysk i risery, musimy sprawdzić, co dokładnie siedzi teraz w koparce. Zrób zdjęcia telefonem (wyślij mi na Signal) lub wpisz odczytane dane prosto w poniższe pola — zobaczę je od razu u siebie:</p>
+
+<p><span class="cb" data-id="f1">☐</span> &nbsp;<b>1. Tabliczka znamionowa na zasilaczu</b> (marka, model, moc w W; jeśli są dwa zasilacze — obu):
+<input class="rig-in" data-rig="psuModel" placeholder="Wpisz tutaj model i moc zasilacza z naklejki (np. Corsair HX1200 / EVGA 1000 G2)..."></p>
+
+<p><span class="cb" data-id="f2">☐</span> &nbsp;<b>2. Wtyczki zasilające do kart (PCIe 6+2 pin) i do procesora (CPU 8-pin)</b> — policz ile ich jest łącznie:
+<input class="rig-in" data-rig="psuPcieCount" placeholder="Wpisz ile jest wtyczek 6+2 pin do kart i 8-pin CPU (np. 8x PCIe, 2x CPU)..."></p>
+
+<p><span class="cb" data-id="f3">☐</span> &nbsp;<b>3. Naklejki z tyłu wszystkich 4 kart RTX 3070</b> (dokładny model każdej z 4 sztuk):
+<input class="rig-in" data-rig="gpuModels" placeholder="Wpisz modele 4 kart (np. 2x MSI Gaming X Trio, 2x Zotac...)..."></p>
+
+<p><span class="cb" data-id="f4">☐</span> &nbsp;<b>4. Dysk w koparce</b> — sprawdź, czy jest tam dysk SSD i jaką ma pojemność na naklejce:
+<input class="rig-in" data-rig="ssdModel" placeholder="Wpisz jaki dysk jest w koparce (np. brak / pendrive / 120 GB / Samsung 1 TB)..."></p>
+
+<p style="margin:0;"><span class="cb" data-id="f5">☐</span> &nbsp;<b>5. Miarka: odległość od tacki płyty głównej do spodu najdalszej karty na górze (w cm)</b>:
+<input class="rig-in" data-rig="riserDistanceCm" placeholder="Wpisz zmierzoną odległość w cm (np. 25 cm — potwierdzi, że risery 30 cm wystarczą)..."></p>
+</td></tr></table>
+
+<table class="blk"><tr><td class="hd hg">02 // CO ZOSTAJE Z KOPARKI</td></tr><tr><td class="bd bg">
+<table class="grid">
+<tr><th>Część z koparki</th><th>Decyzja</th></tr>
+<tr><td><b>4× RTX 3070 8 GB</b></td><td><span class="g">✔ ZOSTAJĄ</span> — to główne serce obliczeniowe serwera (32 GB VRAM)</td></tr>
+<tr><td><b>Stelaż aluminiowy Open-Air</b></td><td><span class="g">✔ ZOSTAJE</span> — idealny pod otwarte chłodzenie 4 kart</td></tr>
+<tr><td><b>Przycisk włączania na przewodzie</b></td><td><span class="g">✔ ZOSTAJE</span> — przepinamy do nowej płyty</td></tr>
+<tr><td><b>Śrubki i mosiężne dystanse pod płytę</b></td><td><span class="g">✔ ZOSTAJĄ</span> — wkręcamy pod nową płytę ASUS X99-E WS</td></tr>
+<tr><td><b>Zasilacz</b></td><td><span class="y">? DO WERYFIKACJI ZE ZDJĘCIA #1 i #2</span> (jeśli ≥1000W i 8× PCIe 8-pin + 2× EPS → zostaje!)</td></tr>
+<tr><td><b>Dysk SSD</b></td><td><span class="y">? DO WERYFIKACJI ZE ZDJĘCIA #4</span> (w koparkach zwykle był tylko mały dysk 60–120 GB lub pendrive)</td></tr>
+</table>
+</td></tr></table>
+
+<table class="blk"><tr><td class="hd hm">02 // CO WYJMUJEMY I SPRZEDAJEMY NA OLX (ODZYSK ~300–450 ZŁ)</td></tr><tr><td class="bd bm">
+<table class="grid">
+<tr><th>Stara część z koparki</th><th>Dlaczego musimy ją wymienić</th></tr>
+<tr><td>Płyta <b>Biostar TB360-BTC PRO 2.0</b></td><td>Ma tylko wąskie gniazda PCIe x1 pod krypto — dla modelu AI 177B jest 16× za wolna i nie obsługuje serwerowego RAM-u 128 GB</td></tr>
+<tr><td>Procesor Intel (LGA 1151) + mały cooler</td><td>Za mało rdzeni/linii PCIe, inne gniazdo niż Xeon LGA 2011-3</td></tr>
+<tr><td>Zwykły RAM DDR4 (4–8 GB)</td><td>Za mały i bez korekcji ECC RDIMM</td></tr>
+<tr><td>Czerwone risery na kablu USB 3.0</td><td>Działają tylko w trybie PCIe x1 — dławią komunikację między kartami</td></tr>
+</table>
+<p class="y" style="margin:6pt 0 0 0;">₿ Kiedy nowy serwer już ruszy, wystaw <b>płytę Biostar + procesor + RAM + czerwone risery jako jeden zestaw na OLX</b> za 390–440 zł (tyle chodzą 31.10).</p>
+</td></tr></table>
+
+</div>
+
+<!-- ======================================================= -->
+<!-- 03 MONTAŻ + INTERAKTYWNA MAPA PŁYTY ASUS X99-E WS -->
+<!-- ======================================================= -->
+<div class="pane" id="montaz">
+
+<table class="blk"><tr><td class="hd hc">03 // INTERAKTYWNA MAPA PŁYTY ASUS X99-E WS (KLIKNIJ ELEMENT)</td></tr><tr><td class="bd bc">
+<p>Kliknij dowolne gniazdo na schemacie płyty poniżej, żeby zobaczyć dokładnie, co tam wpiąć i na co uważać:</p>
+
+<div class="mb-wrap">
+  <div class="mb-board">
+    <div style="text-align:center;color:var(--c);font-weight:bold;margin-bottom:6pt;border-bottom:1pt solid var(--border);padding-bottom:4pt;">[ SCHEMAT PŁYTY: ASUS X99-E WS ]</div>
+
+    <div class="mb-spot warn act" data-spot="eatx">
+      <span>⚡ <b>2× CPU 8-pin (EATX12V_1 + EATX12V_2)</b></span>
+      <span class="y">GÓRA PŁYTY</span>
+    </div>
+
+    <div class="mb-spot info" data-spot="flash">
+      <span>🔄 <b>Port i przycisk USB BIOS Flashback</b></span>
+      <span class="c">TYŁ PŁYTY</span>
+    </div>
+
+    <div class="mb-spot ok" data-spot="ram1">
+      <span>🟩 <b>4× Szare sloty RAM: A1, B1, C1, D1</b></span>
+      <span class="g">TU 4× 32 GB</span>
+    </div>
+
+    <div class="mb-spot" data-spot="ram2">
+      <span>⬛ Czarne sloty RAM: A2, B2, C2, D2</span>
+      <span class="dim">ZOSTAW PUSTE</span>
+    </div>
+
+    <div class="mb-spot ok" data-spot="cpu">
+      <span>🧠 <b>Gniazdo LGA 2011-3 (Xeon + Fera 5)</b></span>
+      <span class="g">ŚRODEK</span>
+    </div>
+
+    <div class="mb-spot warn" data-spot="atx24">
+      <span>🔌 <b>Główne zasilanie 24-pin (EATXPWR)</b> + <b>Q-Code LED</b> + <b>MemOK!</b></span>
+      <span class="y">PRAWA KRAWĘDŹ</span>
+    </div>
+
+    <div class="mb-spot warn" data-spot="ezplug">
+      <span>⚠️ <b>Gniazdo 6-pin EZ_PLUG (wspomaganie PCIe)</b></span>
+      <span class="r">MOLEX → 6-PIN!</span>
+    </div>
+
+    <div class="mb-spot ok" data-spot="pcie">
+      <span>🟦 <b>Sloty PCIe x16: NR 1, 3, 5, 7 (co drugi!)</b></span>
+      <span class="g">4× RISER GPU</span>
+    </div>
+
+    <div class="mb-spot" data-spot="pcie_free">
+      <span>⬛ Sloty PCIe x16: NR 2, 4, 6</span>
+      <span class="dim">WOLNE (np. WiFi)</span>
+    </div>
+
+    <div class="mb-spot info" data-spot="sata">
+      <span>💾 <b>Szary port SATA6G_1</b> + piny <b>PWR_SW</b></span>
+      <span class="c">DÓŁ / PRAWO</span>
+    </div>
+  </div>
+
+  <div class="mb-detail" id="mbDetail">
+    <p class="ox y" style="font-size:12pt;margin:0 0 6pt 0;" id="mbTitle">⚡ 2× Gniazda 8-pin CPU (EATX12V_1 oraz EATX12V_2)</p>
+    <div id="mbBody">
+      <p>Na górnej krawędzi płyty są <b>DWA 8-pinowe gniazda zasilania procesora</b> (<span class="mono">EATX12V_1</span> i <span class="mono">EATX12V_2</span>).</p>
+      <p><span class="g">✔ CO WPIĄĆ:</span> Podłącz <b>OBA</b> gniazda dwoma kablami 8-pin opisanych na wtyczce jako <b>CPU</b> (lub EPS).</p>
+      <p style="margin:0;"><span class="r">✖ ZAKAZ:</span> Nigdy nie wciskaj w te górne gniazda kabli od kart graficznych (PCIe 6+2) ani przejściówki z Molexa — mają odwrotnie ułożone +12V i masę!</p>
+    </div>
+  </div>
+</div>
+</td></tr></table>
+
+<table class="blk"><tr><td class="hd hm">A // ROZBIÓRKA STAREJ KOPARKI</td></tr><tr><td class="bd bm">
+<p><span class="cb" data-id="m1">☐</span> &nbsp;<b>1. Odłącz prąd:</b> wyjmij kabel zasilający z gniazdka i przytrzymaj przycisk włączania przez 5 sekund (rozładuje kondensatory).</p>
+<p><span class="cb" data-id="m2">☐</span> &nbsp;<b>2. Opaska ESD:</b> załóż opaskę antystatyczną na nadgarstek, a krokodylek przypnij do gołego metalu stelaża.</p>
+<p><span class="cb" data-id="m3">☐</span> &nbsp;<b>3. Wyjmij 4 karty RTX 3070:</b> odepnij wtyczki zasilania od kart, wyjmij z nich małe płytki czerwonych riserów USB i odłóż karty na suchy ręcznik/karton.</p>
+<p><span class="cb" data-id="m4">☐</span> &nbsp;<b>4. Wykręć płytę Biostar:</b> odepnij kable i odkręć śrubki trzymające starą płytę. <b>Mosiężne dystanse i śrubki zostaw</b> под nową płytę.</p>
+<p style="margin:0;"><span class="cb" data-id="m5">☐</span> &nbsp;<b>5. Przedmuchaj karty:</b> wydmuchaj kurz z radiatorów sprężonym powietrzem (przytrzymując śmigło wentylatora palcem, żeby się nie rozkręciło na sucho).</p>
+</td></tr></table>
+
+<table class="blk"><tr><td class="hd hy">B // UZBROJENIE NOWEJ PŁYTY ASUS X99-E WS (NA STOLE PRZED WKŁADANIEM)</td></tr><tr><td class="bd by">
+<p><span class="cb" data-id="m6">☐</span> &nbsp;<b>1. Nowa bateria:</b> wyjmij starą pastylkę CR2032 z płyty i włóż nową Duracell CR2032 (plusem do góry).</p>
+<p><span class="cb" data-id="m7">☐</span> &nbsp;<b>2. Aktualizacja BIOS-u (tylko jeśli sprzedawca podał wersję poniżej 3002):</b> wykonujemy USB BIOS Flashback z pendrive’a przed włożeniem procesora (instrukcja w zakładce <a href="#" data-go="bios">04 BIOS</a>).</p>
+<p><span class="cb" data-id="m8">☐</span> &nbsp;<b>3. Montaż procesora Xeon E5-2690 v4:</b> odepnij dwie metalowe dźwignie gniazda LGA 2011-3. Dopasuj <b>złoty trójkąt w rogu procesora</b> do trójkąta na ramce gniazda. Połóż procesor pionowo z góry (nie przesuwaj po złotych pinach!) i zamknij obie dźwignie w kolejności wytłoczonej na blaszce.</p>
+<p><span class="cb" data-id="m9">☐</span> &nbsp;<b>4. Montaż RAM 4× 32 GB:</b> włóż 4 kości w <b>4 szare sloty: A1, B1, C1, D1</b> (wskazane w instrukcji dla 4 modułów Quad-Channel). Dociśnij równomiernie, aż zatrzaski klikną.</p>
+<p><span class="cb" data-id="m10">☐</span> &nbsp;<b>5. Pasta i chłodzenie Fera 5:</b> przetrzyj wierzch procesora wacikiem z IPA. Wkręć w narożniki gniazda <b>4 gwintowane kołki M4 (LGA 2011)</b> z pudełka Fera 5. Wyciśnij na środek procesora kroplę pasty MX-4 wielkości ziarnka grochu, <b>zerwij folię ochronną ze stopy radiatora</b>, przykręć chłodzenie i podepnij wtyczkę wentylatorów do <span class="mono">CPU_FAN</span>.</p>
+<p style="margin:0;"><span class="cb" data-id="m11">☐</span> &nbsp;<b>6. Przykręcenie płyty do stelaża:</b> upewnij się, że mosiężne dystanse wypadają dokładnie pod otworami montażowymi płyty ASUS X99-E WS (żaden nadmiarowy dystans nie może dotykać spodu płyty!). Przykręć płytę.</p>
+</td></tr></table>
+
+<table class="blk"><tr><td class="hd hc">C // PODŁĄCZENIE KABLI I RISERÓW</td></tr><tr><td class="bd bc">
+<table class="grid">
+<tr><th>Kabel / Element</th><th>Gdzie dokładnie wpiąć</th></tr>
+<tr><td><b>Szeroka wtyczka 24-pin ATX</b></td><td>Główne gniazdo zasilania na prawej krawędzi płyty</td></tr>
+<tr><td><b>2× wtyczka 8-pin CPU (EPS)</b></td><td>Oba 8-pinowe gniazda <span class="mono">EATX12V_1</span> i <span class="mono">EATX12V_2</span> na górze płyty — <b>podłącz oba!</b></td></tr>
+<tr><td><b>Przejściówka 2× Molex → 6-pin PCIe</b></td><td>6-pinowe gniazdo <span class="mono">EZ_PLUG</span> na płycie przy slotach PCIe (wspomaga zasilanie slotów przy 4 kartach; <span class="r">nigdy nie wpinaj w 8-pin CPU!</span>)</td></tr>
+<tr><td><b>4× Riser taśmowy PCIe x16</b></td><td>Wepnij w sloty <b>nr 1, 3, 5 oraz 7</b> (licząc od procesora w dół). Sloty 2, 4, 6 zostają puste</td></tr>
+<tr><td><b>Zasilanie 4× RTX 3070</b></td><td>Do każdej karty podepnij <b>2× wtyczki PCIe 8-pin (6+2)</b> z zasilacza (razem 8 wtyczek)</td></tr>
+<tr><td><b>Dysk SSD 1 TB + Hub wentylatorów</b></td><td>Kabel zasilający SATA z zasilacza do dysku i do Huba; kabel danych SATA z dysku do szarego portu <span class="mono">SATA6G_1</span> na płycie</td></tr>
+<tr><td><b>Przycisk włączania ze stelaża</b></td><td>Piny <span class="mono">PWR_SW</span> w prawym dolnym rogu płyty (płyta ma też własny podświetlany przycisk <b>START</b> bezpośrednio na laminacie!)</td></tr>
+</table>
+<p style="margin:0;"><span class="cb" data-id="m12">☐</span> &nbsp;Wszystkie powyższe kable podpięte i dociśnięte do kliknięcia zatrzasków.</p>
+</td></tr></table>
+
+<table class="blk"><tr><td class="hd hg">D // PIERWSZY START TESTOWY (NAJPIERW Z 1 KARTĄ!)</td></tr><tr><td class="bd bg">
+<p><span class="cb" data-id="m13">☐</span> &nbsp;<b>1. Test z 1 kartą:</b> na pierwsze uruchomienie podepnij tylko <b>jedną kartę RTX 3070 w slocie nr 1</b> i podłącz do niej monitor kablem HDMI/DisplayPort.</p>
+<p><span class="cb" data-id="m14">☐</span> &nbsp;<b>2. Włącz zasilacz („I”) i wciśnij przycisk START:</b> wyświetlacz Q-Code na płycie zacznie przeskakiwać przez kody. <b>Pierwszy start z 128 GB RAM trwa 1–2 minuty</b> (trening pamięci DDR4 ECC) — cierpliwie czekaj, nie wyłączaj!</p>
+<p><span class="cb" data-id="m15">☐</span> &nbsp;<b>3. Wejście do BIOS-u:</b> gdy pojawi się ekran ASUS, naciskaj klawisz <b>DEL</b> → ustawiamy opcje z zakładki <a href="#" data-go="bios">04 BIOS</a> (szczególnie <b>Above 4G Decoding = Enabled</b>!).</p>
+<p style="margin:0;"><span class="cb" data-id="m16">☐</span> &nbsp;<b>4. Dołożenie pozostałych 3 kart:</b> po zapisaniu BIOS-u wyłącz komputer z prądu, dopnij pozostałe 3 karty w slotach <b>3, 5, 7</b>, wtyczkę HDMI Dummy Plug oraz 5 wentylatorów Arctic i włącz ponownie.</p>
+</td></tr></table>
+
+</div>
+
+<!-- ======================================================= -->
+<!-- 04 BIOS -->
+<!-- ======================================================= -->
+<div class="pane" id="bios">
+
+<table class="blk"><tr><td class="hd hy">04 // USTAWIENIA BIOS (OBOWIĄZKOWE PRZED PODPIĘCIEM 4 KART!)</td></tr><tr><td class="bd by">
+<p>Przy starcie naciskaj <b>DEL</b>, a po wejściu do BIOS-u naciśnij <b>F7 (Advanced Mode)</b>. Ustaw po kolei:</p>
+<table class="grid">
+<tr><th>Krok</th><th>Gdzie w menu BIOS</th><th>Wartość</th><th>Dlaczego to kluczowe</th></tr>
+<tr><td><span class="cb" data-id="b1">☐</span></td><td>Klawisz <b>F5</b> → Load Optimized Defaults</td><td><b>Yes / OK</b></td><td>Kasuje stare ustawienia po poprzednim właścicielu płyty</td></tr>
+<tr><td><span class="cb" data-id="b2">☐</span></td><td>Advanced → PCI Subsystem Settings → <b>Above 4G Decoding</b></td><td><span class="g"><b>Enabled</b></span></td><td><b>KRYTYCZNE:</b> bez tego płyta nie zaadresuje 32 GB VRAM i z 4 kartami nie przejdzie startu!</td></tr>
+<tr><td><span class="cb" data-id="b3">☐</span></td><td>Advanced → CPU Configuration → <b>Hyper-Threading</b></td><td><span class="y"><b>Disabled</b></span></td><td>Zostawia 14 czystych rdzeni fizycznych AVX2 (wyższa prędkość modelu 177B)</td></tr>
+<tr><td><span class="cb" data-id="b4">☐</span></td><td>Ai Tweaker → <b>Ai Overclock Tuner</b></td><td><b>Auto</b> (bez XMP)</td><td>Pamięć serwerowa ECC RDIMM pracuje stabilnie na profilu JEDEC 2400T</td></tr>
+<tr><td><span class="cb" data-id="b5">☐</span></td><td>Advanced → APM Configuration → <b>Restore AC Power Loss</b></td><td><span class="g"><b>Power On</b></span></td><td>Po zaniku prądu we Frampolu serwer sam automatycznie wstanie</td></tr>
+<tr><td><span class="cb" data-id="b6">☐</span></td><td>Boot → CSM (Compatibility Support Module) → <b>Launch CSM</b></td><td><span class="r"><b>Disabled</b></span></td><td>Czysty tryb UEFI wymagany przy 4 kartach RTX 3070</td></tr>
+</table>
+<p style="margin:0;">Na koniec naciśnij <b>F10 (Save &amp; Reset)</b> → <b>Yes</b>.</p>
+</td></tr></table>
+
+<table class="blk"><tr><td class="hd hc">🔄 // JAK ZAKTUALIZOWAĆ BIOS BEZ PROCESORA (TYLKO JEŚLI PŁYTA MA BIOS PONIŻEJ 3002)</td></tr><tr><td class="bd bc">
+<p>Płyta ASUS X99-E WS potrafi sama wgrać nowy BIOS z pendrive’a (tzw. <b>USB BIOS Flashback</b>) — wystarczy podpiąć do niej sam zasilacz (24-pin + 8-pin CPU), nawet bez wkładania procesora i RAM-u:</p>
+<p>1. Pobierz najnowszy BIOS ze strony ASUS wsparcia dla Twojej dokładnej wersji płyty (<b>X99-E WS</b> lub <b>X99-E WS/USB 3.1</b>).</p>
+<p>2. Rozpakuj plik i zmień jego nazwę na: <span class="mono y">X99EWS.CAP</span> (dla zwykłej X99-E WS) lub <span class="mono y">X99EWU31.CAP</span> (dla wersji USB 3.1).</p>
+<p>3. Skopiuj ten plik na pendrive sformatowany jako <b>FAT32</b>.</p>
+<p>4. Przy wyłączonej płycie (zasilacz włączony na „I”) włóż pendrive do dedykowanego portu <b>BIOS Flashback USB</b> z tyłu płyty i przytrzymaj przycisk <b>BIOSirt / Flashback</b> przez 3 sekundy, aż dioda zacznie migać.</p>
+<p style="margin:0;">5. Dioda miga przez ok. 2 minuty. <b>Kiedy całkowicie zgaśnie — aktualizacja jest skończona!</b></p>
+</td></tr></table>
+
+</div>
+
+<!-- ======================================================= -->
+<!-- 05 SYSTEM & ZDALNY DOSTĘP -->
+<!-- ======================================================= -->
+<div class="pane" id="system">
+
+<table class="blk"><tr><td class="hd hc">05 // INSTALACJA UBUNTU SERVER 24.04 LTS (ZROBISZ W 20 MINUT)</td></tr><tr><td class="bd bc">
+<p class="y">Ty wykonujesz punkty 1–4 przy monitorze. Od punktu 5 wszystko przejmuję zdalnie z Rzeszowa!</p>
+<p><span class="cb" data-id="s1">☐</span> &nbsp;<b>1. Pobierz obraz Ubuntu Server 24.04 LTS:</b> <a href="https://ubuntu.com/download/server" target="_blank" rel="noopener">ubuntu.com/download/server</a></p>
+<p><span class="cb" data-id="s2">☐</span> &nbsp;<b>2. Nagraj na pendrive 32 GB</b> programem <a href="https://etcher.balena.io/" target="_blank" rel="noopener">balenaEtcher</a> (Select image → Select target → Flash).</p>
+<p><span class="cb" data-id="s3">☐</span> &nbsp;<b>3. Włóż pendrive do serwera, włącz (F8 przy starcie → wybierz UEFI Pendrive)</b> i przeklikaj instalator:</p>
+<table class="grid">
+<tr><th>Ekran instalatora</th><th>Co wybrać</th></tr>
+<tr><td>Language</td><td><b>English</b></td></tr>
+<tr><td>Network connections</td><td>Zostaw automatyczne DHCP (kabel LAN musi być wpięty w router i płytę)</td></tr>
+<tr><td>Guided storage configuration</td><td><b>Use an entire disk</b> → wybierz nasz dysk <b>SSD 1 TB</b> (odznacz „Set up this disk as an LVM group”, żeby miał całe 1 TB od razu)</td></tr>
+<tr><td>Profile setup</td><td>Wpisz nazwę użytkownika (np. <span class="mono">ai</span>) oraz hasło (zapisz je sobie w notatniku offline)</td></tr>
+<tr><td><b>SSH Setup</b></td><td><span class="g"><b>[X] Install OpenSSH server — KONIECZNIE ZAZNACZ SPACJĄ!</b></span></td></tr>
+<tr><td>Featured Server Snaps</td><td><b>Nic nie zaznaczaj</b> (wszystko zainstaluje nasz automatyczny skrypt)</td></tr>
+</table>
+<p><span class="cb" data-id="s4">☐</span> &nbsp;<b>4. Po napisie „Reboot Now”:</b> wyjmij pendrive, wciśnij Enter, zaloguj się i wpisz tę jedną linijkę, żeby podłączył się do naszej prywatnej sieci Tailscale:</p>
+<table class="cmd"><tr><td>curl -fsSL https://tailscale.com/install.sh | sh &amp;&amp; sudo tailscale up --ssh</td></tr></table>
+<p style="margin:0;"><span class="cb" data-id="s5">☐</span> &nbsp;<b>5. Wyślij mi link z ekranu (zaczyna się od <span class="mono">https://login.tailscale.com/a/...</span>)</b> — klikam go w Rzeszowie i od tej sekundy mam pełny dostęp SSH bez ruszania Waszego routera!</p>
+</td></tr></table>
+
+<table class="blk"><tr><td class="hd hx">⌘ // ŚCIĄGAWKA AUTOMATYCZNEGO WDROŻENIA SERWERA 177B (PO WEJŚCIU PRZEZ SSH)</td></tr><tr><td class="bd bx">
+<div class="mh" style="margin-bottom:4pt;"><span>Komendy wykonywane na serwerze po zalogowaniu SSH:</span> <button class="cp ui">KOPIUJ KOMENDY</button></div>
+<table class="cmd"><tr><td><span class="mt" style="color:var(--g);">git clone https://github.com/zander12344/krzemowy_leb.git &amp;&amp; cd krzemowy_leb
+cp config/strata.env.example config/strata.env
+chmod +x setup_node_177b.sh scripts/*.sh
+sudo ./setup_node_177b.sh        # GRUB, limity memlock, sterowniki NVIDIA 550, CUDA, kompilacja ik_llama.cpp
+sudo reboot
+
+cd ~/krzemowy_leb &amp;&amp; source .venv/bin/activate
+sudo ./scripts/tune_gpus.sh      # 4x RTX 3070: limit 150W, zegary 210-1530 MHz, wentylatory 68%
+python scripts/check_gpus.py     # test pasma PCIe Gen3 x16, P2P, błędów AER i 32 GB VRAM
+./scripts/download_model.sh      # pobranie wag Qwen 177B MoE IQ3_S (~85,5 GB)
+sudo ./setup_node_177b.sh        # ponowne uruchomienie: buduje pack po pobraniu modelu
+sudo systemctl enable --now llama-server.service
+python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok/s)</span></td></tr></table>
+</td></tr></table>
+
+</div>
+
+<!-- ======================================================= -->
+<!-- 06 Q-CODE & PROBLEMY -->
+<!-- ======================================================= -->
+<div class="pane" id="problemy">
+
+<table class="blk"><tr><td class="hd hy">🔢 // INTERAKTYWNY DEKODER WYŚWIETLACZA Q-CODE (PŁYTA ASUS X99-E WS)</td></tr><tr><td class="bd by">
+<p>Na płycie głównej świecą się 2 cyfry/litery (wyświetlacz <b>Q-Code</b>). Kliknij kod, który widzisz, albo wpisz go poniżej, a powiem Ci od razu co oznacza:</p>
+
+<div class="q-btns ui">
+  <button class="q-btn on" data-q="A0">A0 / AA (Wszystko OK)</button>
+  <button class="q-btn" data-q="53">53 / b0 / b7 / AF (RAM)</button>
+  <button class="q-btn" data-q="d6">d6 / 97 (Brak obrazu / GPU)</button>
+  <button class="q-btn" data-q="00">00 (CPU / Zasilanie 8-pin)</button>
+  <button class="q-btn" data-q="A2">A2 / 99 / AE (Dysk / Boot)</button>
+  <button class="q-btn" data-q="bd">bd / bf (Trening RAM — czekaj!)</button>
+</div>
+
+<div style="background:#05050A;border:1.5pt solid var(--c);padding:10pt;margin-top:6pt;" id="qBox">
+  <p class="ox g" style="font-size:12pt;margin:0 0 4pt 0;" id="qTitle">Kod A0 lub AA — Wszystko działa wzorowo!</p>
+  <p style="margin:0;" id="qDesc">Płyta przeszła wszystkie testy startowe i przekazała sterowanie do systemu operacyjnego Ubuntu. Tak ma świecić podczas normalnej pracy.</p>
+</div>
+</td></tr></table>
+
+<table class="blk"><tr><td class="hd hm">06 // TABELA ROZWIĄZYWANIA PROBLEMÓW</td></tr><tr><td class="bd bm">
+<table class="grid">
+<tr><th>Objaw</th><th>Co sprawdzić krok po kroku</th></tr>
+<tr><td><b>Nic się nie dzieje po wciśnięciu przycisku</b></td><td>1) Przełącznik z tyłu zasilacza na „I”.<br>2) Szeroka wtyczka 24-pin i 2× 8-pin CPU dociśnięte.<br>3) Wciśnij podświetlany przycisk <b>START</b> bezpośrednio na płycie głównej.</td></tr>
+<tr><td><b>Wentylatory kręcą, brak obrazu na monitorze</b></td><td>1) Przy pierwszym starcie poczekaj pełne 2 minuty (płyta trenuje 128 GB RAM).<br>2) Upewnij się, że kabel HDMI z monitora jest wpięty w kartę w slocie nr 1.<br>3) Sprawdź wyżej dwucyfrowy kod <b>Q-Code</b> z wyświetlacza na płycie.</td></tr>
+<tr><td><b>Q-Code stoi na 53, b0, b7 lub AF</b></td><td>Kość RAM niedociśnięta. Wyłącz zasilacz, dociśnij mocno wszystkie 4 kości w szarych slotach <b>A1, B1, C1, D1</b>, aż zatrzaski klikną, i wciśnij przycisk <b>MemOK!</b> na płycie.</td></tr>
+<tr><td><b>System Ubuntu widzi mniej niż 4 karty GPU</b></td><td>1) W BIOS-ie musi być włączone <b>Above 4G Decoding = Enabled</b> oraz <b>Launch CSM = Disabled</b>.<br>2) Sprawdź, czy taśma risera jest równo wciśnięta w slot na płycie i czy karta ma wpięte obie wtyczki 8-pin.</td></tr>
+<tr><td><b>Komputer gaśnie pod obciążeniem</b></td><td>Zadziałało zabezpieczenie zasilacza lub luźna wtyczka. Sprawdź, czy uruchomiono <span class="mono">sudo ./scripts/tune_gpus.sh</span> (ustawia bezpieczny limit 150W na kartę).</td></tr>
+<tr><td><b>Coś pachnie spalenizną lub iskrzy</b></td><td><span class="r">NATYCHMIAST wyciągnij kabel zasilający z gniazdka!</span> Nie włączaj ponownie, zrób zdjęcie złączy i zadzwoń do mnie.</td></tr>
+</table>
+</td></tr></table>
+
+<table class="blk"><tr><td class="hd hc">⚡ // 4 ZASADY BEZPIECZEŃSTWA SPRZĘTU</td></tr><tr><td class="bd bc">
+<p><span class="r">✖ 1.</span> Nigdy nie wpinaj ani nie wyjmuj riserów, kart i RAM-u, gdy zasilacz jest pod prądem.</p>
+<p><span class="r">✖ 2.</span> Nigdy nie mieszaj kabli modularnych od różnych zasilaczy.</p>
+<p><span class="r">✖ 3.</span> Przejściówka <b>2× Molex → 6-pin</b> idzie wyłącznie do 6-pinowego gniazda <span class="mono">EZ_PLUG</span> przy slotach PCIe — nigdy do 8-pinowych gniazd procesora <span class="mono">EATX12V_1/2</span>.</p>
+<p style="margin:0;"><span class="r">✖ 4.</span> Płyta główna musi stać na metalowych dystansach wkręconych dokładnie w miejsca otworów na śrubki.</p>
+</td></tr></table>
+
+</div>
+
+<!-- ======================================================= -->
+<!-- 07 GOTOWE WIADOMOŚCI NA SIGNAL -->
+<!-- ======================================================= -->
+<div class="pane" id="signal">
+
+<table class="blk"><tr><td class="hd hc">07 // GOTOWE WIADOMOŚCI PODSUMOWUJĄCE NA SIGNAL (1-KLIK KOPIUJ)</td></tr><tr><td class="bd bc">
+<p>Jeśli chcesz przesłać komuś skrót zakupów na komunikatorze Signal/WhatsApp, kliknij <b>KOPIUJ</b> przy wybranej części:</p>
+
+<table class="msg"><tr><td>
+<div class="mh"><span>CZĘŚĆ 1/2 — GŁÓWNE CZĘŚCI (PŁYTA, PROCESOR, RAM, DYSK, CHŁODZENIE, ZASILACZ)</span> <button class="cp ui">KOPIUJ CZĘŚĆ 1</button></div>
+<p class="mt">Rozpisałem kompletną listę części do naszego serwera AI (Krzemowy Łeb 2077). 4× RTX 3070, stelaż i przycisk zostają z koparki.
+Koszt całości: 4 540 – 4 740 zł (lub 4 140 – 4 340 zł, jeśli nasz zasilacz z koparki wystarczy).
+
+1) PŁYTA GŁÓWNA — ASUS X99-E WS/USB 3.1 (~1 340 zł z VAT, eBay):
+https://www.ebay.com/itm/116016463694
+Zapas: https://www.ebay.com/itm/365929450877
+
+2) PROCESOR — Intel Xeon E5-2690 v4 SR2N2 (149 zł, Allegro):
+https://allegro.pl/oferta/procesor-intel-xeon-e5-2690v4-sr2n2-14-rdzeni-28-watkow-2-60-ghz-cpu-005-18944729029
+
+3) PAMIĘĆ RAM — 4× 32 GB = 128 GB SK Hynix DDR4-2400 ECC RDIMM 2Rx4 (1 800 zł, targujemy do 1 600 zł, OLX Rzeszów):
+https://www.olx.pl/d/oferta/4-sztuki-sk-hynix-32gb-ddr4-2400-ecc-rdimm-2rx4-ram-serwerowy-CID99-ID1c5THI.html
+
+4) DYSK SSD 1 TB 2,5" SATA z DRAM — Samsung 870 EVO 1TB (300 zł, OLX):
+https://www.olx.pl/d/oferta/dysk-ssd-samsung-870-evo-1tb-sata-2-5-CID99-ID1cXYBJ.html
+Zapas z gwarancją (SanDisk Ultra 3D 1TB, 429 zł):
+https://www.olx.pl/d/oferta/dysk-ssd-1tb-2-5-sata-sandisk-ultra-3d-sdssdh31000g-dram-stan-95-gwarancja-faktura-vat-marza-CID99-ID1cRAY0.html
+
+5) CHŁODZENIE + PASTA (150 zł, nowe):
+- Endorfy Fera 5 Dual Fan (129 zł): https://www.morele.net/chlodzenie-cpu-endorfy-fera-5-dual-fan-ey3a006-11788461/
+- Pasta Arctic MX-4 8g (21,25 zł): https://allegro.pl/oferta/arctic-mx-4-pasta-termoprzewodzaca-8-5-w-mk-8-g-actcp00008b-18519062422
+
+6) ZASILACZ (tylko jeśli nasz z koparki nie ma 1000W i 8 wtyczek PCIe) — Corsair HX1200 Platinum (399 zł):
+https://allegro.pl/oferta/zasilacz-corsair-hx1200-1200-w-80-plus-platinum-19032704470</p>
+</td></tr></table>
+
+<table class="msg"><tr><td>
+<div class="mh"><span>CZĘŚĆ 2/2 — RISERY, NAWIEW STELAŻA I PAKIET MONTAŻOWY</span> <button class="cp ui">KOPIUJ CZĘŚĆ 2</button></div>
+<p class="mt">7) RISERY TAŚMOWE PCIe x16 30 cm — weź 4 sztuki (4 × 69 zł = 276 zł):
+https://allegro.pl/oferta/tasma-riser-pci-e-pcie-3-0-express-x16-x16-30cm-12432322718
+
+8) NAWIEW NA KARTY I HEADLESS (155 zł, nowe):
+- Wentylatory 5× Arctic P12 Pro PWM PST (109,99 zł): https://allegro.pl/oferta/wentylator-arctic-p12-pro-pwm-pst-black-120mm-zestaw-5szt-acfan00307a-17977465818
+- Hub Arctic na 10 wentylatorów (29,99 zł): https://allegro.pl/oferta/arctic-case-fan-hub-10-x-pwm-4-pin-acfan00175a-na-10-wentylatorow-17372158716
+- HDMI Dummy Plug 4K (14,99 zł): https://allegro.pl/oferta/emulator-monitora-adapter-hdmi-vga-4k-dummy-plug-14113599868
+
+9) DROBIAZGI PRZY MONTAŻU (166 zł, nowe):
+- Pendrive SanDisk 32 GB (47,89 zł): https://allegro.pl/oferta/sandisk-pendrive-ultra-flair-32gb-srebrny-18952645229
+- Kabel SATA 50 cm ×2 (5,32 zł): https://allegro.pl/oferta/kabel-gembird-cc-satam-data-13045036934
+- Baterie CR2032 5 szt. (11,99 zł): https://allegro.pl/oferta/bateria-litowa-duracell-cr2032-3v-do-pilota-zegarka-guzikowa-5szt-18876839749
+- Kabel LAN Cat6 10 m (19,90 zł): https://allegro.pl/oferta/kabel-ethernet-sieciowy-internetowy-patchcord-skretka-lan-rj45-utp-cat6-10m-6855553650
+- Adapter 2× Molex → PCIe 6-pin do gniazda EZ_PLUG (4,35 zł): https://allegro.pl/oferta/adapter-molex-pci-express-akyga-ak-ca-13-0-15-m-17852260888
+- Alkohol IPA 99,9% 1L (19,99 zł): https://allegro.pl/oferta/alkohol-izopropylowy-izopropanol-odtluszczacz-ipa-99-9-1l-14274597288
+- Sprężone powietrze 400 ml (9,39 zł): https://allegro.pl/oferta/sprezone-powietrze-400-ml-17423349480
+- Opaska antystatyczna ESD (10,90 zł): https://allegro.pl/oferta/opaska-esd-safe-na-reke-antystatyczna-aele-004-6056599042
+- Taśma rzepowa do kabli 3 m (8,73 zł): https://allegro.pl/oferta/organizer-kabli-baseus-300cm-przewodow-rzep-opaska-czarna-3-m-tasma-rzepowa-18298905862
+- Watomierz do gniazdka (27,53 zł): https://allegro.pl/oferta/miernik-energii-greenblue-watomierz-16a-max-3680w-gb620-e-18380000131</p>
+</td></tr></table>
+
+</td></tr></table>
+
+</div>
+
+<!-- ================= STOPKA ================= -->
+<table class="blk"><tr><td style="background:#05050A;border:1pt solid #FF2BD6;padding:10pt;">
+<p class="mono m" style="font-size:10pt;text-align:center;margin:0;">// KRZEMOWY ŁEB 2077 :: Wszelkie kliknięcia i notatki zapisują się automatycznie :: Coś niejasne → pisz na Signal</p>
+</td></tr></table>
+
+</div>
+<div class="toast" id="toast">ZAPISANO ✔</div>
+
+<script>
+(function(){
+  var LS_KEY = 'krzemowy_leb_state_v3';
+  var WHO_KEY = 'krzemowy_leb_who';
+
+  function defaultState(){
+    return {
+      version: 2,
+      updatedAt: 0,
+      updatedBy: 'lokalnie',
+      checks: {},
+      statuses: {},
+      notes: {},
+      rigInfo: { psuModel:'', psuPcieCount:'', gpuModels:'', ssdModel:'', riserDistanceCm:'' },
+      calc: { psuFromRig:false, ssdFromRig:false, sellOldRig:false, ramPrice:1800, optApc:false, optWifi:false }
+    };
+  }
+
+  var state = defaultState();
+  try {
+    var saved = JSON.parse(localStorage.getItem(LS_KEY) || 'null');
+    if (saved && typeof saved === 'object') state = Object.assign(defaultState(), saved);
+  } catch (e) {}
+
+  var whoSel = document.getElementById('whoSel');
+  try {
+    var savedWho = localStorage.getItem(WHO_KEY);
+    if (savedWho) whoSel.value = savedWho;
+  } catch (e) {}
+  whoSel.addEventListener('change', function(){
+    try { localStorage.setItem(WHO_KEY, whoSel.value); } catch (e) {}
+  });
+
+  function saveLocal(){
+    try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch (e) {}
+  }
+
+  function showToast(msg){
+    var t = document.getElementById('toast');
+    t.textContent = msg || 'SKOPIOWANO ✔';
+    t.style.display = 'block';
+    clearTimeout(showToast._tm);
+    showToast._tm = setTimeout(function(){ t.style.display = 'none'; }, 1500);
+  }
+
+  var SYNC_TOPIC = 'krzemowy_leb_2077_sync_9f4b2e8a';
+  var SYNC_URL = 'https://ntfy.sh/' + SYNC_TOPIC;
+  var pushTimer = null;
+
+  function pushToServer(isReset){
+    state.updatedAt = Date.now();
+    state.updatedBy = whoSel.value || 'użytkownik';
+    saveLocal();
+    render();
+    clearTimeout(pushTimer);
+    pushTimer = setTimeout(function(){
+      var payloadStr = JSON.stringify(state);
+      // 1) Synchronizacja chmurowa Live Sync (ntfy.sh SSE + cache) — działa na Render Static, GitHub Pages i lokalnie
+      fetch(SYNC_URL, {
+        method: 'POST',
+        body: payloadStr
+      }).then(function(r){
+        if (r.ok) updateSyncBadge(true);
+      }).catch(function(){});
+
+      // 2) Lokalny endpoint /api/state (jeśli uruchomiono przez `node server.js`)
+      if (location.protocol !== 'file:') {
+        var body = isReset ? { reset: true, updatedBy: state.updatedBy } : state;
+        fetch('/api/state', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        }).catch(function(){});
+      }
+    }, 150);
+  }
+
+  function updateSyncBadge(online, count){
+    var dot = document.getElementById('syncDot');
+    var txt = document.getElementById('syncTxt');
+    var upd = document.getElementById('lastUpd');
+    if (online) {
+      dot.className = 'sync-dot live';
+      txt.textContent = 'LIVE SYNC AKTYWNY (Rzeszów ↔ Frampol)' + (count ? ' • ' + count + ' online' : '');
+    } else {
+      dot.className = 'sync-dot off';
+      txt.textContent = 'ZAPIS LOKALNY W PRZEGLĄDARCE';
+    }
+    if (state.updatedAt > 0) {
+      var d = new Date(state.updatedAt);
+      var hh = String(d.getHours()).padStart(2,'0');
+      var mm = String(d.getMinutes()).padStart(2,'0');
+      upd.textContent = '• ostatnia zmiana: ' + (state.updatedBy || '') + ' (' + hh + ':' + mm + ')';
+    } else {
+      upd.textContent = '';
+    }
+  }
+
+  function applyIncoming(srv){
+    if (!srv || typeof srv !== 'object' || !srv.checks) return;
+    if ((srv.updatedAt || 0) <= (state.updatedAt || 0)) return;
+    state = Object.assign(defaultState(), srv);
+    saveLocal();
+    render();
+    updateSyncBadge(true);
+  }
+
+  function connectLiveSync(){
+    // Pobierz ostatni zapisany stan z chmury (ostatnie 12h w buforze ntfy)
+    fetch(SYNC_URL + '/json?poll=1&since=12h').then(function(r){ return r.text(); }).then(function(txt){
+      updateSyncBadge(true);
+      var lines = txt.trim().split('\n');
+      for (var i = lines.length - 1; i >= 0; i--) {
+        try {
+          var ev = JSON.parse(lines[i]);
+          if (ev && ev.event === 'message' && ev.message) {
+            var parsed = JSON.parse(ev.message);
+            if (parsed && parsed.checks) { applyIncoming(parsed); break; }
+          }
+        } catch (e) {}
+      }
+    }).catch(function(){});
+
+    // Strumień SSE na żywo
+    if (window.EventSource) {
+      try {
+        var es = new EventSource(SYNC_URL + '/sse');
+        es.onopen = function(){ updateSyncBadge(true); };
+        es.onmessage = function(ev){
+          try {
+            var wrapper = JSON.parse(ev.data);
+            var msg = wrapper && wrapper.message ? JSON.parse(wrapper.message) : wrapper;
+            applyIncoming(msg);
+          } catch (e) {}
+        };
+        es.onerror = function(){ updateSyncBadge(false); };
+      } catch (e) {}
+    }
+  }
+
+  function render(){
+    var c = state.calc || defaultState().calc;
+    var ramPrice = Number(c.ramPrice) || 1800;
+
+    // Ustawienie ceny RAM na przycisku/checkboxie
+    var ramCb = document.getElementById('ramCb');
+    if (ramCb) ramCb.dataset.p = String(ramPrice);
+
+    document.getElementById('cPsu').checked = !!c.psuFromRig;
+    document.getElementById('cSsd').checked = !!c.ssdFromRig;
+    document.getElementById('cApc').checked = !!c.optApc;
+    document.getElementById('cWifi').checked = !!c.optWifi;
+
+    document.querySelectorAll('.ram-btn').forEach(function(b){
+      b.classList.toggle('on', Number(b.dataset.ram) === ramPrice);
+    });
+
+    // Odznaczenie/ukrycie kosztu zasilacza lub SSD jeśli zostają z koparki
+    var psuSkip = document.getElementById('psuSkipBadge');
+    if (psuSkip) psuSkip.textContent = c.psuFromRig ? '✔ MAMY SWÓJ Z KOPARKI (0 zł)' : '(albo nie trzeba, jeśli nasz z koparki wystarczy)';
+    var ssdSkip = document.getElementById('ssdSkipBadge');
+    if (ssdSkip) ssdSkip.textContent = c.ssdFromRig ? '✔ MAMY SWÓJ Z KOPARKI (0 zł)' : '';
+
+    // Checkboxy
+    document.querySelectorAll('.cb').forEach(function(el){
+      var id = el.dataset.id;
+      var on = !!state.checks[id];
+      el.textContent = on ? '☑' : '☐';
+      el.classList.toggle('on', on);
+      if (el.parentElement) el.parentElement.classList.toggle('done', on && !el.dataset.p);
+    });
+
+    // Statusy zakupowe
+    document.querySelectorAll('.st-bar').forEach(function(bar){
+      var item = bar.dataset.item;
+      var cur = state.statuses[item] || (state.checks[item] ? 'got' : 'todo');
+      bar.querySelectorAll('.st-btn').forEach(function(btn){
+        btn.classList.toggle('on', btn.dataset.st === cur);
+      });
+    });
+
+    // Notatki (nie nadpisuj pola, w którym użytkownik aktualnie pisze)
+    document.querySelectorAll('.note-in').forEach(function(inp){
+      var k = inp.dataset.note;
+      if (document.activeElement !== inp) {
+        inp.value = (state.notes && state.notes[k]) || '';
+      }
+    });
+
+    // Dane z koparki
+    document.querySelectorAll('.rig-in').forEach(function(inp){
+      var k = inp.dataset.rig;
+      if (document.activeElement !== inp) {
+        inp.value = (state.rigInfo && state.rigInfo[k]) || '';
+      }
+    });
+
+    // Obliczenia budżetowe
+    var baseTotal = 1340 + 149 + ramPrice + (c.ssdFromRig ? 0 : 300) + 150 + (c.psuFromRig ? 0 : 399) + 276 + 155 + 166;
+    if (c.optApc) baseTotal += 229;
+    if (c.optWifi) baseTotal += 125;
+
+    var items = document.querySelectorAll('#zakupy .cb[data-p]');
+    var totalCount = 0, boughtCount = 0, spent = 0;
+    items.forEach(function(el){
+      var id = el.dataset.id;
+      var isOpt = el.dataset.opt === '1';
+      if (id === 'psu' && c.psuFromRig) return;
+      if (id === 'ssd' && c.ssdFromRig) return;
+      if (id === 'apc' && !c.optApc && !state.checks[id]) return;
+      if (id === 'wifi' && !c.optWifi && !state.checks[id]) return;
+      if (!isOpt || (id === 'apc' && c.optApc) || (id === 'wifi' && c.optWifi) || state.checks[id]) {
+        totalCount++;
+        if (state.checks[id]) {
+          boughtCount++;
+          spent += Number(el.dataset.p);
+        }
+      }
+    });
+
+    var left = Math.max(0, baseTotal - spent);
+    var netAfterSell = Math.max(0, baseTotal - 350);
+
+    document.getElementById('kpiTotal').textContent = baseTotal.toLocaleString('pl-PL') + ' zł';
+    document.getElementById('kpiSub').textContent =
+      (c.psuFromRig ? 'bez zasilacza' : 'z zasilaczem') + ' • RAM ' + ramPrice + ' zł';
+    document.getElementById('kpiSpent').textContent = spent.toLocaleString('pl-PL') + ' zł';
+    document.getElementById('kpiCount').textContent = boughtCount + ' z ' + totalCount + ' pozycji kupione';
+    document.getElementById('kpiLeft').textContent = left.toLocaleString('pl-PL') + ' zł';
+    document.getElementById('kpiNet').textContent = netAfterSell.toLocaleString('pl-PL') + ' zł';
+
+    document.getElementById('sumRamCell').textContent = ramPrice.toLocaleString('pl-PL') + ' zł';
+    document.getElementById('sumSsdCell').textContent = c.ssdFromRig ? '0 zł (z koparki)' : '300 zł';
+    document.getElementById('sumPsuCell').textContent = c.psuFromRig ? '0 zł (z koparki)' : '399 zł';
+    document.getElementById('sumTotalCell').textContent = baseTotal.toLocaleString('pl-PL') + ' zł';
+
+    document.getElementById('progTxt').textContent =
+      'ZAKUPY: ' + boughtCount + ' / ' + totalCount + '  ::  KUPIONE ZA ' + spent.toLocaleString('pl-PL') + ' zł  ::  ZOSTAŁO ' + left.toLocaleString('pl-PL') + ' zł';
+    document.getElementById('progBar').style.width = (totalCount ? (100 * boughtCount / totalCount) : 0) + '%';
+  }
+
+  // Kliknięcia checkboxów i statusów
+  document.addEventListener('click', function(ev){
+    var t = ev.target;
+    if (t.classList.contains('cb')) {
+      var id = t.dataset.id;
+      state.checks[id] = !state.checks[id];
+      if (state.statuses[id] || id === 'mb' || id === 'cpu' || id === 'ram' || id === 'ssd' || id === 'psu' || id === 'riser') {
+        state.statuses[id] = state.checks[id] ? 'got' : 'todo';
+      }
+      pushToServer(false);
+    } else if (t.classList.contains('st-btn')) {
+      var bar = t.closest('.st-bar');
+      if (!bar) return;
+      var item = bar.dataset.item;
+      var st = t.dataset.st;
+      state.statuses[item] = st;
+      if (item === 'cool') {
+        state.checks['fera'] = (st === 'got');
+        state.checks['paste'] = (st === 'got');
+      } else {
+        state.checks[item] = (st === 'got');
+      }
+      pushToServer(false);
+    } else if (t.classList.contains('ram-btn')) {
+      state.calc.ramPrice = Number(t.dataset.ram) || 1800;
+      pushToServer(false);
+    } else if (t.dataset && t.dataset.go) {
+      ev.preventDefault();
+      switchTab(t.dataset.go);
+    }
+  });
+
+  // Przełączniki kalkulatora
+  ['cPsu','cSsd','cApc','cWifi'].forEach(function(cid){
+    var el = document.getElementById(cid);
+    if (!el) return;
+    el.addEventListener('change', function(){
+      state.calc.psuFromRig = document.getElementById('cPsu').checked;
+      state.calc.ssdFromRig = document.getElementById('cSsd').checked;
+      state.calc.optApc = document.getElementById('cApc').checked;
+      state.calc.optWifi = document.getElementById('cWifi').checked;
+      pushToServer(false);
+    });
+  });
+
+  // Wpisywanie notatek i danych z koparki
+  var inputTimer = null;
+  document.addEventListener('input', function(ev){
+    var t = ev.target;
+    if (t.classList.contains('note-in')) {
+      state.notes[t.dataset.note] = t.value;
+      clearTimeout(inputTimer);
+      inputTimer = setTimeout(function(){ pushToServer(false); }, 350);
+    } else if (t.classList.contains('rig-in')) {
+      state.rigInfo[t.dataset.rig] = t.value;
+      clearTimeout(inputTimer);
+      inputTimer = setTimeout(function(){ pushToServer(false); }, 350);
+    }
+  });
+
+  // Nawigacja zakładek
+  function switchTab(tabId){
+    document.querySelectorAll('.tabs button').forEach(function(x){
+      x.classList.toggle('act', x.dataset.t === tabId);
+    });
+    document.querySelectorAll('.pane').forEach(function(p){
+      p.classList.toggle('show', p.id === tabId);
+    });
+    window.scrollTo(0, 0);
+  }
+  document.querySelectorAll('.tabs button').forEach(function(b){
+    b.addEventListener('click', function(){ switchTab(b.dataset.t); });
+  });
+
+  // Interaktywna mapa płyty ASUS X99-E WS
+  var SPOTS = {
+    eatx: {
+      title: '⚡ 2× Gniazda 8-pin CPU (EATX12V_1 oraz EATX12V_2)',
+      body: '<p>Na samej górze płyty znajdują się <b>DWA 8-pinowe gniazda zasilania procesora</b> (<span class="mono">EATX12V_1</span> i <span class="mono">EATX12V_2</span>).</p><p><span class="g">✔ CO WPIĄĆ:</span> Podłącz <b>OBA gniazda</b> dwoma kablami 8-pin z zasilacza opisanymi jako <b>CPU / EPS</b>.</p><p style="margin:0;"><span class="r">✖ ZAKAZ:</span> Nigdy nie wpinaj w nie kabli od kart graficznych (PCIe 6+2) ani przejściówki z Molexa!</p>'
+    },
+    flash: {
+      title: '🔄 Port i przycisk USB BIOS Flashback (tył płyty)',
+      body: '<p>Pozwala zaktualizować BIOS płyty z pendrive’a <b>nawet bez włożonego procesora i pamięci RAM</b>.</p><p style="margin:0;">Jeśli sprzedawca z eBaya napisze, że płyta ma BIOS starszy niż <b>3002</b>, wkładamy tu pendrive z plikiem <span class="mono">X99EWS.CAP</span> / <span class="mono">X99EWU31.CAP</span> i przytrzymujemy przycisk Flashback przez 3 sekundy (instrukcja w zakładce 04 BIOS).</p>'
+    },
+    ram1: {
+      title: '🟩 4× Szare sloty RAM: A1, B1, C1, D1 (Quad-Channel)',
+      body: '<p>Płyta ma 8 slotów na pamięć RAM (4 po lewej i 4 po prawej stronie procesora).</p><p><span class="g">✔ CO WPIĄĆ:</span> Nasze 4 kości SK Hynix 32 GB (<span class="mono">2Rx4 PC4-2400T-R</span>) wkładamy w <b>4 szare sloty: A1, B1, C1 oraz D1</b> (zgodnie z instrukcją ASUS dla 4 modułów). To uruchamia pełną prędkość 4-kanałową (Quad-Channel).</p>'
+    },
+    ram2: {
+      title: '⬛ Czarne sloty RAM: A2, B2, C2, D2 (zostają puste)',
+      body: '<p>Przy 4 kościach po 32 GB (razem 128 GB — maksymalna pojemność wspierana przez płytę) czarne sloty zostawiamy puste.</p>'
+    },
+    cpu: {
+      title: '🧠 Gniazdo LGA 2011-3 (Procesor Xeon E5-2690 v4 + Fera 5)',
+      body: '<p>Gniazdo ma 2011 delikatnych złotych nóżek w środku — <b>nie dotykaj ich palcami</b>.</p><p>1) Otwórz dwie dźwignie.<br>2) Dopasuj złoty trójkąt w rogu procesora <span class="mono">SR2N2</span> do trójkąta na gnieździe.<br>3) Zamknij dźwignie, wkręć 4 kołki M4 w gwinty na rogach gniazda, nałóż kroplę pasty MX-4 i przykręć chłodzenie Endorfy Fera 5 (pamiętaj o zdjęciu folii ze spodu!).</p>'
+    },
+    atx24: {
+      title: '🔌 Zasilanie 24-pin + Wyświetlacz Q-Code + Przycisk MemOK!',
+      body: '<p>• <b>24-pin EATXPWR:</b> najszersza wtyczka z zasilacza.</p><p>• <b>Wyświetlacz Q-Code (2 cyfry LED):</b> pokazuje etap uruchamiania płyty. Jeśli płyta stanie na jakimś kodzie, wpisz go w zakładce <b>06 Q-CODE</b>.</p><p style="margin:0;">• <b>Przycisk MemOK!:</b> jeśli przy pierwszym starcie z nowym RAM-em płyta nie wyświetla obrazu, przytrzymaj ten przycisk przez 3 sekundy — płyta sama dobierze bezpieczne parametry pamięci.</p>'
+    },
+    ezplug: {
+      title: '⚠️ Gniazdo 6-pin EZ_PLUG (dodatkowe zasilanie slotów PCIe)',
+      body: '<p>To jest <b>6-pinowe gniazdo</b> na płycie głównej, które dostarcza dodatkowy prąd do slotów PCIe, gdy pracują w nich 4 karty graficzne.</p><p><span class="g">✔ CO WPIĄĆ:</span> Tutaj wpinamy naszą <b>przejściówkę 2× Molex → PCIe 6-pin</b> (bo wszystkie 8 fabrycznych wtyczek PCIe zasilacza idzie bezpośrednio do 4 kart RTX 3070).</p><p style="margin:0;"><span class="r">✖ UWAGA:</span> To jest gniazdo 6-pin przy slotach PCIe (<span class="mono">EZ_PLUG</span>). Nie pomyl go z 8-pinowymi gniazdami procesora (<span class="mono">EATX12V_1/2</span>) na górze płyty!</p>'
+    },
+    pcie: {
+      title: '🟦 Sloty PCIe x16 nr 1, 3, 5, 7 (tu wpinamy 4 karty RTX 3070)',
+      body: '<p>Licząc od procesora w dół, płyta ma 7 długich slotów PCIe x16.</p><p><span class="g">✔ CO WPIĄĆ:</span> Nasze 4 taśmy Riser PCIe x16 wpinamy <b>co drugi slot: w gniazda nr 1, 3, 5 oraz 7</b>. Dzięki układom PLX na tej płycie każda z 4 kart dostaje pełne pasmo x16!</p><p style="margin:0;">Na pierwszy testowy start podepnij tylko <b>1 kartę w slocie nr 1</b>.</p>'
+    },
+    pcie_free: {
+      title: '⬛ Sloty PCIe nr 2, 4, 6 (wolne)',
+      body: '<p>Zostają wolne między riserami. Jeśli kiedyś będziesz chciał dołożyć kartę Wi-Fi 6 PCIe (Intel AX210), wpinasz ją właśnie w jeden z tych wolnych slotów.</p>'
+    },
+    sata: {
+      title: '💾 Szary port SATA6G_1 + piny przycisku PWR_SW',
+      body: '<p>• <b>SATA6G_1 (szary port na dole z prawej):</b> tu wpinamy kabel danych z dysku SSD 1 TB (port należy do głównego chipsetu Intel X99 i nie zabiera ani jednej linii PCIe kartom graficznym).</p><p style="margin:0;">• <b>PWR_SW (prawy dolny róg):</b> tu wpinamy 2-pinowy kabelek przycisku włączania ze stelaża.</p>'
+    }
+  };
+
+  document.querySelectorAll('.mb-spot').forEach(function(el){
+    el.addEventListener('click', function(){
+      document.querySelectorAll('.mb-spot').forEach(function(x){ x.classList.remove('act'); });
+      el.classList.add('act');
+      var info = SPOTS[el.dataset.spot];
+      if (info) {
+        document.getElementById('mbTitle').innerHTML = info.title;
+        document.getElementById('mbBody').innerHTML = info.body;
+      }
+    });
+  });
+
+  // Dekoder Q-Code
+  var QCODES = {
+    'A0': { t: 'Kod A0 lub AA — Wszystko działa wzorowo!', d: 'Płyta przeszła test POST i przekazała sterowanie do systemu Ubuntu. Tak ma świecić podczas normalnej pracy.' },
+    '53': { t: 'Kod 53 / b0 / b7 / AF — Problem z pamięcią RAM', d: 'Płyta nie wykryła poprawnie kości RAM. Wyłącz zasilacz, dociśnij mocno wszystkie 4 kości w szarych slotach A1, B1, C1, D1 (aż klikną oba zatrzaski). Jeśli nadal stoi, zostaw na próbę 1 kość w slocie A1 i wciśnij przycisk MemOK! na płycie.' },
+    'd6': { t: 'Kod d6 lub 97 — Nie wykryto karty graficznej / monitora', d: '1) Sprawdź, czy taśma risera w slocie nr 1 jest wciśnięta do końca i równo.<br>2) Sprawdź, czy do karty RTX 3070 są wpięte OBIE wtyczki zasilania 8-pin (6+2).<br>3) Upewnij się, że monitor jest podłączony do karty w slocie nr 1 i włączony.' },
+    '00': { t: 'Kod 00 — Brak startu procesora / zasilania CPU', d: '1) Sprawdź, czy na górze płyty podłączone są OBA 8-pinowe kable zasilania procesora (EATX12V_1 i EATX12V_2).<br>2) Jeśli oba są wpięte, a nadal jest 00 — płyta może mieć stary BIOS (<3002) i wymaga szybkiej aktualizacji z pendrive’a przyciskiem USB BIOS Flashback (zakładka 04 BIOS).' },
+    'A2': { t: 'Kod A2 / 99 / AE — Oczekiwanie w BIOS-ie lub brak systemu na dysku', d: 'Płyta działa poprawnie i czeka na podjęcie akcji na ekranie (np. wciśnięcie F1/DEL po wymianie baterii CR2032 albo włożenie pendrive’a z instalatorem Ubuntu).' },
+    'bd': { t: 'Kod bd / bf / b1 — Trening pamięci DDR4 ECC (poczekaj!)', d: 'Przy pierwszym włączeniu z 128 GB serwerowego RAM-u płyta testuje wszystkie 4 kanały pamięci. Może to trwać od 60 do 120 sekund — NIE WYŁĄCZAJ zasilania, po chwili przeskoczy dalej!' }
+  };
+
+  document.querySelectorAll('.q-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.q-btn').forEach(function(x){ x.classList.remove('on'); });
+      btn.classList.add('on');
+      var q = QCODES[btn.dataset.q];
+      if (q) {
+        document.getElementById('qTitle').innerHTML = q.t;
+        document.getElementById('qDesc').innerHTML = q.d;
+      }
+    });
+  });
+
+  // Kopiowanie wiadomości i komend
+  function copyText(txt){
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(txt).then(function(){ showToast('SKOPIOWANO DO SCHOWKA ✔'); }, function(){ fallback(txt); });
+    } else { fallback(txt); }
+  }
+  function fallback(txt){
+    var ta = document.createElement('textarea'); ta.value = txt; document.body.appendChild(ta);
+    ta.select(); try { document.execCommand('copy'); showToast('SKOPIOWANO DO SCHOWKA ✔'); } catch (e) {} document.body.removeChild(ta);
+  }
+  document.querySelectorAll('.cp').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var cell = btn.closest('td') || btn.parentElement.parentElement;
+      var box = cell.querySelector('.mt');
+      if (box) copyText(box.innerText.trim());
+    });
+  });
+
+  // Tryb Google Docs / Drukuj i Reset
+  function docs(on){
+    document.body.classList.toggle('docs', on);
+    document.getElementById('docsHint').style.display = on ? 'block' : 'none';
+    window.scrollTo(0, 0);
+  }
+  document.getElementById('docsBtn').addEventListener('click', function(){ docs(true); });
+  document.getElementById('docsOff').addEventListener('click', function(e){ e.preventDefault(); docs(false); });
+  document.getElementById('resetBtn').addEventListener('click', function(){
+    if (confirm('Wyczyścić wszystkie odhaczenia dla Was obu?')) {
+      state.checks = {};
+      state.statuses = {};
+      pushToServer(false);
+    }
+  });
+
+  render();
+  connectLiveSync();
+})();
+</script>
+</body>
+</html>
