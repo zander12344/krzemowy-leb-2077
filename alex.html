@@ -79,7 +79,7 @@
   td.hd {
     padding: 7pt 10pt; font-family: 'Oxanium', sans-serif; font-size: 12.5pt;
     font-weight: bold; color: #05050A; letter-spacing: .4pt;
-    display: flex; align-items: center; gap: 8px;
+    vertical-align: middle;
   }
   td.bd { background: var(--panel); padding: 11pt; }
   .hc { background: var(--c); border: 1pt solid var(--c); } .bc { border: 1pt solid var(--c); }
@@ -140,7 +140,7 @@
     background: rgba(18, 18, 31, 0.85); color: var(--txt); border: 1pt solid var(--border);
     padding: 4pt 8pt; cursor: pointer; border-radius: 2pt; transition: all .15s;
   }
-  .tool:hover { background: var(--panel-hover); border-color: var(--c); color: var(--c); }
+  .tool:hover { background: rgba(0, 240, 255, 0.15); border-color: var(--c); color: var(--c); }
 
   .prog {
     height: 9pt; background: rgba(5, 5, 10, 0.8); border: 1pt solid var(--g);
@@ -206,6 +206,7 @@
   }
   .item-card.got { border-left-color: var(--g); opacity: .88; }
   .item-card.ord { border-left-color: var(--y); }
+  table.blk.from-rig { opacity: .75; border-left: 3.5pt solid var(--g); }
   .item-card:hover {
     border-color: var(--border-glow);
     box-shadow: 0 10px 35px rgba(0,0,0,0.7), 0 0 20px rgba(0,240,255,0.15);
@@ -240,6 +241,7 @@
 
   .pane { display: none; }
   .pane.show { display: block; animation: fadeInPane .2s ease-out; }
+  @keyframes fadeInPane { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
   .toast {
     display: none; position: fixed; bottom: 16pt; right: 16pt;
@@ -545,6 +547,10 @@
     <span class="mono g">− 429 zł</span>
   </div>
   <div class="calc-row">
+    <label><input type="checkbox" id="cSellRig"> <b>Sprzedajemy starą płytę i procesor z koparki</b> (odzysk po złożeniu nowego serwera)</label>
+    <span class="mono m" id="sellRigBadge">− 350 zł</span>
+  </div>
+  <div class="calc-row">
     <span><b>Cena za 128 GB RAM na OLX</b> (zależnie od tego, ile utargujemy u p. Grzegorza):</span>
     <div>
       <button class="ram-btn" data-ram="1600">1 600 zł (utargowane −200 zł)</button>
@@ -799,7 +805,7 @@ Pozdrawiam!</p>
 <p><span class="cb" data-id="sata" data-p="5">☐</span> &nbsp;<a href="https://allegro.pl/oferta/kabel-gembird-cc-satam-data-13045036934" target="_blank" rel="noopener">Kabel SATA 50 cm (2 szt. × 2,66 zł)</a> — <span class="y">5,32 zł</span> <span class="dim">(do połączenia dysku SSD z płytą)</span></p>
 <p><span class="cb" data-id="cr2032" data-p="12">☐</span> &nbsp;<a href="https://allegro.pl/oferta/bateria-litowa-duracell-cr2032-3v-do-pilota-zegarka-guzikowa-5szt-18876839749" target="_blank" rel="noopener">Baterie Duracell CR2032 (5 szt.)</a> — <span class="y">11,99 zł</span> <span class="dim">(nowa bateria do płyty, żeby BIOS nie gubił ustawień)</span></p>
 <p><span class="cb" data-id="lan" data-p="20">☐</span> &nbsp;<a href="https://allegro.pl/oferta/kabel-ethernet-sieciowy-internetowy-patchcord-skretka-lan-rj45-utp-cat6-10m-6855553650" target="_blank" rel="noopener">Kabel sieciowy LAN Cat.6 (10 m)</a> — <span class="y">19,90 zł</span> <span class="dim">(stabilny internet z routera do serwera)</span></p>
-<p><span class="cb" data-id="molex" data-p="4">☐</span> &nbsp;<a href="https://allegro.pl/oferta/adapter-molex-pci-express-akyga-ak-ca-13-0-15-m-17852260888" target="_blank" rel="noopener">Przejściówka 2× Molex → PCIe 6-pin</a> — <span class="y">4,35 zł</span><br><span class="dim">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dodatkowe 6-pinowe zasilanie płyty przy 4 kartach (gniazdo <span class="mono">EZ_PLUG</span> przy slotach PCIe — <span class="r">nie mylić z 8-pin CPU!</span>)</span></p>
+<p><span class="cb" data-id="molex" data-p="4">☐</span> &nbsp;<a href="https://allegro.pl/oferta/adapter-molex-pci-express-akyga-ak-ca-13-0-15-m-17852260888" target="_blank" rel="noopener">Przejściówka 2× Molex → PCIe 6-pin (zapas)</a> — <span class="y">4,35 zł</span><br><span class="dim">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;zapasowy adapter pomocniczy PCIe 6-pin (samo gniazdo <span class="mono">EZ_PLUG_1</span> na dole płyty X99-E WS to 4-pin Molex zasilany wprost z zasilacza — <span class="r">nigdy nie mylić z 8-pin CPU!</span>)</span></p>
 <p><span class="cb" data-id="ipa" data-p="20">☐</span> &nbsp;<a href="https://allegro.pl/oferta/alkohol-izopropylowy-izopropanol-odtluszczacz-ipa-99-9-1l-14274597288" target="_blank" rel="noopener">Alkohol izopropylowy IPA 99,9% (1 litr)</a> — <span class="y">19,99 zł</span> <span class="dim">(odtłuszczenie procesora pod nową pastę)</span></p>
 <p><span class="cb" data-id="air" data-p="9">☐</span> &nbsp;<a href="https://allegro.pl/oferta/sprezone-powietrze-400-ml-17423349480" target="_blank" rel="noopener">Sprężone powietrze 400 ml</a> — <span class="y">9,39 zł</span> <span class="dim">(wydmuchanie kurzu z radiatorów kart RTX 3070)</span></p>
 <p><span class="cb" data-id="esd" data-p="11">☐</span> &nbsp;<a href="https://allegro.pl/oferta/opaska-esd-safe-na-reke-antystatyczna-aele-004-6056599042" target="_blank" rel="noopener">Opaska antystatyczna ESD na rękę</a> — <span class="y">10,90 zł</span> <span class="dim">(ochrona płyty i kości RAM przed przeskokiem iskry z dłoni)</span></p>
@@ -936,8 +942,8 @@ Pozdrawiam!</p>
     </div>
 
     <div class="mb-spot warn" data-spot="ezplug">
-      <span>⚠️ <b>Gniazdo 6-pin EZ_PLUG (wspomaganie PCIe)</b></span>
-      <span class="r">MOLEX → 6-PIN!</span>
+      <span>⚠️ <b>Gniazdo EZ_PLUG_1 (wspomaganie slotów PCIe)</b></span>
+      <span class="r">4-PIN MOLEX Z PSU!</span>
     </div>
 
     <div class="mb-spot ok" data-spot="pcie">
@@ -989,7 +995,7 @@ Pozdrawiam!</p>
 <tr><th>Kabel / Element</th><th>Gdzie dokładnie wpiąć</th></tr>
 <tr><td><b>Szeroka wtyczka 24-pin ATX</b></td><td>Główne gniazdo zasilania na prawej krawędzi płyty</td></tr>
 <tr><td><b>2× wtyczka 8-pin CPU (EPS)</b></td><td>Oba 8-pinowe gniazda <span class="mono">EATX12V_1</span> i <span class="mono">EATX12V_2</span> na górze płyty — <b>podłącz oba!</b></td></tr>
-<tr><td><b>Przejściówka 2× Molex → 6-pin PCIe</b></td><td>6-pinowe gniazdo <span class="mono">EZ_PLUG</span> na płycie przy slotach PCIe (wspomaga zasilanie slotów przy 4 kartach; <span class="r">nigdy nie wpinaj w 8-pin CPU!</span>)</td></tr>
+<tr><td><b>Wtyczka 4-pin Molex z zasilacza (ew. adapter 6-pin w zapasie)</b></td><td>Gniazdo <span class="mono">EZ_PLUG_1</span> na dolnej krawędzi płyty (wspomaga zasilanie slotów PCIe przy 4 kartach; <span class="r">nigdy nie wpinaj żadnych przejściówek w 8-pin CPU!</span>)</td></tr>
 <tr><td><b>4× Riser taśmowy PCIe x16</b></td><td>Wepnij w sloty <b>nr 1, 3, 5 oraz 7</b> (licząc od procesora w dół). Sloty 2, 4, 6 zostają puste</td></tr>
 <tr><td><b>Zasilanie 4× RTX 3070</b></td><td>Do każdej karty podepnij <b>2× wtyczki PCIe 8-pin (6+2)</b> z zasilacza (razem 8 wtyczek)</td></tr>
 <tr><td><b>Dysk SSD 1 TB + Hub wentylatorów</b></td><td>Kabel zasilający SATA z zasilacza do dysku i do Huba; kabel danych SATA z dysku do szarego portu <span class="mono">SATA6G_1</span> na płycie</td></tr>
@@ -1103,7 +1109,7 @@ sudo systemctl daemon-reload &amp;&amp; sudo systemctl enable wol.service
 <tr><td><b>SSH Setup</b></td><td><span class="g"><b>[X] Install OpenSSH server — KONIECZNIE ZAZNACZ SPACJĄ!</b></span></td></tr>
 <tr><td>Featured Server Snaps</td><td><b>Nic nie zaznaczaj</b> (wszystko zainstaluje nasz automatyczny skrypt)</td></tr>
 </table>
-<p><span class="cb" data-id="s4">◻</span> &nbsp;<b>4. Po restarcie:</b> logujesz się do systemu i uruchamiasz skrypt wdrożeniowy:</p>
+<p><span class="cb" data-id="s4">☐</span> &nbsp;<b>4. Po restarcie:</b> logujesz się do systemu i uruchamiasz skrypt wdrożeniowy:</p>
 <table class="cmd"><tr><td>chmod +x setup_node_177b.sh && sudo ./setup_node_177b.sh</td></tr></table>
 </td></tr></table>
 
@@ -1187,7 +1193,7 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
 <table class="blk"><tr><td class="hd hc">⚡ // 4 ZASADY BEZPIECZEŃSTWA SPRZĘTU</td></tr><tr><td class="bd bc">
 <p><span class="r">✖ 1.</span> Nigdy nie wpinaj ani nie wyjmuj riserów, kart i RAM-u, gdy zasilacz jest pod prądem.</p>
 <p><span class="r">✖ 2.</span> Nigdy nie mieszaj kabli modularnych od różnych zasilaczy.</p>
-<p><span class="r">✖ 3.</span> Przejściówka <b>2× Molex → 6-pin</b> idzie wyłącznie do 6-pinowego gniazda <span class="mono">EZ_PLUG</span> przy slotach PCIe — nigdy do 8-pinowych gniazd procesora <span class="mono">EATX12V_1/2</span>.</p>
+<p><span class="r">✖ 3.</span> Do gniazda <span class="mono">EZ_PLUG_1</span> na dole płyty wpinamy bezpośrednio 4-pinowy wtyk Molex z zasilacza (przejściówka 2× Molex → 6-pin zostaje w zapasie) — nigdy nie wpinaj żadnych przejściówek do 8-pinowych gniazd procesora <span class="mono">EATX12V_1/2</span>.</p>
 <p style="margin:0;"><span class="r">✖ 4.</span> Płyta główna musi stać na metalowych dystansach wkręconych dokładnie w miejsca otworów na śrubki.</p>
 </td></tr></table>
 
@@ -1302,7 +1308,16 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
   var GROUP_SUBS = {
     cool: ['fera', 'paste'],
     fan: ['fans', 'hub', 'dummy'],
-    parts: ['usb', 'sata', 'cr2032', 'lan', 'molex', 'ipa', 'air', 'esd', 'rzep', 'watt']
+    parts: ['usb', 'sata', 'cr2032', 'lan', 'molex', 'ipa', 'air', 'esd', 'rzep', 'watt'],
+    options: ['apc', 'wifi']
+  };
+
+  var SUB_PRICES = {
+    fera: 129.00, paste: 20.18,
+    fans: 109.99, hub: 29.99, dummy: 14.99,
+    usb: 47.89, sata: 5.32, cr2032: 11.99, molex: 4.35, lan: 19.90,
+    ipa: 19.99, air: 9.39, esd: 10.90, rzep: 8.73, watt: 27.51,
+    apc: 229.00, wifi: 125.00
   };
 
   function syncGroupFlags(srvState){
@@ -1315,10 +1330,15 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
       if (allChecked) {
         srvState.checks[g] = true;
         srvState.statuses[g] = 'got';
+      } else if (anyChecked) {
+        srvState.checks[g] = false;
+        if (!srvState.statuses[g] || srvState.statuses[g] === 'todo' || srvState.statuses[g] === 'got') {
+          srvState.statuses[g] = 'ord';
+        }
       } else if (srvState.statuses[g] === 'got' || srvState.checks[g]) {
         subs.forEach(function(k){ srvState.checks[k] = true; });
-      } else if (anyChecked && (!srvState.statuses[g] || srvState.statuses[g] === 'todo')) {
-        srvState.statuses[g] = 'ord';
+        srvState.checks[g] = true;
+        srvState.statuses[g] = 'got';
       }
     });
   }
@@ -1452,9 +1472,13 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
     // Ustawienie ceny RAM na przycisku/checkboxie
     var ramCb = document.getElementById('ramCb');
     if (ramCb) ramCb.dataset.p = String(ramPrice);
+    var ramHdr = document.getElementById('ramHdrPrice');
+    if (ramHdr) ramHdr.textContent = ramPrice.toLocaleString('pl-PL') + ' zł';
 
     document.getElementById('cPsu').checked = !!c.psuFromRig;
     document.getElementById('cSsd').checked = !!c.ssdFromRig;
+    var sellRigEl = document.getElementById('cSellRig');
+    if (sellRigEl) sellRigEl.checked = !!c.sellOldRig;
     document.getElementById('cApc').checked = !!c.optApc;
     document.getElementById('cWifi').checked = !!c.optWifi;
 
@@ -1467,6 +1491,13 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
     if (psuSkip) psuSkip.textContent = c.psuFromRig ? '✔ MAMY SWÓJ Z KOPARKI (0 zł)' : '(albo nie trzeba, jeśli nasz z koparki wystarczy)';
     var ssdSkip = document.getElementById('ssdSkipBadge');
     if (ssdSkip) ssdSkip.textContent = c.ssdFromRig ? '✔ MAMY SWÓJ Z KOPARKI (0 zł)' : '';
+    var sellBadge = document.getElementById('sellRigBadge');
+    if (sellBadge) sellBadge.textContent = c.sellOldRig ? '✔ ODLICZONO −350 zł' : '− 350 zł';
+
+    var blkPsu = document.getElementById('blkPsu');
+    if (blkPsu) blkPsu.classList.toggle('from-rig', !!c.psuFromRig);
+    var blkSsd = document.getElementById('blkSsd');
+    if (blkSsd) blkSsd.classList.toggle('from-rig', !!c.ssdFromRig);
 
     // Checkboxy
     document.querySelectorAll('.cb').forEach(function(el){
@@ -1474,6 +1505,9 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
       var on = !!state.checks[id];
       el.textContent = on ? '☑' : '☐';
       el.classList.toggle('on', on);
+      el.setAttribute('role', 'checkbox');
+      el.setAttribute('tabindex', '0');
+      el.setAttribute('aria-checked', on ? 'true' : 'false');
       if (el.parentElement) el.parentElement.classList.toggle('done', on && !el.dataset.p);
     });
 
@@ -1525,22 +1559,45 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
 
     var totalCount = 0, boughtCount = 0, spent = 0;
     canonicalItems.forEach(function(it){
-      // APC / Wi-Fi to opcje dodatkowe: wchodzą do kwoty, ale nie do licznika pozycji.
-      if (it.skip || it.id === 'apc' || it.id === 'wifi') return;
-      totalCount++;
+      if (it.skip) return;
+      var isOpt = (it.id === 'apc' || it.id === 'wifi');
+      if (!isOpt) totalCount++;
       var st = state.statuses[it.id] || (state.checks[it.id] ? 'got' : 'todo');
-      if (st === 'got' || st === 'ord' || state.checks[it.id]) {
+      if (isOpt) {
+        var optSt = state.statuses['options'] || 'todo';
+        if (state.checks[it.id] || optSt === 'got' || optSt === 'ord') {
+          spent += it.price;
+        }
+        return;
+      }
+      if (st === 'got' || state.checks[it.id]) {
         boughtCount++;
         spent += it.price;
+      } else if (st === 'ord') {
+        boughtCount++;
+        if (GROUP_SUBS[it.id]) {
+          var subs = GROUP_SUBS[it.id];
+          var anySub = subs.some(function(k){ return !!state.checks[k]; });
+          if (anySub) {
+            var subSum = 0;
+            subs.forEach(function(k){ if (state.checks[k]) subSum += (SUB_PRICES[k] || 0); });
+            spent += Math.round(subSum);
+          } else {
+            spent += it.price;
+          }
+        } else {
+          spent += it.price;
+        }
       }
     });
 
-    var left = Math.max(0, baseTotal - spent);
     var netAfterSell = Math.max(0, baseTotal - 350);
+    var effectiveTotal = c.sellOldRig ? netAfterSell : baseTotal;
+    var left = Math.max(0, effectiveTotal - spent);
 
-    document.getElementById('kpiTotal').textContent = baseTotal.toLocaleString('pl-PL') + ' zł';
+    document.getElementById('kpiTotal').textContent = effectiveTotal.toLocaleString('pl-PL') + ' zł';
     document.getElementById('kpiSub').textContent =
-      (c.psuFromRig ? 'bez zasilacza' : 'z zasilaczem') + ' • RAM ' + ramPrice + ' zł';
+      (c.psuFromRig ? 'bez zasilacza' : 'z zasilaczem') + ' • RAM ' + ramPrice + ' zł' + (c.sellOldRig ? ' • -350 zł zwrotu' : '');
     document.getElementById('kpiSpent').textContent = spent.toLocaleString('pl-PL') + ' zł';
     document.getElementById('kpiCount').textContent = boughtCount + ' z ' + totalCount + ' pozycji zamówione/kupione';
     document.getElementById('kpiLeft').textContent = left.toLocaleString('pl-PL') + ' zł';
@@ -1549,7 +1606,7 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
     document.getElementById('sumRamCell').textContent = ramPrice.toLocaleString('pl-PL') + ' zł';
     document.getElementById('sumSsdCell').textContent = c.ssdFromRig ? '0 zł (z koparki)' : '429 zł';
     document.getElementById('sumPsuCell').textContent = c.psuFromRig ? '0 zł (z koparki)' : '399 zł';
-    document.getElementById('sumTotalCell').textContent = baseTotal.toLocaleString('pl-PL') + ' zł';
+    document.getElementById('sumTotalCell').textContent = effectiveTotal.toLocaleString('pl-PL') + ' zł';
 
     document.getElementById('progTxt').textContent =
       'ZAKUPY: ' + boughtCount + ' / ' + totalCount + '  ::  OPŁACONE ' + spent.toLocaleString('pl-PL') + ' zł  ::  ZOSTAŁO ' + left.toLocaleString('pl-PL') + ' zł';
@@ -1583,9 +1640,11 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
       var st = t.dataset.st;
       state.statuses[item] = st;
       state.checks[item] = (st === 'got');
-      if (GROUP_SUBS[item]) {
+      if (GROUP_SUBS[item] && (st === 'got' || st === 'todo')) {
         GROUP_SUBS[item].forEach(function(sub){
           state.checks[sub] = (st === 'got');
+          if (sub === 'apc') state.calc.optApc = (st === 'got');
+          if (sub === 'wifi') state.calc.optWifi = (st === 'got');
         });
       }
       pushToServer(false);
@@ -1598,17 +1657,31 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
     }
   });
 
+  document.addEventListener('keydown', function(ev){
+    var t = ev.target;
+    if (t && t.classList && t.classList.contains('cb') && (ev.key === 'Enter' || ev.key === ' ')) {
+      ev.preventDefault();
+      t.click();
+    }
+  });
+
   // Przełączniki kalkulatora
-  ['cPsu','cSsd','cApc','cWifi'].forEach(function(cid){
+  ['cPsu','cSsd','cSellRig','cApc','cWifi'].forEach(function(cid){
     var el = document.getElementById(cid);
     if (!el) return;
     el.addEventListener('change', function(){
       state.calc.psuFromRig = document.getElementById('cPsu').checked;
       state.calc.ssdFromRig = document.getElementById('cSsd').checked;
+      var sr = document.getElementById('cSellRig');
+      if (sr) state.calc.sellOldRig = sr.checked;
       state.calc.optApc = document.getElementById('cApc').checked;
       state.calc.optWifi = document.getElementById('cWifi').checked;
       state.checks.apc = state.calc.optApc;
       state.checks.wifi = state.calc.optWifi;
+      var anyOpt = state.calc.optApc || state.calc.optWifi;
+      var allOpt = state.calc.optApc && state.calc.optWifi;
+      state.checks.options = allOpt;
+      state.statuses.options = allOpt ? 'got' : (anyOpt ? 'ord' : 'todo');
       pushToServer(false);
     });
   });
@@ -1682,8 +1755,8 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
       body: '<p>• <b>24-pin EATXPWR:</b> najszersza wtyczka z zasilacza.</p><p>• <b>Wyświetlacz Q-Code (2 cyfry LED):</b> pokazuje etap uruchamiania płyty. Jeśli płyta stanie na jakimś kodzie, wpisz go w zakładce <b>06 Q-CODE</b>.</p><p style="margin:0;">• <b>Przycisk MemOK!:</b> jeśli przy pierwszym starcie z nowym RAM-em płyta nie wyświetla obrazu, przytrzymaj ten przycisk przez 3 sekundy — płyta sama dobierze bezpieczne parametry pamięci.</p>'
     },
     ezplug: {
-      title: '⚠️ Gniazdo 6-pin EZ_PLUG (dodatkowe zasilanie slotów PCIe)',
-      body: '<p>To jest <b>6-pinowe gniazdo</b> na płycie głównej, które dostarcza dodatkowy prąd do slotów PCIe, gdy pracują w nich 4 karty graficzne.</p><p><span class="g">✔ CO WPIĄĆ:</span> Tutaj wpinamy naszą <b>przejściówkę 2× Molex → PCIe 6-pin</b> (bo wszystkie 8 fabrycznych wtyczek PCIe zasilacza idzie bezpośrednio do 4 kart RTX 3070).</p><p style="margin:0;"><span class="r">✖ UWAGA:</span> To jest gniazdo 6-pin przy slotach PCIe (<span class="mono">EZ_PLUG</span>). Nie pomyl go z 8-pinowymi gniazdami procesora (<span class="mono">EATX12V_1/2</span>) na górze płyty!</p>'
+      title: '⚠️ Gniazdo EZ_PLUG_1 (dodatkowe zasilanie slotów PCIe)',
+      body: '<p>To jest <b>4-pinowe gniazdo Molex</b> na dolnej krawędzi płyty ASUS X99-E WS, które dostarcza dodatkowy prąd +12V do slotów PCIe przy pracy 4 kart graficznych.</p><p><span class="g">✔ CO WPIĄĆ:</span> Wpinamy tu bezpośrednio <b>wtyczkę 4-pin Molex (Peripheral)</b> z wiązki zasilacza (natomiast kupiona przejściówka 2× Molex → 6-pin zostaje w zapasie). Wszystkie 8 fabrycznych wtyczek PCIe 6+2 zasilacza idzie bezpośrednio do 4 kart RTX 3070.</p><p style="margin:0;"><span class="r">✖ UWAGA:</span> Nigdy nie wpinaj żadnych przejściówek w 8-pinowe gniazda procesora (<span class="mono">EATX12V_1/2</span>) na górze płyty!</p>'
     },
     pcie: {
       title: '🟦 Sloty PCIe x16 nr 1, 3, 5, 7 (tu wpinamy 4 karty RTX 3070)',
@@ -1763,7 +1836,9 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
     if (confirm('Wyczyścić wszystkie odhaczenia dla Was obu?')) {
       state.checks = {};
       state.statuses = {};
-      pushToServer(false);
+      state.calc.optApc = false;
+      state.calc.optWifi = false;
+      pushToServer(true);
     }
   });
 
@@ -1775,7 +1850,7 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
   var _ENC_JWK_KEY = 'krzemowy_sec_aes_jwk_alex_v3';
   var _AUTH_SALT = 'krzemowy-leb-2077-quantum-salt-x99ews';
   var _ENC_SALT = 'krzemowy-leb-2077-aes-gcm-sync-salt-v3';
-  var _SYNC_PASSPHRASE = atob('MjEzNw=='); // wspólny klucz sync (2137) — niezależny od PIN-u logowania
+  var _SYNC_PASSPHRASE = atob('MjEzNw==');
   var _AUTH_ITERATIONS = 100000;
   var _VAULT_SIGNATURE = '013195503135a64ed366adaacc0872e00e8dd3759b1dce7fe9084e98f84c2b7c';
   var _FAIL_KEY = 'krzemowy_sec_fail_count_alex';
@@ -1928,16 +2003,20 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
 
   async function getSyncAesKey() {
     if (_cachedAesKey) return _cachedAesKey;
+    if (!hasSubtle()) return null;
     try {
       var rawJwk = localStorage.getItem(_ENC_JWK_KEY);
-      if (!rawJwk) return null;
-      _cachedAesKey = await crypto.subtle.importKey(
-        'jwk',
-        JSON.parse(rawJwk),
-        { name: 'AES-GCM', length: 256 },
-        false,
-        ['encrypt', 'decrypt']
-      );
+      if (rawJwk) {
+        _cachedAesKey = await crypto.subtle.importKey(
+          'jwk',
+          JSON.parse(rawJwk),
+          { name: 'AES-GCM', length: 256 },
+          false,
+          ['encrypt', 'decrypt']
+        );
+        return _cachedAesKey;
+      }
+      await deriveAndCacheSyncKey(_SYNC_PASSPHRASE);
       return _cachedAesKey;
     } catch (e) {
       return null;
@@ -2048,9 +2127,30 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
   }
 
   var _watchdogBusy = false;
+  var _lockObserver = null;
+
+  function startLockObserver(){
+    if (!window.MutationObserver || _lockObserver) return;
+    _lockObserver = new MutationObserver(function(){
+      enforceLockIntegrity();
+    });
+    var ls = document.getElementById('lockScreen');
+    var wr = document.querySelector('.wrap');
+    if (ls) _lockObserver.observe(ls, { attributes: true, attributeFilter: ['style', 'class'] });
+    if (wr) _lockObserver.observe(wr, { attributes: true, attributeFilter: ['style', 'class'] });
+    if (document.body) _lockObserver.observe(document.body, { childList: true });
+  }
+
+  function stopLockObserver(){
+    if (_lockObserver) {
+      _lockObserver.disconnect();
+      _lockObserver = null;
+    }
+  }
 
   function unlockPage(){
     _watchdogBusy = true;
+    stopLockObserver();
     var ls = document.getElementById('lockScreen');
     if (ls) {
       ls.classList.remove('show');
@@ -2085,6 +2185,7 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
       if (!checkLockout()) inp.focus();
     }
     _watchdogBusy = false;
+    startLockObserver();
   }
 
   function enforceLockIntegrity(){
@@ -2115,14 +2216,6 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
     }
     enforceLockIntegrity();
   }, 1000);
-
-  // ANTI-TAMPER WATCHDOG
-  if (window.MutationObserver) {
-    var observer = new MutationObserver(function(){
-      enforceLockIntegrity();
-    });
-    observer.observe(document.documentElement, { childList: true, subtree: true, attributes: true });
-  }
 
   // Ochrona przed skrótami inspekcji kodu na ekranie blokady
   document.addEventListener('keydown', function(e){

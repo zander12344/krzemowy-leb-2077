@@ -79,7 +79,7 @@
   td.hd {
     padding: 7pt 10pt; font-family: 'Oxanium', sans-serif; font-size: 12.5pt;
     font-weight: bold; color: #05050A; letter-spacing: .4pt;
-    display: flex; align-items: center; gap: 8px;
+    vertical-align: middle;
   }
   td.bd { background: var(--panel); padding: 11pt; }
 
@@ -330,12 +330,12 @@
   .st-btn.s-todo.on { background: #2A2A44; color: #FFF; border-color: #9A9AB4; }
   .st-btn.s-ord.on { background: var(--y); color: #05050A; border-color: var(--y); font-weight: bold; box-shadow: 0 0 10px rgba(252,238,10,0.3); }
   .st-btn.s-got.on { background: var(--g); color: #05050A; border-color: var(--g); font-weight: bold; box-shadow: 0 0 10px rgba(57,255,20,0.35); }
-  .note-in {
+  .note-in, .rig-in {
     width: 100%; background: rgba(5, 5, 10, 0.85); color: var(--c);
     border: 1pt solid var(--border); padding: 5pt 7pt; font-family: 'JetBrains Mono', monospace;
     font-size: 9.5pt; margin-top: 4pt; border-radius: 2pt;
   }
-  .note-in:focus { outline: none; border-color: var(--c); box-shadow: 0 0 8px rgba(0,240,255,0.4); }
+  .note-in:focus, .rig-in:focus { outline: none; border-color: var(--c); box-shadow: 0 0 8px rgba(0,240,255,0.4); }
 
   /* Kafelki laptopa i sprzętu */
   .laptop-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 10pt; margin: 10pt 0; }
@@ -610,6 +610,10 @@
         <span class="g ox" id="ssdSkipBadge">+429 zł oszczędności</span>
       </div>
       <div class="calc-row">
+        <label><input type="checkbox" id="cSellRig"> <b>Sprzedajemy starą płytę i procesor z koparki</b> (odzysk po złożeniu nowego serwera)</label>
+        <span class="m ox" id="sellRigBadge">+350 zł zwrotu</span>
+      </div>
+      <div class="calc-row">
         <span><b>Cena za komplet 128 GB RAM:</b></span>
         <div>
           <button class="ram-btn on" data-ram="1800">1 800 zł (cena z OLX)</button>
@@ -634,9 +638,8 @@
             <p class="dim" style="margin:4pt 0;">To <b>najdłuższa dostawa w całym projekcie</b> (często Chiny, 2–4 tygodnie + cło). Dlatego płyta idzie pierwsza — reszta może dojść później, ale bez płyty nie ma czego składać. Sprawdź wersję <b>X99-E WS</b> i BIOS ≥ 3002.</p>
             <div class="alt-links" style="margin-top:5pt;">
               <span class="ox dim" style="font-size:8.5pt;">ZAPAS:</span>
-              <a class="sub-buy alt" href="https://www.ebay.com/itm/820268187544" target="_blank" rel="noopener">EBAY $335 ↗</a>
-              <a class="sub-buy alt" href="https://www.ebay.com/itm/860074704653" target="_blank" rel="noopener">EBAY $338 ↗</a>
-              <a class="sub-buy alt" href="https://www.ebay.com/itm/860078298076" target="_blank" rel="noopener">EBAY $479 ↗</a>
+              <a class="sub-buy alt" href="https://www.ebay.com/itm/365929450877" target="_blank" rel="noopener">EBAY $317 ↗</a>
+              <a class="sub-buy alt" href="https://www.ebay.com/itm/307142203195" target="_blank" rel="noopener">EBAY $315 ↗</a>
             </div>
             <div class="st-bar" data-item="mb">
               <span class="dim ox" style="font-size:8.5pt;">STATUS:</span>
@@ -873,7 +876,7 @@
                 <div class="sub-right"><span class="sub-price">11,99 zł</span><a class="sub-buy" href="https://allegro.pl/oferta/bateria-litowa-duracell-cr2032-3v-do-pilota-zegarka-guzikowa-5szt-18876839749" target="_blank" rel="noopener">ALLEGRO ↗</a></div>
               </div>
               <div class="sub-item" data-sub="molex">
-                <div class="sub-left"><span class="sub-cb" data-sub-id="molex">☐</span><span class="sub-name" title="Akyga AK-CA-13 — dodatkowe zasilanie 6-pin płyty w gnieździe EZ_PLUG (nie mylić z 8-pin CPU!)">Przejściówka 2× Molex → PCIe 6-pin</span></div>
+                <div class="sub-left"><span class="sub-cb" data-sub-id="molex">☐</span><span class="sub-name" title="Akyga AK-CA-13 — zapasowy adapter pomocniczy PCIe 6-pin (gniazdo EZ_PLUG_1 na płycie to 4-pin Molex zasilany wprost z zasilacza)">Przejściówka 2× Molex → PCIe 6-pin (zapas)</span></div>
                 <div class="sub-right"><span class="sub-price">4,35 zł</span><a class="sub-buy" href="https://allegro.pl/oferta/adapter-molex-pci-express-akyga-ak-ca-13-0-15-m-17852260888" target="_blank" rel="noopener">ALLEGRO ↗</a></div>
               </div>
               <div class="sub-item" data-sub="lan">
@@ -942,6 +945,13 @@
               <a class="sub-buy alt" href="https://www.ebay.com/itm/880020726581" target="_blank" rel="noopener">EBAY $14 ↗</a>
               <a class="sub-buy alt" href="https://www.ebay.com/itm/206640128453" target="_blank" rel="noopener">EBAY $105 ↗</a>
             </div>
+            <div class="st-bar" data-item="options">
+              <span class="dim ox" style="font-size:8.5pt;">STATUS OPCJI:</span>
+              <button class="st-btn s-todo on" data-st="todo">DO KUPIENIA</button>
+              <button class="st-btn s-ord" data-st="ord">ZAMÓWIONE ⏳</button>
+              <button class="st-btn s-got" data-st="got">W DOMU ✔</button>
+            </div>
+            <input type="text" class="note-in" data-note="options" placeholder="Notatka do opcji dodatkowych (APC / Wi-Fi)...">
           </div>
 
         </td>
@@ -962,7 +972,7 @@
           </p>
 
           <div style="text-align:center;margin:8pt 0 14pt 0;">
-            <img src="assets/ai_core_stream.gif" alt="AI Neural Datastream" style="max-width:100%;height:auto;border-radius:4px;border:1px solid var(--c);box-shadow:0 0 15px rgba(0,240,255,0.25);" />
+            <img src="assets/ai_core_stream.gif" alt="AI Neural Datastream" onerror="this.style.display='none'" style="max-width:100%;height:auto;border-radius:4px;border:1px solid var(--c);box-shadow:0 0 15px rgba(0,240,255,0.25);" />
             <div class="dim mono" style="font-size:8.5pt;margin-top:4pt;">// LIVE STATUS: QWEN 177B NEURAL CORE STREAM // ZERO OGRANICZEŃ // 100% TWOJE DANE</div>
           </div>
 
@@ -1037,14 +1047,14 @@
                 <span class="dim" style="font-size:10pt;">Gdy nikt z niego nie korzysta, karty wyłączają wentylatory (0 dB ciszy) i zbijają pobór prądu. Serwer czuwa i odpowiada w ułamku sekundy, gdy tylko wejdziesz na stronę na laptopie (0 sekund czekania).</span>
               </div>
               <div style="background:#090916;border:1pt solid var(--border);padding:9pt;border-radius:2pt;">
-                <b class="y">2. Głęboki Sen (Pobór jak żarówka ~10W):</b><br>
-                <span class="dim" style="font-size:10pt;">W nocy lub przy dłuższym braku zapytań serwer może przejść w tryb uśpienia pamięci (S3). Karty i dyski są wyłączone, a minimalny prąd podtrzymuje jedynie pamięć RAM z załadowanym modelem.</span>
+                <b class="y">2. Nocne Wyłączenie / Hibernacja (~2–5W):</b><br>
+                <span class="dim" style="font-size:10pt;">W nocy serwer może całkowicie wyłączyć karty i zasilacz (czuwając jedynie na karcie sieciowej pod Wake-on-LAN). Po wybudzeniu usługa <span class="mono">llama-server.service</span> automatycznie ładuje model z szybkiego dysku SSD w ~25–40 sekund.</span>
               </div>
             </div>
             <div style="background:#090916;border:1pt solid var(--border);padding:9pt;border-radius:2pt;">
               <b class="g">🚀 Jak wybudzić serwer, gdy zaśnie? (Wake on LAN):</b>
               <ul style="margin:4pt 0 0 0;padding-left:14pt;font-size:10.2pt;line-height:1.6;">
-                <li><b>Z laptopa w domu:</b> Klikasz przygotowany skrót na pulpicie <i>„Obudź Serwer”</i> — laptop wysyła sygnał sieciowy (tzw. Magic Packet) i po 5 sekundach serwer stoi na nogach z modelem gotowym do pracy!</li>
+                <li><b>Z laptopa w domu:</b> Klikasz przygotowany skrót na pulpicie <i>„Obudź Serwer”</i> — laptop wysyła sygnał sieciowy (tzw. Magic Packet), płyta startuje i automatycznie podnosi serwer AI do pracy!</li>
                 <li><b>Z telefonu:</b> Jedno dotknięcie w bezpłatnej aplikacji na telefonie (np. <i>Wake On Lan</i> po domowym Wi-Fi).</li>
                 <li><b>Zdalnie poza domem:</b> Możesz użyć taniego inteligentnego gniazdka Wi-Fi (np. Tuya / Tapo za ~35 zł) — w aplikacji na telefonie klikasz włącz/wyłącz i serwer sam wstaje z dowolnego miejsca na świecie (dzięki funkcji BIOS <i>Restore AC Power Loss</i>)!</li>
               </ul>
@@ -1070,7 +1080,7 @@
 
           <br>
           <div style="text-align:center;margin:10pt 0 16pt 0;">
-            <img src="assets/mining_rig_hud.gif" alt="Schemat stelaża koparki i 4 grafy telemetrii" style="max-width:100%;height:auto;border-radius:4px;border:1px solid var(--c);box-shadow:0 0 18px rgba(0,240,255,0.3);" />
+            <img src="assets/mining_rig_hud.gif" alt="Schemat stelaża koparki i 4 grafy telemetrii" onerror="this.style.display='none'" style="max-width:100%;height:auto;border-radius:4px;border:1px solid var(--c);box-shadow:0 0 18px rgba(0,240,255,0.3);" />
             <div class="dim mono" style="font-size:8.5pt;margin-top:5pt;">// SCHEMAT STELAŻA KOPARKI: 4× RTX 3070 NA RISERACH // 4 UKŁADY TELEMETRII (MOC, PCIe P2P, TERMIKA, VRAM)</div>
           </div>
 
@@ -1129,6 +1139,15 @@
             
             <label class="dim" style="font-size:9pt;margin-top:6pt;display:block;">ILE WTYCZEK PCIE 8-PIN (6+2) WYCHODZI Z ZASILACZA:</label>
             <input type="text" class="rig-in" data-rig="psuPcieCount" placeholder="np. 8 wtyczek (4 kable po 2 wtyczki)...">
+
+            <label class="dim" style="font-size:9pt;margin-top:6pt;display:block;">DOKŁADNE MODELE KART RTX 3070 (np. ASUS TUF / MSI Ventus 3X):</label>
+            <input type="text" class="rig-in" data-rig="gpuModels" placeholder="Wpisz producentów / wersje chłodzenia 4 kart...">
+
+            <label class="dim" style="font-size:9pt;margin-top:6pt;display:block;">MODEL DYSKU SSD Z KOPARKI (jeśli zostaje stary):</label>
+            <input type="text" class="rig-in" data-rig="ssdModel" placeholder="np. Crucial MX500 500GB / brak...">
+
+            <label class="dim" style="font-size:9pt;margin-top:6pt;display:block;">ODLEGŁOŚĆ OD PŁYTY DO KART NA STELAŻU (w cm, pod długość riserów):</label>
+            <input type="text" class="rig-in" data-rig="riserDistanceCm" placeholder="np. 22 cm (standardowo bierzemy risery 30 cm)...">
           </div>
         </td>
       </tr>
@@ -1415,7 +1434,7 @@
         <td class="bd bx">
           <p style="font-size:11.5pt;line-height:1.6;">
             <b>Twoja 4. karta RTX 3070 potrafi zamienić się w profesjonalne studio filmowo-graficzne:</b><br>
-            Dzięki zainstalowanemu środowisku ComfyUI i Freefield (otwarty odpowiednik drogich chmur typu Higgsfield czy Midjourney) możesz oferować firmom gotowe usługi marketingowe bez płacenia grafikom ani grosza:
+            Dzięki zainstalowanemu środowisku ComfyUI i Freefield (otwarty odpowiednik drogich chmur typu Higgsfield czy Midjourney) możesz oferować firmom gotowe usługi marketingowe bez płacenia grafikom ani grosza (wystarczy jednym kliknięciem przełączyć serwer z trybu pełnego modelu 177B na profil graficzny ComfyUI lub lżejszy model czatu na 3 kartach):
           </p>
 
           <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:8pt;margin-top:8pt;">
@@ -1827,6 +1846,8 @@
     out.calc = Object.assign(defaultState().calc, (out.calc && typeof out.calc === 'object' && !Array.isArray(out.calc)) ? out.calc : {});
     out.calc.optApc = !!(out.checks.apc || out.calc.optApc);
     out.calc.optWifi = !!(out.checks.wifi || out.calc.optWifi);
+    if (out.calc.optApc) out.checks.apc = true;
+    if (out.calc.optWifi) out.checks.wifi = true;
     out.updatedAt = Number(out.updatedAt) || 0;
     return out;
   }
@@ -1846,7 +1867,16 @@
   var GROUP_SUBS = {
     cool: ['fera', 'paste'],
     fan: ['fans', 'hub', 'dummy'],
-    parts: ['usb', 'sata', 'cr2032', 'lan', 'molex', 'ipa', 'air', 'esd', 'rzep', 'watt']
+    parts: ['usb', 'sata', 'cr2032', 'lan', 'molex', 'ipa', 'air', 'esd', 'rzep', 'watt'],
+    options: ['apc', 'wifi']
+  };
+
+  var SUB_PRICES = {
+    fera: 129.00, paste: 20.18,
+    fans: 109.99, hub: 29.99, dummy: 14.99,
+    usb: 47.89, sata: 5.32, cr2032: 11.99, molex: 4.35, lan: 19.90,
+    ipa: 19.99, air: 9.39, esd: 10.90, rzep: 8.73, watt: 27.51,
+    apc: 229.00, wifi: 125.00
   };
 
   function saveLocal(){
@@ -1917,10 +1947,15 @@
       if (allChecked) {
         srvState.checks[g] = true;
         srvState.statuses[g] = 'got';
+      } else if (anyChecked) {
+        srvState.checks[g] = false;
+        if (!srvState.statuses[g] || srvState.statuses[g] === 'todo' || srvState.statuses[g] === 'got') {
+          srvState.statuses[g] = 'ord';
+        }
       } else if (srvState.statuses[g] === 'got' || srvState.checks[g]) {
         subs.forEach(function(k){ srvState.checks[k] = true; });
-      } else if (anyChecked && (!srvState.statuses[g] || srvState.statuses[g] === 'todo')) {
-        srvState.statuses[g] = 'ord';
+        srvState.checks[g] = true;
+        srvState.statuses[g] = 'got';
       }
     });
   }
@@ -1996,11 +2031,15 @@
     document.getElementById('ramPriceTxt').textContent = ramPrice.toLocaleString('pl-PL') + ' zł';
     document.getElementById('cPsu').checked = !!c.psuFromRig;
     document.getElementById('cSsd').checked = !!c.ssdFromRig;
+    var sellRigEl = document.getElementById('cSellRig');
+    if (sellRigEl) sellRigEl.checked = !!c.sellOldRig;
 
     var psuSkip = document.getElementById('psuSkipBadge');
     if (psuSkip) psuSkip.textContent = c.psuFromRig ? '✔ MAMY SWÓJ Z KOPARKI (0 zł)' : '+399 zł oszczędności';
     var ssdSkip = document.getElementById('ssdSkipBadge');
     if (ssdSkip) ssdSkip.textContent = c.ssdFromRig ? '✔ MAMY SWÓJ Z KOPARKI (0 zł)' : '+429 zł oszczędności';
+    var sellBadge = document.getElementById('sellRigBadge');
+    if (sellBadge) sellBadge.textContent = c.sellOldRig ? '✔ ODLICZONO -350 zł' : '+350 zł zwrotu';
 
     var psuCard = document.querySelector('.item-card[data-card="psu"]');
     if (psuCard) psuCard.classList.toggle('from-rig', !!c.psuFromRig);
@@ -2034,21 +2073,44 @@
 
     var totalCount = 0, boughtCount = 0, spent = 0;
     items.forEach(function(it){
-      // APC / Wi-Fi to opcje dodatkowe: wchodzą do kwoty, ale nie do licznika pozycji.
-      if (it.skip || it.id === 'apc' || it.id === 'wifi') return;
-      totalCount++;
+      if (it.skip) return;
+      var isOpt = (it.id === 'apc' || it.id === 'wifi');
+      if (!isOpt) totalCount++;
       var st = state.statuses[it.id] || (state.checks[it.id] ? 'got' : 'todo');
-      if (st === 'got' || st === 'ord' || state.checks[it.id]) {
+      if (isOpt) {
+        var optSt = state.statuses['options'] || 'todo';
+        if (state.checks[it.id] || optSt === 'got' || optSt === 'ord') {
+          spent += it.price;
+        }
+        return;
+      }
+      if (st === 'got' || state.checks[it.id]) {
         boughtCount++;
         spent += it.price;
+      } else if (st === 'ord') {
+        boughtCount++;
+        if (GROUP_SUBS[it.id]) {
+          var subs = GROUP_SUBS[it.id];
+          var anySub = subs.some(function(k){ return !!state.checks[k]; });
+          if (anySub) {
+            var subSum = 0;
+            subs.forEach(function(k){ if (state.checks[k]) subSum += (SUB_PRICES[k] || 0); });
+            spent += Math.round(subSum);
+          } else {
+            spent += it.price;
+          }
+        } else {
+          spent += it.price;
+        }
       }
     });
 
-    var left = Math.max(0, baseTotal - spent);
     var netAfterSell = Math.max(0, baseTotal - 350);
+    var effectiveTotal = c.sellOldRig ? netAfterSell : baseTotal;
+    var left = Math.max(0, effectiveTotal - spent);
 
-    document.getElementById('kpiTotal').textContent = baseTotal.toLocaleString('pl-PL') + ' zł';
-    document.getElementById('kpiSub').textContent = (c.psuFromRig ? 'bez zasilacza' : 'z zasilaczem') + ' • RAM ' + ramPrice + ' zł';
+    document.getElementById('kpiTotal').textContent = (c.sellOldRig ? netAfterSell : baseTotal).toLocaleString('pl-PL') + ' zł';
+    document.getElementById('kpiSub').textContent = (c.psuFromRig ? 'bez zasilacza' : 'z zasilaczem') + ' • RAM ' + ramPrice + ' zł' + (c.sellOldRig ? ' • -350 zł zwrotu' : '');
     document.getElementById('kpiSpent').textContent = spent.toLocaleString('pl-PL') + ' zł';
     document.getElementById('kpiCount').textContent = boughtCount + ' z ' + totalCount + ' pozycji zamówione/kupione';
     document.getElementById('kpiLeft').textContent = left.toLocaleString('pl-PL') + ' zł';
@@ -2081,6 +2143,9 @@
         (sid === 'wifi' && !!c.optWifi);
       el.textContent = on ? '☑' : '☐';
       el.classList.toggle('on', on);
+      el.setAttribute('role', 'checkbox');
+      el.setAttribute('tabindex', '0');
+      el.setAttribute('aria-checked', on ? 'true' : 'false');
       var row = el.closest('.sub-item');
       var optCard = row && row.closest('.item-card[data-card="options"]');
       if (row) row.classList.toggle('done', on && !optCard);
@@ -2091,13 +2156,18 @@
       var cbs = card.querySelectorAll('.sub-cb');
       if (!cbs.length) return;
       var bought = 0;
-      cbs.forEach(function(cb){ if (state.checks[cb.dataset.subId]) bought++; });
+      cbs.forEach(function(cb){
+        var sid = cb.dataset.subId;
+        var isChecked = !!state.checks[sid] || (sid === 'apc' && !!c.optApc) || (sid === 'wifi' && !!c.optWifi);
+        if (isChecked) bought++;
+      });
       var prog = card.querySelector('.sub-progress');
       if (prog) prog.textContent = bought + ' / ' + cbs.length + (card.dataset.card === 'options' ? ' wybrane' : ' kupione');
     });
 
     // Notatki
     document.querySelectorAll('.note-in').forEach(function(inp){
+      if (inp.classList.contains('rig-in')) return;
       var k = inp.dataset.note;
       if (document.activeElement !== inp) {
         inp.value = (state.notes && state.notes[k]) || '';
@@ -2145,9 +2215,13 @@
       state.statuses[item] = st;
       state.checks[item] = (st === 'got');
       if (GROUP_SUBS[item]) {
-        GROUP_SUBS[item].forEach(function(sub){
-          state.checks[sub] = (st === 'got');
-        });
+        if (st === 'got' || st === 'todo') {
+          GROUP_SUBS[item].forEach(function(sub){
+            state.checks[sub] = (st === 'got');
+            if (sub === 'apc') state.calc.optApc = (st === 'got');
+            if (sub === 'wifi') state.calc.optWifi = (st === 'got');
+          });
+        }
       }
       pushToServer();
       showToast('ZAPISANO STATUS: ' + t.textContent);
@@ -2157,13 +2231,24 @@
     }
   });
 
+  // Obsługa klawiatury (Enter / Spacja) dla .sub-cb
+  document.addEventListener('keydown', function(ev){
+    var t = ev.target;
+    if (t && t.classList && t.classList.contains('sub-cb') && (ev.key === 'Enter' || ev.key === ' ')) {
+      ev.preventDefault();
+      t.click();
+    }
+  });
+
   // Checkboxy
-  ['cPsu','cSsd'].forEach(function(cid){
+  ['cPsu','cSsd','cSellRig'].forEach(function(cid){
     var el = document.getElementById(cid);
     if (!el) return;
     el.addEventListener('change', function(){
       state.calc.psuFromRig = document.getElementById('cPsu').checked;
       state.calc.ssdFromRig = document.getElementById('cSsd').checked;
+      var sr = document.getElementById('cSellRig');
+      if (sr) state.calc.sellOldRig = sr.checked;
       pushToServer();
     });
   });
@@ -2172,12 +2257,12 @@
   var inputTimer = null;
   document.addEventListener('input', function(ev){
     var t = ev.target;
-    if (t.classList.contains('note-in')) {
-      state.notes[t.dataset.note] = t.value;
+    if (t.classList.contains('rig-in')) {
+      state.rigInfo[t.dataset.rig] = t.value;
       clearTimeout(inputTimer);
       inputTimer = setTimeout(pushToServer, 350);
-    } else if (t.classList.contains('rig-in')) {
-      state.rigInfo[t.dataset.rig] = t.value;
+    } else if (t.classList.contains('note-in')) {
+      state.notes[t.dataset.note] = t.value;
       clearTimeout(inputTimer);
       inputTimer = setTimeout(pushToServer, 350);
     }
@@ -2205,7 +2290,7 @@
   var _ENC_JWK_KEY = 'krzemowy_sec_aes_jwk_v3';
   var _AUTH_SALT = 'krzemowy-leb-2077-quantum-salt-x99ews';
   var _ENC_SALT = 'krzemowy-leb-2077-aes-gcm-sync-salt-v3';
-  var _SYNC_PASSPHRASE = atob('MjEzNw=='); // wspólny klucz sync (2137) — niezależny od PIN-u logowania
+  var _SYNC_PASSPHRASE = atob('MjEzNw==');
   var _AUTH_ITERATIONS = 100000;
   var _VAULT_SIGNATURE = '7327f449cc755bd172a66775f7cc5c7349f40dfb1f06060de234e28e64ab3ee1';
   var _FAIL_KEY = 'krzemowy_sec_fail_count';
@@ -2358,16 +2443,20 @@
 
   async function getSyncAesKey() {
     if (_cachedAesKey) return _cachedAesKey;
+    if (!hasSubtle()) return null;
     try {
       var rawJwk = localStorage.getItem(_ENC_JWK_KEY);
-      if (!rawJwk) return null;
-      _cachedAesKey = await crypto.subtle.importKey(
-        'jwk',
-        JSON.parse(rawJwk),
-        { name: 'AES-GCM', length: 256 },
-        false,
-        ['encrypt', 'decrypt']
-      );
+      if (rawJwk) {
+        _cachedAesKey = await crypto.subtle.importKey(
+          'jwk',
+          JSON.parse(rawJwk),
+          { name: 'AES-GCM', length: 256 },
+          false,
+          ['encrypt', 'decrypt']
+        );
+        return _cachedAesKey;
+      }
+      await deriveAndCacheSyncKey(_SYNC_PASSPHRASE);
       return _cachedAesKey;
     } catch (e) {
       return null;
@@ -2478,9 +2567,30 @@
   }
 
   var _watchdogBusy = false;
+  var _lockObserver = null;
+
+  function startLockObserver(){
+    if (!window.MutationObserver || _lockObserver) return;
+    _lockObserver = new MutationObserver(function(){
+      enforceLockIntegrity();
+    });
+    var ls = document.getElementById('lockScreen');
+    var wr = document.querySelector('.wrap');
+    if (ls) _lockObserver.observe(ls, { attributes: true, attributeFilter: ['style', 'class'] });
+    if (wr) _lockObserver.observe(wr, { attributes: true, attributeFilter: ['style', 'class'] });
+    if (document.body) _lockObserver.observe(document.body, { childList: true });
+  }
+
+  function stopLockObserver(){
+    if (_lockObserver) {
+      _lockObserver.disconnect();
+      _lockObserver = null;
+    }
+  }
 
   function unlockPage(){
     _watchdogBusy = true;
+    stopLockObserver();
     var ls = document.getElementById('lockScreen');
     if (ls) {
       ls.classList.remove('show');
@@ -2515,6 +2625,7 @@
       if (!checkLockout()) inp.focus();
     }
     _watchdogBusy = false;
+    startLockObserver();
   }
 
   function enforceLockIntegrity(){
@@ -2545,14 +2656,6 @@
     }
     enforceLockIntegrity();
   }, 1000);
-
-  // ANTI-TAMPER WATCHDOG
-  if (window.MutationObserver) {
-    var observer = new MutationObserver(function(){
-      enforceLockIntegrity();
-    });
-    observer.observe(document.documentElement, { childList: true, subtree: true, attributes: true });
-  }
 
   // Ochrona przed skrótami inspekcji kodu na ekranie blokady
   document.addEventListener('keydown', function(e){
@@ -2962,12 +3065,12 @@
 
   // Attach click audio & burst
   document.addEventListener('click', function(e){
-    var target = e.target.closest('button, a, .cb');
+    var target = e.target.closest('button, a, .sub-cb, .sub-item');
     if (!target) return;
     if (target.classList.contains('p-btn')) {
       CyberAudio.click();
       CyberBurst.spawn(e.clientX, e.clientY);
-    } else if (target.classList.contains('st-btn')) {
+    } else if (target.classList.contains('st-btn') || target.classList.contains('sub-cb') || target.classList.contains('sub-item')) {
       CyberAudio.status();
       CyberBurst.spawn(e.clientX, e.clientY);
     } else if (target.closest('.tabs')) {
@@ -3012,12 +3115,11 @@
   }
 
   function triggerCyberSeba(){
-    CyberAudio.fanfare();
     var wrap = document.querySelector('.wrap');
-    if (wrap) {
-      wrap.classList.add('cyber-shake');
-      setTimeout(function(){ wrap.classList.remove('cyber-shake'); }, 500);
-    }
+    if (!wrap || wrap.classList.contains('terminal-locked')) return;
+    CyberAudio.fanfare();
+    wrap.classList.add('cyber-shake');
+    setTimeout(function(){ wrap.classList.remove('cyber-shake'); }, 500);
     var modal = document.getElementById('cyberSebaModal');
     if (modal) modal.style.display = 'flex';
     for (var i = 0; i < 6; i++) {
@@ -3042,7 +3144,10 @@
   var konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
   var konamiIndex = 0;
   window.addEventListener('keydown', function(e){
-    if (e.key && e.key.toLowerCase() === konamiCode[konamiIndex].toLowerCase()) {
+    var wrapEl = document.querySelector('.wrap');
+    if (!e.key || !wrapEl || wrapEl.classList.contains('terminal-locked')) return;
+    var key = e.key.toLowerCase();
+    if (key === konamiCode[konamiIndex].toLowerCase()) {
       konamiIndex++;
       if (konamiIndex === konamiCode.length) {
         konamiIndex = 0;
@@ -3051,7 +3156,11 @@
         triggerCyberSeba();
       }
     } else {
-      konamiIndex = 0;
+      if (konamiIndex === 2 && key === 'arrowup') {
+        konamiIndex = 2;
+      } else {
+        konamiIndex = (key === konamiCode[0].toLowerCase()) ? 1 : 0;
+      }
     }
   });
 
