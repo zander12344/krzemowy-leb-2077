@@ -240,6 +240,11 @@
     gap: 5pt;
     margin: 7pt 0 5pt 0;
   }
+  .backup-grid { grid-template-columns: 1fr; }
+  @media (max-width: 560px) {
+    .backup-grid .sub-item { flex-direction: column; align-items: flex-start; }
+    .backup-grid .sub-right { flex-wrap: wrap; }
+  }
   .sub-item {
     display: flex;
     align-items: center;
@@ -302,6 +307,14 @@
     transition: all .15s;
   }
   .sub-buy:hover { background: var(--g); color: #05050A; text-decoration: none; box-shadow: 0 0 10px rgba(0,255,136,0.4); }
+  .sub-buy.srch {
+    background: rgba(0, 240, 255, 0.10); color: var(--c);
+    border-color: rgba(0, 240, 255, 0.45);
+  }
+  .sub-buy.srch:hover {
+    background: var(--c); color: #05050A; border-color: var(--c);
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+  }
   .alt-links {
     font-size: 9.2pt;
     color: var(--dim);
@@ -612,6 +625,104 @@
     </div>
 
     <br>
+
+    <!-- ZAPASOWE WYSZUKIWANIA -->
+    <table class="blk">
+      <tr><td class="hd hc">🛟 00 // ZAPASOWE LINKI — GDY OFERTA WYGASNIE</td></tr>
+      <tr>
+        <td class="bd bc">
+          <p style="margin:0 0 6pt 0;font-size:10.5pt;">Pojedyncze oferty na Allegro i OLX szybko znikają. Poniższe przyciski prowadzą do <b>wyszukiwań na żywo</b> — zawsze pokażą aktualne ogłoszenia. Sortuj je na stronie przez <b>„Najnowsze”</b> i porównaj parametry z opisem części wyżej.</p>
+          <div class="sub-grid backup-grid">
+            <div class="sub-item">
+              <div class="sub-left"><span class="sub-name"><b>Płyta ASUS X99-E WS</b><br><span class="dim">musi mieć „WS” w nazwie, nie X99-A/Deluxe</span></span></div>
+              <div class="sub-right">
+                <a class="sub-buy srch" href="https://www.ebay.com/sch/i.html?_nkw=ASUS+X99-E+WS&amp;_sop=10" target="_blank" rel="noopener">EBAY ↗</a>
+                <a class="sub-buy srch" href="https://allegro.pl/listing?string=ASUS%20X99-E%20WS" target="_blank" rel="noopener">ALLEGRO ↗</a>
+                <a class="sub-buy srch" href="https://www.olx.pl/oferty/q-asus-x99-e-ws/" target="_blank" rel="noopener">OLX ↗</a>
+              </div>
+            </div>
+
+            <div class="sub-item">
+              <div class="sub-left"><span class="sub-name"><b>Xeon E5-2690 v4</b><br><span class="dim">LGA 2011-3, 14 rdzeni, SR2N2</span></span></div>
+              <div class="sub-right">
+                <a class="sub-buy srch" href="https://allegro.pl/listing?string=Xeon%20E5-2690%20v4" target="_blank" rel="noopener">ALLEGRO ↗</a>
+                <a class="sub-buy srch" href="https://www.olx.pl/oferty/q-xeon-e5-2690-v4/" target="_blank" rel="noopener">OLX ↗</a>
+                <a class="sub-buy srch" href="https://www.ebay.com/sch/i.html?_nkw=Xeon+E5-2690+v4&amp;_sop=10" target="_blank" rel="noopener">EBAY ↗</a>
+              </div>
+            </div>
+
+            <div class="sub-item">
+              <div class="sub-left"><span class="sub-name"><b>RAM 128 GB: 4× 32 GB DDR4 ECC RDIMM</b><br><span class="dim">2400 MHz, 2Rx4, najlepiej komplet 4 kości</span></span></div>
+              <div class="sub-right">
+                <a class="sub-buy srch" href="https://www.olx.pl/oferty/q-32gb-ddr4-2400-ecc-rdimm/" target="_blank" rel="noopener">OLX ↗</a>
+                <a class="sub-buy srch" href="https://allegro.pl/listing?string=32GB%20DDR4%202400%20ECC%20RDIMM" target="_blank" rel="noopener">ALLEGRO ↗</a>
+                <a class="sub-buy srch" href="https://www.ebay.com/sch/i.html?_nkw=32GB+DDR4+2400+ECC+RDIMM&amp;_sop=10" target="_blank" rel="noopener">EBAY ↗</a>
+              </div>
+            </div>
+
+            <div class="sub-item">
+              <div class="sub-left"><span class="sub-name"><b>SSD 1 TB SATA 2,5" z DRAM</b><br><span class="dim">SanDisk Ultra 3D lub inny z buforem DRAM</span></span></div>
+              <div class="sub-right">
+                <a class="sub-buy srch" href="https://www.morele.net/wyszukiwarka/?q=SSD%201TB%20SATA%202.5%20DRAM" target="_blank" rel="noopener">MORELE ↗</a>
+                <a class="sub-buy srch" href="https://allegro.pl/listing?string=SSD%201TB%20SATA%202.5%20DRAM" target="_blank" rel="noopener">ALLEGRO ↗</a>
+                <a class="sub-buy srch" href="https://www.olx.pl/oferty/q-ssd-1tb-sata/" target="_blank" rel="noopener">OLX ↗</a>
+              </div>
+            </div>
+
+            <div class="sub-item">
+              <div class="sub-left"><span class="sub-name"><b>Chłodzenie Endorfy Fera 5 Dual Fan</b><br><span class="dim">montaż LGA 2011-3, 2 wentylatory</span></span></div>
+              <div class="sub-right">
+                <a class="sub-buy srch" href="https://www.morele.net/wyszukiwarka/?q=Endorfy%20Fera%205%20Dual%20Fan" target="_blank" rel="noopener">MORELE ↗</a>
+                <a class="sub-buy srch" href="https://allegro.pl/listing?string=Endorfy%20Fera%205%20Dual%20Fan" target="_blank" rel="noopener">ALLEGRO ↗</a>
+                <a class="sub-buy srch" href="https://www.olx.pl/oferty/q-fera-5-dual-fan/" target="_blank" rel="noopener">OLX ↗</a>
+              </div>
+            </div>
+
+            <div class="sub-item">
+              <div class="sub-left"><span class="sub-name"><b>Zasilacz 1000–1200 W modularny</b><br><span class="dim">min. 8× PCIe 6+2 i 2× CPU 8-pin EPS</span></span></div>
+              <div class="sub-right">
+                <a class="sub-buy srch" href="https://allegro.pl/listing?string=zasilacz%201200W%20modularny%208x%20PCIe" target="_blank" rel="noopener">ALLEGRO ↗</a>
+                <a class="sub-buy srch" href="https://www.olx.pl/oferty/q-zasilacz-1200w/" target="_blank" rel="noopener">OLX ↗</a>
+                <a class="sub-buy srch" href="https://www.ebay.com/sch/i.html?_nkw=Corsair+HX1200&amp;_sop=10" target="_blank" rel="noopener">EBAY ↗</a>
+              </div>
+            </div>
+
+            <div class="sub-item">
+              <div class="sub-left"><span class="sub-name"><b>4× Risery PCIe x16, 30 cm</b><br><span class="dim">ekranowane, pełne x16 — nie x1</span></span></div>
+              <div class="sub-right">
+                <a class="sub-buy srch" href="https://allegro.pl/listing?string=riser%20PCIe%20x16%2030cm" target="_blank" rel="noopener">ALLEGRO ↗</a>
+                <a class="sub-buy srch" href="https://www.olx.pl/oferty/q-riser-pcie-x16/" target="_blank" rel="noopener">OLX ↗</a>
+              </div>
+            </div>
+
+            <div class="sub-item">
+              <div class="sub-left"><span class="sub-name"><b>5× Arctic P12 Pro PWM PST + Hub</b><br><span class="dim">120 mm, PWM PST, zestaw 5 szt.</span></span></div>
+              <div class="sub-right">
+                <a class="sub-buy srch" href="https://www.morele.net/wyszukiwarka/?q=Arctic%20P12%20Pro%20PWM%20PST" target="_blank" rel="noopener">MORELE ↗</a>
+                <a class="sub-buy srch" href="https://allegro.pl/listing?string=Arctic%20P12%20Pro%20PWM%20PST" target="_blank" rel="noopener">ALLEGRO ↗</a>
+              </div>
+            </div>
+
+            <div class="sub-item">
+              <div class="sub-left"><span class="sub-name"><b>Listwa APC PMF83VT-FR</b><br><span class="dim">8 gniazd, 3 m, ochrona przepięciowa</span></span></div>
+              <div class="sub-right">
+                <a class="sub-buy srch" href="https://allegro.pl/listing?string=listwa%20APC%20PMF83VT" target="_blank" rel="noopener">ALLEGRO ↗</a>
+                <a class="sub-buy srch" href="https://www.morele.net/wyszukiwarka/?q=listwa%20APC%20PMF83VT" target="_blank" rel="noopener">MORELE ↗</a>
+              </div>
+            </div>
+
+            <div class="sub-item">
+              <div class="sub-left"><span class="sub-name"><b>Karta Wi-Fi 6 + BT 5.3 (Intel AX210)</b><br><span class="dim">PCIe, tylko jeśli nie ma kabla LAN</span></span></div>
+              <div class="sub-right">
+                <a class="sub-buy srch" href="https://www.morele.net/wyszukiwarka/?q=Intel%20AX210" target="_blank" rel="noopener">MORELE ↗</a>
+                <a class="sub-buy srch" href="https://allegro.pl/listing?string=Intel%20AX210" target="_blank" rel="noopener">ALLEGRO ↗</a>
+              </div>
+            </div>
+          </div>
+          <p class="dim" style="margin:6pt 0 0 0;font-size:9pt;">⚠ Te linki są celowo wyszukiwaniami, a nie konkretnymi ofertami — dzięki temu nie wygasną. Przed zakupem sprawdź zgodność modelu i kompletność zestawu.</p>
+        </td>
+      </tr>
+    </table>
 
     <!-- ETAP 1 -->
     <table class="blk">
@@ -2143,6 +2254,7 @@
   var _ENC_JWK_KEY = 'krzemowy_sec_aes_jwk_v3';
   var _AUTH_SALT = 'krzemowy-leb-2077-quantum-salt-x99ews';
   var _ENC_SALT = 'krzemowy-leb-2077-aes-gcm-sync-salt-v3';
+  var _SYNC_PASSPHRASE = atob('MjEzNw=='); // wspólny klucz sync (2137) — niezależny od PIN-u logowania
   var _AUTH_ITERATIONS = 100000;
   var _VAULT_SIGNATURE = '7327f449cc755bd172a66775f7cc5c7349f40dfb1f06060de234e28e64ab3ee1';
   var _FAIL_KEY = 'krzemowy_sec_fail_count';
@@ -2545,7 +2657,7 @@
       resetFailedAttempts();
       if (err) { err.textContent = ''; err.style.display = 'none'; }
       try { localStorage.setItem(_AUTH_TOKEN_KEY, sig); } catch (e) {}
-      await deriveAndCacheSyncKey(val);
+      await deriveAndCacheSyncKey(_SYNC_PASSPHRASE);
       unlockPage();
       if (typeof CyberAudio !== 'undefined' && CyberAudio.unlock) CyberAudio.unlock();
       showToast('DOSTĘP PRZYZNANY 🔓');

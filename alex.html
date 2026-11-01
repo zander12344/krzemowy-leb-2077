@@ -1771,14 +1771,15 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
   // =========================================================================
   // ZERO-KNOWLEDGE AUTHENTICATION & E2EE SYNC CORE (PBKDF2 + AES-GCM-256)
   // =========================================================================
-  var _AUTH_TOKEN_KEY = 'krzemowy_sec_vault_token_v3';
-  var _ENC_JWK_KEY = 'krzemowy_sec_aes_jwk_v3';
+  var _AUTH_TOKEN_KEY = 'krzemowy_sec_vault_token_alex_v4';
+  var _ENC_JWK_KEY = 'krzemowy_sec_aes_jwk_alex_v3';
   var _AUTH_SALT = 'krzemowy-leb-2077-quantum-salt-x99ews';
   var _ENC_SALT = 'krzemowy-leb-2077-aes-gcm-sync-salt-v3';
+  var _SYNC_PASSPHRASE = atob('MjEzNw=='); // wspólny klucz sync (2137) — niezależny od PIN-u logowania
   var _AUTH_ITERATIONS = 100000;
-  var _VAULT_SIGNATURE = '7327f449cc755bd172a66775f7cc5c7349f40dfb1f06060de234e28e64ab3ee1';
-  var _FAIL_KEY = 'krzemowy_sec_fail_count';
-  var _LOCK_UNTIL_KEY = 'krzemowy_sec_lock_until';
+  var _VAULT_SIGNATURE = '013195503135a64ed366adaacc0872e00e8dd3759b1dce7fe9084e98f84c2b7c';
+  var _FAIL_KEY = 'krzemowy_sec_fail_count_alex';
+  var _LOCK_UNTIL_KEY = 'krzemowy_sec_lock_until_alex';
   var _cachedAesKey = null;
 
   function constantTimeEqual(a, b) {
@@ -2144,7 +2145,6 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
     var PIN_EASTER_EGGS = {
       '1337': '😎 ELO HACKERZYSTA :: Kod elitarny, ale niepoprawny!',
       '0420': '🌿 420 DETECTED :: Chłodzenie ciekłym azotem i pełen chill!',
-      '6969': '🔞 NICE TRY :: To serwer obliczeniowy AI, a nie portal randkowy!',
       '0000': '💳 To nie PIN do karty z dyskontu!',
       '1234': '🔐 Standardowe kody fabryczne są trwale zablokowane.',
       '2077': '🤖 CYBERPUNK 2077 :: Wake up samurai, ale podaj właściwy klucz!'
@@ -2176,7 +2176,7 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
       resetFailedAttempts();
       if (err) { err.textContent = ''; err.style.display = 'none'; }
       try { localStorage.setItem(_AUTH_TOKEN_KEY, sig); } catch (e) {}
-      await deriveAndCacheSyncKey(val);
+      await deriveAndCacheSyncKey(_SYNC_PASSPHRASE);
       unlockPage();
       if (typeof CyberAudio !== 'undefined' && CyberAudio.unlock) CyberAudio.unlock();
       showToast('DOSTĘP PRZYZNANY 🔓');
