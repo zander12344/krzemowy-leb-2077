@@ -206,6 +206,84 @@
     transition: all .15s;
   }
   .buy-btn:hover { background: #FFF; color: #000; box-shadow: 0 0 16px #FFF; text-decoration: none; }
+  .sub-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
+    gap: 5pt;
+    margin: 7pt 0 5pt 0;
+  }
+  .sub-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6pt;
+    background: rgba(5, 5, 12, 0.78);
+    border: 1pt solid rgba(0, 240, 255, 0.2);
+    padding: 4.5pt 7pt;
+    border-radius: 2pt;
+    font-size: 9.6pt;
+    transition: border-color .15s, background .15s;
+  }
+  .sub-item:hover { border-color: var(--c); }
+  .sub-item.done {
+    border-color: rgba(0, 255, 136, 0.45);
+    background: rgba(0, 255, 136, 0.06);
+  }
+  .sub-item.done .sub-name { text-decoration: line-through; color: var(--dim); }
+  .sub-left {
+    display: flex;
+    align-items: center;
+    gap: 5.5pt;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+  .sub-name { min-width: 0; overflow-wrap: anywhere; line-height: 1.32; }
+  .sub-cb {
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5pt;
+    color: var(--c);
+    user-select: none;
+    line-height: 1;
+  }
+  .sub-cb.on { color: var(--g); text-shadow: 0 0 6px var(--g); }
+  .sub-right {
+    display: flex;
+    align-items: center;
+    gap: 5pt;
+    flex-shrink: 0;
+  }
+  .sub-price {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9pt;
+    color: var(--y);
+    font-weight: bold;
+  }
+  .sub-buy {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(0, 255, 136, 0.14);
+    color: var(--g);
+    border: 1pt solid var(--g);
+    font-family: 'Oxanium', sans-serif;
+    font-size: 8.5pt;
+    font-weight: bold;
+    padding: 2pt 6pt;
+    border-radius: 2pt;
+    white-space: nowrap;
+    transition: all .15s;
+  }
+  .sub-buy:hover { background: var(--g); color: #05050A; text-decoration: none; box-shadow: 0 0 10px rgba(0,255,136,0.4); }
+  .alt-links {
+    font-size: 9.2pt;
+    color: var(--dim);
+    margin: 3pt 0 4pt 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8pt;
+    align-items: center;
+  }
+  .alt-links a { font-weight: normal; color: var(--c); font-size: 9.2pt; }
   .st-bar { display: flex; flex-wrap: wrap; gap: 5pt; align-items: center; margin: 6pt 0 4pt 0; }
   .st-btn {
     font-family: 'Oxanium', sans-serif; font-size: 9pt; font-weight: bold;
@@ -456,7 +534,7 @@
     <div class="kpi-grid">
       <div class="kpi">
         <div class="kpi-label">Łączny koszt części</div>
-        <div class="val c" id="kpiTotal">4 735 zł</div>
+        <div class="val c" id="kpiTotal">4 864 zł</div>
         <div class="dim" id="kpiSub" style="margin-top:2pt;">z zasilaczem • RAM 1800 zł</div>
       </div>
       <div class="kpi">
@@ -466,12 +544,12 @@
       </div>
       <div class="kpi">
         <div class="kpi-label">Zostało do zapłaty</div>
-        <div class="val y" id="kpiLeft">4 735 zł</div>
+        <div class="val y" id="kpiLeft">4 864 zł</div>
         <div class="dim" style="margin-top:2pt;">do skompletowania serwera</div>
       </div>
       <div class="kpi">
         <div class="kpi-label">Po sprzedaży starej płyty</div>
-        <div class="val m" id="kpiNet">4 385 zł</div>
+        <div class="val m" id="kpiNet">4 514 zł</div>
         <div class="dim" style="margin-top:2pt;">~350 zł ze starej bazy koparki</div>
       </div>
     </div>
@@ -479,7 +557,7 @@
     <!-- Pasek postępu -->
     <div style="background:#05050A;border:1pt solid var(--border);padding:6pt 8pt;margin-bottom:10pt;">
       <div class="mono" style="font-size:9.5pt;display:flex;justify-content:space-between;" id="progTxt">
-        ZAKUPY: 0 / 9 &nbsp;::&nbsp; KUPIONE ZA 0 zł &nbsp;::&nbsp; ZOSTAŁO 4 735 zł
+        ZAKUPY: 0 / 9 &nbsp;::&nbsp; KUPIONE ZA 0 zł &nbsp;::&nbsp; ZOSTAŁO 4 864 zł
       </div>
       <div class="prog"><i id="progBar" style="width:0%;"></i></div>
     </div>
@@ -493,12 +571,13 @@
       </div>
       <div class="calc-row">
         <label><input type="checkbox" id="cSsd"> <b>Mamy sprawny dysk SSD z koparki</b> (z kablem SATA)</label>
-        <span class="g ox" id="ssdSkipBadge">+300 zł oszczędności</span>
+        <span class="g ox" id="ssdSkipBadge">+429 zł oszczędności</span>
       </div>
       <div class="calc-row">
         <span><b>Cena za komplet 128 GB RAM:</b></span>
         <div>
           <button class="ram-btn on" data-ram="1800">1 800 zł (cena z OLX)</button>
+          <button class="ram-btn" data-ram="1700">1 700 zł</button>
           <button class="ram-btn" data-ram="1600">1 600 zł (jak utargujemy)</button>
         </div>
       </div>
@@ -538,21 +617,21 @@
           <div class="item-card" data-card="ssd">
             <div class="item-title">
               <div>
-                <span class="tag c">DYSK</span> &nbsp;<b style="font-size:11.5pt;"><span class="icon-chip c"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h4M7 16h2"/><circle cx="17" cy="14" r="1.5" fill="currentColor"/></svg></span> DYSK SSD 1 TB SATA 2,5" (Samsung 870 EVO)</b>
+                <span class="tag c">DYSK</span> &nbsp;<b style="font-size:11.5pt;"><span class="icon-chip c"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h4M7 16h2"/><circle cx="17" cy="14" r="1.5" fill="currentColor"/></svg></span> DYSK SSD 1 TB SATA 2,5" z DRAM (SanDisk Ultra 3D)</b>
               </div>
               <div>
-                <span class="y ox" style="font-size:13pt;">300 zł</span> &nbsp;
-                <a href="https://www.olx.pl/d/oferta/dysk-ssd-samsung-870-evo-1tb-sata-2-5-CID99-ID1cXYBJ.html" target="_blank" rel="noopener" class="buy-btn">KUP NA OLX ↗</a>
+                <span class="y ox" style="font-size:13pt;">429 zł</span> &nbsp;
+                <a href="https://www.olx.pl/d/oferta/dysk-ssd-1tb-2-5-sata-sandisk-ultra-3d-sdssdh31000g-dram-stan-95-gwarancja-faktura-vat-marza-CID99-ID1cRAY0.html" target="_blank" rel="noopener" class="buy-btn">KUP NA OLX ↗</a>
               </div>
             </div>
-            <p class="dim" style="margin:4pt 0;">Szybki dysk SSD 1 TB na system i pliki modeli AI.</p>
+            <p class="dim" style="margin:4pt 0;">Dysk 1 TB z pamięcią DRAM na system i pliki modeli AI. Stan 95%, gwarancja i faktura, Przesyłka OLX.</p>
             <div class="st-bar" data-item="ssd">
               <span class="dim ox" style="font-size:8.5pt;">STATUS:</span>
               <button class="st-btn s-todo on" data-st="todo">DO KUPIENIA</button>
               <button class="st-btn s-ord" data-st="ord">ZAMÓWIONE ⏳</button>
               <button class="st-btn s-got" data-st="got">W DOMU ✔</button>
             </div>
-            <input type="text" class="note-in" data-note="ssd" placeholder="Notatka (np. kupiony Samsung 870 EVO)">
+            <input type="text" class="note-in" data-note="ssd" placeholder="Notatka (np. kupiony SanDisk Ultra 3D 1 TB)">
           </div>
 
         </td>
@@ -561,7 +640,7 @@
 
     <!-- ETAP 2 -->
     <table class="blk">
-      <tr><td class="hd hc">ETAP 2 // ZAMÓW W TYGODNIU (NOWE Z ALLEGRO — SZYBKA WYSYŁKA SMART)</td></tr>
+      <tr><td class="hd hc">ETAP 2 // ZAMÓW W TYGODNIU (NOWE Z ALLEGRO + UŻYWANY ZASILACZ)</td></tr>
       <tr>
         <td class="bd bc">
           <p class="dim" style="margin-bottom:8pt;">Zamawiasz z Allegro Smart lub sklepów komputerowych — przyjdą w 1–3 dni robocze.</p>
@@ -570,7 +649,7 @@
           <div class="item-card" data-card="cpu">
             <div class="item-title">
               <div><span class="tag c">PROCESOR</span> &nbsp;<b style="font-size:11.5pt;"><span class="icon-chip c"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="8" y="8" width="8" height="8" rx="1"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/></svg></span> Intel Xeon E5-2690 v4 (14 rdzeni / 28 wątków)</b></div>
-              <div><span class="y ox" style="font-size:13pt;">149 zł</span> &nbsp;<a href="https://allegro.pl/oferta/procesor-intel-xeon-e5-2690-v4-14x-2-6ghz-sr2n2-15984403167" target="_blank" rel="noopener" class="buy-btn">KUP NA ALLEGRO ↗</a></div>
+              <div><span class="y ox" style="font-size:13pt;">149 zł</span> &nbsp;<a href="https://allegro.pl/oferta/procesor-intel-xeon-e5-2690v4-sr2n2-14-rdzeni-28-watkow-2-60-ghz-cpu-005-18944729029" target="_blank" rel="noopener" class="buy-btn">KUP NA ALLEGRO ↗</a></div>
             </div>
             <p class="dim" style="margin:4pt 0;">14-rdzeniowy procesor serwerowy do obliczeń AI.</p>
             <div class="st-bar" data-item="cpu">
@@ -586,9 +665,19 @@
           <div class="item-card" data-card="cool">
             <div class="item-title">
               <div><span class="tag c">CHŁODZENIE</span> &nbsp;<b style="font-size:11.5pt;"><span class="icon-chip c"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 12c-2-3-1-6 1-7M12 12c3-2 6-1 7 1M12 12c2 3 1 6-1 7M12 12c-3 2-6 1-7-1"/></svg></span> Endorfy Fera 5 Dual Fan + Pasta Arctic MX-4 (8g)</b></div>
-              <div><span class="y ox" style="font-size:13pt;">150 zł</span> &nbsp;<a href="https://www.morele.net/chlodzenie-cpu-endorfy-fera-5-dual-fan-ey3a006-11788213/" target="_blank" rel="noopener" class="buy-btn">KUP NA MORELE / ALLEGRO ↗</a></div>
+              <div><span class="sub-progress mono g" style="font-size:8.5pt;"></span> <span class="y ox" style="font-size:13pt;">150 zł</span></div>
             </div>
-            <p class="dim" style="margin:4pt 0;">Wydajne i ciche chłodzenie procesora z podwójnym wentylatorem.</p>
+            <p class="dim" style="margin:4pt 0;">Wydajne i ciche chłodzenie procesora z podwójnym wentylatorem. <b>2 pozycje — osobne linki, bo to dwa różne sklepy:</b></p>
+            <div class="sub-grid">
+              <div class="sub-item" data-sub="fera">
+                <div class="sub-left"><span class="sub-cb" data-sub-id="fera">☐</span><span class="sub-name" title="Endorfy Fera 5 Dual Fan EY3A006 — 220W TDP, śruby M4 pod LGA 2011-3 w pudełku">Endorfy Fera 5 Dual Fan (220W TDP)</span></div>
+                <div class="sub-right"><span class="sub-price">129,00 zł</span><a class="sub-buy" href="https://www.morele.net/chlodzenie-cpu-endorfy-fera-5-dual-fan-ey3a006-11788461/" target="_blank" rel="noopener">MORELE ↗</a></div>
+              </div>
+              <div class="sub-item" data-sub="paste">
+                <div class="sub-left"><span class="sub-cb" data-sub-id="paste">☐</span><span class="sub-name" title="Arctic MX-4 8 g ACTCP00008B — procesor + ewentualne odświeżenie pasty na kartach">Pasta Arctic MX-4 8 g</span></div>
+                <div class="sub-right"><span class="sub-price">20,18 zł</span><a class="sub-buy" href="https://allegro.pl/oferta/arctic-mx-4-pasta-termoprzewodzaca-8-5-w-mk-8-g-actcp00008b-18519062422" target="_blank" rel="noopener">ALLEGRO ↗</a></div>
+              </div>
+            </div>
             <div class="st-bar" data-item="cool">
               <span class="dim ox" style="font-size:8.5pt;">STATUS:</span>
               <button class="st-btn s-todo on" data-st="todo">DO KUPIENIA</button>
@@ -602,7 +691,7 @@
           <div class="item-card" data-card="psu">
             <div class="item-title">
               <div><span class="tag y">ZASILANIE</span> &nbsp;<b style="font-size:11.5pt;"><span class="icon-chip y"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8" cy="12" r="3"/><path d="M15 8h4M15 12h4M15 16h4"/></svg></span> Corsair HX1200 1200W Platinum (8 wtyczek PCIe 8-pin)</b></div>
-              <div><span class="y ox" style="font-size:13pt;">399 zł</span> &nbsp;<a href="https://allegro.pl/oferta/zasilacz-corsair-hx1200-1200w-80-plus-platinum-17215286241" target="_blank" rel="noopener" class="buy-btn">KUP NA ALLEGRO ↗</a></div>
+              <div><span class="y ox" style="font-size:13pt;">399 zł</span> &nbsp;<a href="https://allegro.pl/oferta/zasilacz-corsair-hx1200-1200-w-80-plus-platinum-19032704470" target="_blank" rel="noopener" class="buy-btn">KUP NA ALLEGRO ↗</a></div>
             </div>
             <p class="dim" style="margin:4pt 0;">⚠️ Zamawiasz TYLKO, jeśli stary zasilacz ze stelaża nie wystarczy (Alex potwierdzi ze zdjęcia).</p>
             <div class="st-bar" data-item="psu">
@@ -618,7 +707,7 @@
           <div class="item-card" data-card="riser">
             <div class="item-title">
               <div><span class="tag c">ŁĄCZNIKI</span> &nbsp;<b style="font-size:11.5pt;"><span class="icon-chip c"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="5" rx="1"/><rect x="4" y="17" width="16" height="5" rx="1"/><path d="M6 7v10M10 7v10M14 7v10M18 7v10" stroke-dasharray="2 2"/></svg></span> 4× Risery PCIe 3.0/4.0 x16 (długość 30 cm, ekranowane)</b></div>
-              <div><span class="y ox" style="font-size:13pt;">276 zł</span> &nbsp;<a href="https://allegro.pl/oferta/riser-pcie-3-0-16x-16x-tasma-katowy-30cm-termopad-15174360699" target="_blank" rel="noopener" class="buy-btn">KUP NA ALLEGRO ↗</a></div>
+              <div><span class="y ox" style="font-size:13pt;">276 zł</span> &nbsp;<a href="https://allegro.pl/oferta/tasma-riser-pci-e-pcie-3-0-express-x16-x16-30cm-12432322718" target="_blank" rel="noopener" class="buy-btn">KUP NA ALLEGRO ↗</a></div>
             </div>
             <p class="dim" style="margin:4pt 0;">Taśmy łączące 4 karty graficzne z płytą główną na stelażu.</p>
             <div class="st-bar" data-item="riser">
@@ -633,10 +722,24 @@
           <!-- WENTYLATORY -->
           <div class="item-card" data-card="fan">
             <div class="item-title">
-              <div><span class="tag c">NAWIEW</span> &nbsp;<b style="font-size:11.5pt;"><span class="icon-chip c"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 12c-3-2-4-5-2-7 2-2 5-1 7 2-2 3-5 4-7 2z"/></svg></span> 5× Wentylatory Arctic P12 PWM PST + Fan Hub</b></div>
-              <div><span class="y ox" style="font-size:13pt;">155 zł</span> &nbsp;<a href="https://allegro.pl/oferta/arctic-p12-pwm-pst-czarny-5-pack-wentylator-120mm-11854964645" target="_blank" rel="noopener" class="buy-btn">KUP NA ALLEGRO ↗</a></div>
+              <div><span class="tag c">NAWIEW</span> &nbsp;<b style="font-size:11.5pt;"><span class="icon-chip c"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 12c-3-2-4-5-2-7 2-2 5-1 7 2-2 3-5 4-7 2z"/></svg></span> 5× Arctic P12 Pro PWM PST + Fan Hub + Dummy Plug</b></div>
+              <div><span class="sub-progress mono g" style="font-size:8.5pt;"></span> <span class="y ox" style="font-size:13pt;">155 zł</span></div>
             </div>
-            <p class="dim" style="margin:4pt 0;">Chłodzenie kart graficznych na stelażu. Karty będą ciche i chłodne (poniżej 65°C).</p>
+            <p class="dim" style="margin:4pt 0;">Chłodzenie kart graficznych na stelażu. Karty będą ciche i chłodne (poniżej 65°C). <b>3 pozycje — osobne linki:</b></p>
+            <div class="sub-grid">
+              <div class="sub-item" data-sub="fans">
+                <div class="sub-left"><span class="sub-cb" data-sub-id="fans">☐</span><span class="sub-name" title="Zestaw 5 szt. ACFAN00307A — stały przewiew między 4 kartami RTX">5× Arctic P12 Pro PWM PST (120 mm)</span></div>
+                <div class="sub-right"><span class="sub-price">109,99 zł</span><a class="sub-buy" href="https://allegro.pl/oferta/wentylator-arctic-p12-pro-pwm-pst-black-120mm-zestaw-5szt-acfan00307a-17977465818" target="_blank" rel="noopener">ALLEGRO ↗</a></div>
+              </div>
+              <div class="sub-item" data-sub="hub">
+                <div class="sub-left"><span class="sub-cb" data-sub-id="hub">☐</span><span class="sub-name" title="Arctic Case Fan Hub ACFAN00175A — 10 kanałów PWM, zasilany z SATA">Arctic Case Fan Hub (10× PWM)</span></div>
+                <div class="sub-right"><span class="sub-price">29,99 zł</span><a class="sub-buy" href="https://allegro.pl/oferta/arctic-case-fan-hub-10-x-pwm-4-pin-acfan00175a-na-10-wentylatorow-17372158716" target="_blank" rel="noopener">ALLEGRO ↗</a></div>
+              </div>
+              <div class="sub-item" data-sub="dummy">
+                <div class="sub-left"><span class="sub-cb" data-sub-id="dummy">☐</span><span class="sub-name" title="Emulator monitora 4K — serwer pracuje bez podłączonego ekranu">Wtyczka HDMI Dummy Plug 4K</span></div>
+                <div class="sub-right"><span class="sub-price">14,99 zł</span><a class="sub-buy" href="https://allegro.pl/oferta/emulator-monitora-adapter-hdmi-vga-4k-dummy-plug-14113599868" target="_blank" rel="noopener">ALLEGRO ↗</a></div>
+              </div>
+            </div>
             <div class="st-bar" data-item="fan">
               <span class="dim ox" style="font-size:8.5pt;">STATUS:</span>
               <button class="st-btn s-todo on" data-st="todo">DO KUPIENIA</button>
@@ -649,10 +752,57 @@
           <!-- DROBIAZGI MONTAŻOWE -->
           <div class="item-card" data-card="parts">
             <div class="item-title">
-              <div><span class="tag dim">MONTAŻ</span> &nbsp;<b style="font-size:11.5pt;"><span class="icon-chip dim"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M8 12h8"/></svg></span> Drobiazgi: Pendrive 32GB, 2× kabel SATA, bateria CR2032, kabel Molex-PCIe</b></div>
-              <div><span class="y ox" style="font-size:13pt;">166 zł</span> &nbsp;<a href="https://allegro.pl/oferta/sandisk-pendrive-ultra-flair-32gb-srebrny-18952645229" target="_blank" rel="noopener" class="buy-btn">KUP NA ALLEGRO ↗</a></div>
+              <div><span class="tag dim">MONTAŻ</span> &nbsp;<b style="font-size:11.5pt;"><span class="icon-chip dim"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M8 12h8"/></svg></span> Drobiazgi montażowe (10 pozycji: pendrive, kable, bateria, IPA, ESD, watomierz)</b></div>
+              <div><span class="sub-progress mono g" style="font-size:8.5pt;"></span> <span class="y ox" style="font-size:13pt;">166 zł</span></div>
             </div>
-            <p class="dim" style="margin:4pt 0;">Pendrive do instalacji systemu oraz kable połączeniowe.</p>
+            <p class="dim" style="margin:4pt 0;">Płyta z eBaya przychodzi bez kabli i baterii. <b>Każda pozycja ma własny link — Allegro nie pozwala zrobić jednego koszyka z osobnych ofert, więc klikaj i dodawaj po kolei.</b></p>
+            <div class="sub-grid">
+              <div class="sub-item" data-sub="usb">
+                <div class="sub-left"><span class="sub-cb" data-sub-id="usb">☐</span><span class="sub-name" title="SanDisk Ultra Flair 32 GB USB 3.0 — instalacja Ubuntu i aktualizacja BIOS-u">Pendrive 32 GB SanDisk Ultra Flair</span></div>
+                <div class="sub-right"><span class="sub-price">47,89 zł</span><a class="sub-buy" href="https://allegro.pl/oferta/sandisk-pendrive-ultra-flair-32gb-srebrny-18952645229" target="_blank" rel="noopener">ALLEGRO ↗</a></div>
+              </div>
+              <div class="sub-item" data-sub="sata">
+                <div class="sub-left"><span class="sub-cb" data-sub-id="sata">☐</span><span class="sub-name" title="2 sztuki × 2,66 zł — jeden do dysku SSD, drugi w zapas">2× kabel SATA 50 cm</span></div>
+                <div class="sub-right"><span class="sub-price">5,32 zł</span><a class="sub-buy" href="https://allegro.pl/oferta/kabel-gembird-cc-satam-data-13045036934" target="_blank" rel="noopener">ALLEGRO ↗</a></div>
+              </div>
+              <div class="sub-item" data-sub="cr2032">
+                <div class="sub-left"><span class="sub-cb" data-sub-id="cr2032">☐</span><span class="sub-name" title="Duracell CR2032 3V, 5 szt. — nowa bateria, żeby BIOS nie gubił ustawień">Bateria CR2032 (5 szt.)</span></div>
+                <div class="sub-right"><span class="sub-price">11,99 zł</span><a class="sub-buy" href="https://allegro.pl/oferta/bateria-litowa-duracell-cr2032-3v-do-pilota-zegarka-guzikowa-5szt-18876839749" target="_blank" rel="noopener">ALLEGRO ↗</a></div>
+              </div>
+              <div class="sub-item" data-sub="molex">
+                <div class="sub-left"><span class="sub-cb" data-sub-id="molex">☐</span><span class="sub-name" title="Akyga AK-CA-13 — dodatkowe zasilanie 6-pin płyty w gnieździe EZ_PLUG (nie mylić z 8-pin CPU!)">Przejściówka 2× Molex → PCIe 6-pin</span></div>
+                <div class="sub-right"><span class="sub-price">4,35 zł</span><a class="sub-buy" href="https://allegro.pl/oferta/adapter-molex-pci-express-akyga-ak-ca-13-0-15-m-17852260888" target="_blank" rel="noopener">ALLEGRO ↗</a></div>
+              </div>
+              <div class="sub-item" data-sub="lan">
+                <div class="sub-left"><span class="sub-cb" data-sub-id="lan">☐</span><span class="sub-name" title="Patchcord Cat.6 10 m — stabilne połączenie router → serwer (zamiast Wi-Fi)">Kabel LAN Cat.6 10 m</span></div>
+                <div class="sub-right"><span class="sub-price">19,90 zł</span><a class="sub-buy" href="https://allegro.pl/oferta/kabel-ethernet-sieciowy-internetowy-patchcord-skretka-lan-rj45-utp-cat6-10m-6855553650" target="_blank" rel="noopener">ALLEGRO ↗</a></div>
+              </div>
+              <div class="sub-item" data-sub="ipa">
+                <div class="sub-left"><span class="sub-cb" data-sub-id="ipa">☐</span><span class="sub-name" title="Izopropanol 99,9%, 1 litr — odtłuszczenie procesora przed nałożeniem pasty">Alkohol IPA 99,9% (1 l)</span></div>
+                <div class="sub-right"><span class="sub-price">19,99 zł</span><a class="sub-buy" href="https://allegro.pl/oferta/alkohol-izopropylowy-izopropanol-odtluszczacz-ipa-99-9-1l-14274597288" target="_blank" rel="noopener">ALLEGRO ↗</a></div>
+              </div>
+              <div class="sub-item" data-sub="air">
+                <div class="sub-left"><span class="sub-cb" data-sub-id="air">☐</span><span class="sub-name" title="400 ml — wydmuchanie kurzu z radiatorów kart RTX 3070">Sprężone powietrze 400 ml</span></div>
+                <div class="sub-right"><span class="sub-price">9,39 zł</span><a class="sub-buy" href="https://allegro.pl/oferta/sprezone-powietrze-400-ml-17423349480" target="_blank" rel="noopener">ALLEGRO ↗</a></div>
+              </div>
+              <div class="sub-item" data-sub="esd">
+                <div class="sub-left"><span class="sub-cb" data-sub-id="esd">☐</span><span class="sub-name" title="Opaska antystatyczna z krokodylkiem — ochrona płyty i RAM przed ESD">Opaska antystatyczna ESD</span></div>
+                <div class="sub-right"><span class="sub-price">10,90 zł</span><a class="sub-buy" href="https://allegro.pl/oferta/opaska-esd-safe-na-reke-antystatyczna-aele-004-6056599042" target="_blank" rel="noopener">ALLEGRO ↗</a></div>
+              </div>
+              <div class="sub-item" data-sub="rzep">
+                <div class="sub-left"><span class="sub-cb" data-sub-id="rzep">☐</span><span class="sub-name" title="Taśma rzepowa 3 m — upięcie wiązek kabli na stelażu">Taśma rzepowa Baseus 3 m</span></div>
+                <div class="sub-right"><span class="sub-price">8,73 zł</span><a class="sub-buy" href="https://allegro.pl/oferta/organizer-kabli-baseus-300cm-przewodow-rzep-opaska-czarna-3-m-tasma-rzepowa-18298905862" target="_blank" rel="noopener">ALLEGRO ↗</a></div>
+              </div>
+              <div class="sub-item" data-sub="watt">
+                <div class="sub-left"><span class="sub-cb" data-sub-id="watt">☐</span><span class="sub-name" title="GreenBlue GB620 — pokazuje na żywo pobór w watach i koszt prądu w złotych">Watomierz GreenBlue GB620</span></div>
+                <div class="sub-right"><span class="sub-price">27,51 zł</span><a class="sub-buy" href="https://allegro.pl/oferta/miernik-energii-greenblue-watomierz-16a-max-3680w-gb620-e-18380000131" target="_blank" rel="noopener">ALLEGRO ↗</a></div>
+              </div>
+            </div>
+            <div class="alt-links">
+              <span>SUMA POZYCJI: <b class="y">165,97 zł</b> (liczone 2× kabel SATA)</span>
+              <span>·</span>
+              <span>Wszystko nowe, kupujesz od razu — bez pytania sprzedawcy.</span>
+            </div>
             <div class="st-bar" data-item="parts">
               <span class="dim ox" style="font-size:8.5pt;">STATUS:</span>
               <button class="st-btn s-todo on" data-st="todo">DO KUPIENIA</button>
@@ -674,7 +824,7 @@
           <div class="item-card" data-card="mb">
             <div class="item-title">
               <div><span class="tag m">SERCE MASZYNY</span> &nbsp;<b style="font-size:12pt;"><span class="icon-chip m"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><rect x="6" y="6" width="5" height="5"/><path d="M15 6h3M15 9h3M6 15h12M6 18h12"/></svg></span> Płyta główna ASUS X99-E WS / USB 3.1</b></div>
-              <div><span class="y ox" style="font-size:14pt;">~1 340 zł</span> &nbsp;<a href="https://www.ebay.com/itm/387431268750" target="_blank" rel="noopener" class="buy-btn" style="background:var(--m);color:#FFF;">KUP NA EBAY ↗</a></div>
+              <div><span class="y ox" style="font-size:14pt;">~1 340 zł</span> &nbsp;<a href="https://www.ebay.com/itm/116016463694" target="_blank" rel="noopener" class="buy-btn" style="background:var(--m);color:#FFF;">KUP NA EBAY ↗</a></div>
             </div>
             <p class="dim" style="margin:4pt 0;">Płyta główna obsługująca 4 karty graficzne i procesor. Darmowa wysyłka do Polski.</p>
             <div class="st-bar" data-item="mb">
@@ -741,7 +891,7 @@
           <div style="background:rgba(5,5,14,0.85);border:1pt solid var(--g);padding:11pt;margin-top:12pt;border-radius:3pt;">
             <p class="ox g" style="font-size:13pt;margin:0 0 6pt 0;">⚡ JAK DZIAŁA OSZCZĘDZANIE ENERGII I WYBUDZANIE (WAKE ON LAN)</p>
             <p style="margin:0 0 8pt 0;font-size:10.8pt;line-height:1.6;">
-              Nie musisz się martwić o rachunki za prąd. Serwer ma pobór obniżony o ~280W i dwa inteligentne tryby oszczędzania:
+              Nie musisz się martwić o rachunki za prąd. Karty chodzą z limitem 150 W, więc serwer bierze <b>120–150 W w spoczynku</b> i <b>550–650 W pod pełnym obciążeniem AI</b> (szczegóły w zakładce 06). Do tego ma dwa tryby oszczędzania:
             </p>
             <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:8pt;margin-bottom:8pt;">
               <div style="background:#090916;border:1pt solid var(--border);padding:9pt;border-radius:2pt;">
@@ -834,7 +984,7 @@
 
           <div style="background:#05050A;border:1pt solid var(--border);padding:10pt;">
             <b class="ox c">SPRAWDZENIE ZASILACZA Z KOPARKI:</b>
-            <p class="dim" style="margin:4pt 0 8pt 0;">Zrób zdjęcie naklejki ze starego zasilacza i wpisz tutaj dane. Jeśli ma 1000W+ i 8 wtyczek 8-pin, nie kupujesz nowego za 399 zł!</p>
+            <p class="dim" style="margin:4pt 0 8pt 0;">Zrób zdjęcie naklejki ze starego zasilacza i wpisz tutaj dane. Jeśli ma <b>min. 1000 W</b>, <b>8 wtyczek PCIe 6+2</b> do kart i <b>2 wtyczki CPU 8-pin (EPS)</b>, nie kupujesz nowego za 399 zł!</p>
             
             <label class="dim" style="font-size:9pt;">MODEL I MOC ZASILACZA (np. Corsair RM1000x / Chieftec 1200W):</label>
             <input type="text" class="rig-in" data-rig="psuModel" placeholder="Wpisz model...">
@@ -856,7 +1006,7 @@
           <div style="line-height:1.6;font-size:11pt;">
             <p><span class="tag g">KROK 1</span> &nbsp;<b>Seba zamawia części:</b> Kupujesz RAM (OLX), SSD (OLX), CPU i chłodzenie (Allegro) oraz płytę (eBay). Odbierasz paczki do domu.</p>
             <p><span class="tag g">KROK 2</span> &nbsp;<b>Dajesz znać Alexowi:</b> Jak dotrą kluczowe podzespoły (płyta główna, procesor, pamięć RAM) — dzwonisz lub piszesz na Signal.</p>
-            <p><span class="tag c">KROK 3</span> &nbsp;<b>Alex przyjeżdża złożyć sprzęt:</b> Alex zabiera narzędzia (śrubokręty, rzepy montażowe) i pendrive z gotowym instalatorem Ubuntu oraz modelem AI (pastę termoprzewodzącą i wszystkie części masz już u siebie w odebranych paczkach!).</p>
+            <p><span class="tag c">KROK 3</span> &nbsp;<b>Alex przyjeżdża złożyć sprzęt:</b> Alex zabiera narzędzia (śrubokręty, rzepy), pastę MX-4 i zapasowy pendrive z instalatorem Ubuntu 24.04 — ale pendrive 32 GB z listy i tak kupujesz, bo zostaje u Ciebie na aktualizację BIOS-u i przyszłe reinstalacje. Wszystkie części są już w Twoich odebranych paczkach.</p>
             <p><span class="tag c">KROK 4</span> &nbsp;<b>Wspólny montaż:</b> Alex montuje płytę na stelażu, podłącza risery, procesor i chłodzenie Fera 5, konfiguruje BIOS i instaluje system Linux.</p>
             <p><span class="tag m">KROK 5</span> &nbsp;<b>Test na Twoim laptopie:</b> Odpalamy serwer, łączysz się ze swojego laptopa po Wi-Fi i sprawdzamy jak śmiga model AI.</p>
             <p><span class="tag m">KROK 6</span> &nbsp;<b>Gotowe:</b> Serwer zostaje u Ciebie na stelażu, gotowy do stabilnej pracy 24/7.</p>
@@ -1622,7 +1772,7 @@
     var psuSkip = document.getElementById('psuSkipBadge');
     if (psuSkip) psuSkip.textContent = c.psuFromRig ? '✔ MAMY SWÓJ Z KOPARKI (0 zł)' : '+399 zł oszczędności';
     var ssdSkip = document.getElementById('ssdSkipBadge');
-    if (ssdSkip) ssdSkip.textContent = c.ssdFromRig ? '✔ MAMY SWÓJ Z KOPARKI (0 zł)' : '+300 zł oszczędności';
+    if (ssdSkip) ssdSkip.textContent = c.ssdFromRig ? '✔ MAMY SWÓJ Z KOPARKI (0 zł)' : '+429 zł oszczędności';
 
     var psuCard = document.querySelector('.item-card[data-card="psu"]');
     if (psuCard) psuCard.classList.toggle('from-rig', !!c.psuFromRig);
@@ -1636,7 +1786,7 @@
     // Ceny (spójne 1:1 z panelem Alexa, uwzględniające opcje APC i Wi-Fi)
     var hasApc = !!(c.optApc || state.checks['apc']);
     var hasWifi = !!(c.optWifi || state.checks['wifi']);
-    var baseTotal = 1340 + 149 + ramPrice + (c.ssdFromRig ? 0 : 300) + 150 + (c.psuFromRig ? 0 : 399) + 276 + 155 + 166;
+    var baseTotal = 1340 + 149 + ramPrice + (c.ssdFromRig ? 0 : 429) + 150 + (c.psuFromRig ? 0 : 399) + 276 + 155 + 166;
     if (hasApc) baseTotal += 229;
     if (hasWifi) baseTotal += 125;
 
@@ -1644,7 +1794,7 @@
       { id:'mb', price: 1340 },
       { id:'cpu', price: 149 },
       { id:'ram', price: ramPrice },
-      { id:'ssd', price: c.ssdFromRig ? 0 : 300, skip: c.ssdFromRig },
+      { id:'ssd', price: c.ssdFromRig ? 0 : 429, skip: c.ssdFromRig },
       { id:'cool', price: 150 },
       { id:'psu', price: c.psuFromRig ? 0 : 399, skip: c.psuFromRig },
       { id:'riser', price: 276 },
@@ -1683,14 +1833,35 @@
     document.querySelectorAll('.st-bar').forEach(function(bar){
       var item = bar.dataset.item;
       var cur = state.statuses[item] || (state.checks[item] ? 'got' : 'todo');
+      var shown = (cur === 'ask') ? 'todo' : cur;
       bar.querySelectorAll('.st-btn').forEach(function(btn){
-        btn.classList.toggle('on', btn.dataset.st === cur);
+        btn.classList.toggle('on', btn.dataset.st === shown);
       });
       var card = bar.closest('.item-card');
       if (card) {
         card.classList.toggle('got', cur === 'got');
-        card.classList.toggle('ord', cur === 'ord');
+        card.classList.toggle('ord', cur === 'ord' || cur === 'ask');
       }
+    });
+
+    // Pozycje składowe (chłodzenie, nawiew, drobiazgi) — własne ☐/☑
+    document.querySelectorAll('.sub-cb').forEach(function(el){
+      var sid = el.dataset.subId;
+      var on = !!state.checks[sid];
+      el.textContent = on ? '☑' : '☐';
+      el.classList.toggle('on', on);
+      var row = el.closest('.sub-item');
+      if (row) row.classList.toggle('done', on);
+    });
+
+    // Licznik pozycji w kartach zbiorczych (np. 3 / 10 kupione)
+    document.querySelectorAll('.item-card').forEach(function(card){
+      var cbs = card.querySelectorAll('.sub-cb');
+      if (!cbs.length) return;
+      var bought = 0;
+      cbs.forEach(function(cb){ if (state.checks[cb.dataset.subId]) bought++; });
+      var prog = card.querySelector('.sub-progress');
+      if (prog) prog.textContent = bought + ' / ' + cbs.length + ' kupione';
     });
 
     // Notatki
@@ -1713,6 +1884,24 @@
   // Kliknięcia przycisków statusu
   document.addEventListener('click', function(ev){
     var t = ev.target;
+    var scb = (t.closest ? t.closest('.sub-cb') : null);
+    var subRow = (t.closest && !t.closest('a')) ? t.closest('.sub-item') : null;
+    if (scb || subRow) {
+      var sid = (scb || subRow).dataset.subId || (subRow ? subRow.dataset.sub : null);
+      if (!sid) return;
+      state.checks[sid] = !state.checks[sid];
+      Object.keys(GROUP_SUBS).forEach(function(g){
+        if (GROUP_SUBS[g].indexOf(sid) !== -1) {
+          var allOn = GROUP_SUBS[g].every(function(k){ return !!state.checks[k]; });
+          var anyOn = GROUP_SUBS[g].some(function(k){ return !!state.checks[k]; });
+          state.checks[g] = allOn;
+          state.statuses[g] = allOn ? 'got' : (anyOn ? 'ord' : 'todo');
+        }
+      });
+      pushToServer();
+      showToast(state.checks[sid] ? 'ODHACZONO ✔' : 'ODZNACZONO');
+      return;
+    }
     if (t.classList.contains('st-btn')) {
       var bar = t.closest('.st-bar');
       if (!bar) return;
