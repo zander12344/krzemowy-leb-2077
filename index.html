@@ -431,6 +431,7 @@
       <button data-t="laptop">02 TWÓJ LAPTOP &amp; AI</button>
       <button data-t="koparka">03 Z KOPARKI (0 ZŁ)</button>
       <button data-t="plan">04 PLAN PRZYJAZDU ALEXA</button>
+      <button data-t="mozliwosci" style="border-color:var(--y);color:var(--y);">⚡ 05 CO POTRAFI TWÓJ MODEL</button>
     </div>
   </div>
 
@@ -803,6 +804,308 @@
         </td>
       </tr>
     </table>
+  </div>
+
+  <!-- ==================== ZAKŁADKA 05: CO POTRAFI TWÓJ MODEL ==================== -->
+  <div id="mozliwosci" class="pane">
+
+    <!-- BANNER GŁÓWNY ZAKŁADKI -->
+    <table class="blk">
+      <tr><td class="hd hy">⚡ 05 // CO NAPRAWDĘ POTRAFI TWÓJ MODEL (QWEN 177B MoE) // PRZEWODNIK DLA SEBY</td></tr>
+      <tr>
+        <td class="bd by">
+          <p class="ox y" style="font-size:16pt;margin:2pt 0 6pt 0;">TO NIE JEST ZWYKŁY CHATBOT — TO TWOJA PRYWATNA FABRYKA ANALITYCZNA</p>
+          <p style="font-size:11.5pt;line-height:1.65;margin:0 0 10pt 0;">
+            Seba, ten komputer, który budujemy na stelażu z Twoich 4 kart graficznych, to <b>potwór obliczeniowy</b>. 
+            Większość ludzi myśli, że AI to tylko zabawka jak darmowy ChatGPT, który po 5 pytaniach zapomina co pisałeś, cenzuruje odpowiedzi i kasuje 100 zł abonamentu. 
+            Nasz serwer ma <b>177 miliardów parametrów</b> i stoi fizycznie u Ciebie w pokoju. 
+            Nikt Cię nie podsłuchuje, nie ma żadnych abonamentów, a <b>wszystkie tajemnice, umowy, faktury i dane nigdy nie wychodzą poza Twój dysk</b>.
+          </p>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:8pt;margin-bottom:8pt;">
+            <div style="background:#090916;border:1pt solid var(--c);padding:8pt 10pt;border-radius:2pt;">
+              <span class="ox c" style="font-size:12pt;">🧠 177 MILIARDÓW MÓZGU</span><br>
+              <span class="dim" style="font-size:9.5pt;">Architektura MoE: dziesiątki wyspecjalizowanych ekspertów w jednym modelu.</span>
+            </div>
+            <div style="background:#090916;border:1pt solid var(--g);padding:8pt 10pt;border-radius:2pt;">
+              <span class="ox g" style="font-size:12pt;">🛡️ 100% PRYWATNOŚCI</span><br>
+              <span class="dim" style="font-size:9.5pt;">Zero wysyłania do chmury. Urzędy ani konkurencja nie mają wglądu w Twoje pliki.</span>
+            </div>
+            <div style="background:#090916;border:1pt solid var(--m);padding:8pt 10pt;border-radius:2pt;">
+              <span class="ox m" style="font-size:12pt;">🌙 PRACA W NOCY (0 ZŁ)</span><br>
+              <span class="dim" style="font-size:9.5pt;">Kładziesz się spać, a serwer przez noc analizuje 500 stron dokumentów i rano daje raport.</span>
+            </div>
+            <div style="background:#090916;border:1pt solid var(--y);padding:8pt 10pt;border-radius:2pt;">
+              <span class="ox y" style="font-size:12pt;">⚡ ZASADA 95 / 5</span><br>
+              <span class="dim" style="font-size:9.5pt;">Model odwala 95% najcięższej roboty kancelarii i księgowych. Ty dajesz tylko finalny podpis.</span>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <!-- MODUŁ 1: PRAWNIK & RADCA PRAWNY -->
+    <table class="blk" style="margin-top:12pt;">
+      <tr><td class="hd hc">⚖️ SEKCJA 1: WIRTUALNY PRAWNIK &amp; RADCA PRAWNY // KODEKS KARNY, CYWILNY, PRACY, KSH</td></tr>
+      <tr>
+        <td class="bd bc">
+          <p style="font-size:11.5pt;line-height:1.6;">
+            <b>Co się dzieje, jak wgramy modelowi bazę polskiego prawa (ISAP + orzecznictwo sądów)?</b><br>
+            Wgrywamy mu kompletne, oficjalne teksty jednolite wszystkich polskich ustaw z Dziennika Ustaw (Kodeks karny, cywilny, pracy, spółek handlowych, postępowania administracyjnego i cywilnego) oraz bazę ponad 200 000 wyroków Sądu Najwyższego i Sądów Apelacyjnych. 
+            Model nie zgaduje przepisów z pamięci — on <b>błyskawicznie przeszukuje dokładne brzmienie każdego artykułu i podpiera się realnymi wyrokami</b>.
+          </p>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(310px, 1fr));gap:10pt;margin-top:10pt;">
+            
+            <!-- KARTA: UMOWY -->
+            <div style="background:#090916;border:1pt solid var(--border);padding:11pt;border-radius:3pt;">
+              <p class="ox c" style="font-size:13pt;margin:0 0 6pt 0;">📄 1. PRZEŚWIETLANIE I ROZBIJANIE UMÓW</p>
+              <ul style="margin:0;padding-left:14pt;font-size:10.5pt;line-height:1.6;">
+                <li><b>Wrzucasz dowolną umowę:</b> najem lokalu/mieszkania, umowa leasingu auta, umowa z operatorem, zlecenie handlowe, umowa o pracę czy podwykonawcza.</li>
+                <li><b>Wyłapuje ukryte pułapki w 30 sekund:</b> kary umowne jednostronne (np. 500 zł kary za dzień zwłoki dla Ciebie, ale zero kary dla nich), niekorzystne terminy wypowiedzenia, automatyczne przedłużenia na kolejny rok.</li>
+                <li><b>Wykrywa klauzule niedozwolone (abuzywne):</b> model porównuje zapisy z rejestrem UOKiK i pisze Ci: <i>„Punkt 6 umowy jest bezprawny na mocy art. 385¹ Kodeksu cywilnego — w razie sporu sąd uzna go za niebyły”</i>.</li>
+                <li><b>Generuje gotowe poprawki:</b> wypluwa gotowy aneks lub bezpieczną dla Ciebie wersję umowy, którą odsyłasz drugiej stronie do podpisu.</li>
+              </ul>
+            </div>
+
+            <!-- KARTA: KODEKS KARNY -->
+            <div style="background:#090916;border:1pt solid var(--border);padding:11pt;border-radius:3pt;">
+              <p class="ox m" style="font-size:13pt;margin:0 0 6pt 0;">🚨 2. KODEKS KARNY I OBRONA W SPRAWACH SPORNYCH</p>
+              <ul style="margin:0;padding-left:14pt;font-size:10.5pt;line-height:1.6;">
+                <li><b>Kwalifikacja prawna czynu:</b> Jeśli ktoś oskarża Cię o oszustwo (art. 286 § 1 k.k.) czy przywłaszczenie (art. 284 k.k.), model natychmiast analizuje tzw. <i>znamiona przestępstwa</i>. Wykazuje czarno na białym, że brak zamiaru bezpośredniego czyni sprawę czystym sporem cywilnym (niewykonanie umowy z art. 471 k.c.), a nie przestępstwem!</li>
+                <li><b>Badanie przedawnienia karalności:</b> Sprawdza daty czynu wg art. 101 i 102 Kodeksu karnego. Jeśli sprawa jest przedawniona — sprawa natychmiast trafia do kosza.</li>
+                <li><b>Pisanie zawiadomień do Prokuratury / Policji:</b> Gdy nieuczciwy kontrahent wyłudził towar lub pieniądze i zerwał kontakt, model w 5 minut pisze sformalizowane zawiadomienie z powołaniem na dowody, wyciągi bankowe i artykuły k.k.</li>
+                <li><b>Wnioski procesowe:</b> Redaguje wnioski o umorzenie postępowania przygotowawczego, odpowiedzi na zarzuty czy zażalenia na postanowienia prokuratora.</li>
+              </ul>
+            </div>
+
+            <!-- KARTA: SPRZECIWY OD NAKAZÓW -->
+            <div style="background:#090916;border:1pt solid var(--border);padding:11pt;border-radius:3pt;">
+              <p class="ox y" style="font-size:13pt;margin:0 0 6pt 0;">⚖️ 3. SPRZECIWY OD NAKAZÓW ZAPŁATY (E-SĄD / EPU)</p>
+              <ul style="margin:0;padding-left:14pt;font-size:10.5pt;line-height:1.6;">
+                <li><b>Pismo od komornika lub nakaz z e-Sądu w Lublinie?</b> Firmy windykacyjne skupują stare, przedawnione długi sprzed 5–10 lat i liczą, że ludzie przestraszą się i zapłacą.</li>
+                <li><b>Gotowy sprzeciw w 2 minuty:</b> Model przygotowuje idealnie sformatowany Sprzeciw od nakazu zapłaty.</li>
+                <li><b>Skuteczne zarzuty prawne:</b> Podnosi zarzut przedawnienia roszczenia (art. 118 k.c. — 3 lata dla firm, 2 lata dla umowy o dzieło), brak legitymacji czynnej powoda (brak dowodów na skuteczną cesję wierzytelności) oraz zawyżone koszty windykacji.</li>
+                <li><b>Efekt:</b> Po złożeniu takiego sprzeciwu nakaz zapłaty traci moc w całości, a komornik musi natychmiast wstrzymać wszelkie działania.</li>
+              </ul>
+            </div>
+
+            <!-- KARTA: CZY MOŻE BYĆ ADWOKATEM -->
+            <div style="background:#090916;border:1pt solid var(--border);padding:11pt;border-radius:3pt;">
+              <p class="ox g" style="font-size:13pt;margin:0 0 6pt 0;">🎓 4. CZY MODEL MOŻE BYĆ ADWOKATEM W SĄDZIE?</p>
+              <p style="font-size:10.5pt;line-height:1.6;margin:0 0 6pt 0;">
+                <b>Odpowiedź wprost bez owijania w bawełnę:</b><br>
+                Zgodnie z polskim prawem na sali sądowej togę może założyć tylko certyfikowany adwokat lub radca prawny (albo Ty sam reprezentujesz siebie). Model fizycznie nie wejdzie z Tobą na salę rozpraw.
+              </p>
+              <p style="font-size:10.5pt;line-height:1.6;margin:0;">
+                <b>ALE: Model robi 95% najcięższej, najdroższej pracy kancelarii!</b><br>
+                Prawnicy biorą 1 500 – 5 000 zł nie za to, że stoją w sądzie, ale za to, że spędzają 15 godzin na czytaniu papierów, szukaniu wyroków Sądu Najwyższego i pisaniu uzasadnienia. 
+                Nasz serwer robi to w 2 minuty za 0 zł. Ty idziesz do prawnika tylko po podpis (albo sam składasz gotowe pismo w sądzie).
+              </p>
+            </div>
+
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <!-- MODUŁ 2: KSIĘGOWY & DORADCA PODATKOWY -->
+    <table class="blk" style="margin-top:12pt;">
+      <tr><td class="hd hg">💰 SEKCJA 2: WIRTUALNY GŁÓWNY KSIĘGOWY &amp; DORADCA PODATKOWY</td></tr>
+      <tr>
+        <td class="bd bg">
+          <p style="font-size:11.5pt;line-height:1.6;">
+            <b>Co potrafi liczyć i jak oszczędza realną gotówkę?</b><br>
+            Polski system podatkowy (zwłaszcza po Polskim Ładzie) jest jednym z najbardziej skomplikowanych na świecie. 
+            Zwykła księgowa w biurze rachunkowym często tylko klepie faktury i nie ma czasu doradzać, jak legalnie płacić mniejsze podatki. 
+            Nasz serwer potrafi przeprowadzać precyzyjne symulacje finansowe, porównywać warianty i pilnować terminów.
+          </p>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(310px, 1fr));gap:10pt;margin-top:10pt;">
+
+            <!-- SYMULACJE PODATKOWE -->
+            <div style="background:#090916;border:1pt solid var(--border);padding:11pt;border-radius:3pt;">
+              <p class="ox g" style="font-size:13pt;margin:0 0 6pt 0;">📊 1. SYMULACJE FORM OPODATKOWANIA</p>
+              <ul style="margin:0;padding-left:14pt;font-size:10.5pt;line-height:1.6;">
+                <li><b>Wpisujesz swoje cyfry:</b> planowany przychód (np. 15 tys., 30 tys., 60 tys. zł miesięcznie) oraz szacowane koszty.</li>
+                <li><b>Model przelicza co do złotówki 4 ścieżki:</b>
+                  <br>• Zasady ogólne (skala 12% / 32% + składka zdrowotna 9%).
+                  <br>• Podatek liniowy (19% + składka zdrowotna 4,9%).
+                  <br>• Ryczałt (stawki 5,5%, 8,5%, 12%, 14% lub 15% + ryczałtowy ZUS).
+                  <br>• Spółka z o.o. (mały podatnik 9% CIT + wypłata dywidendy lub powtarzające się świadczenia niepieniężne art. 176 KSH).
+                </li>
+                <li><b>Konkretny wynik:</b> Wypluwa kalkulację i mówi wprost: <i>„Na ryczałcie 8,5% zostaje Ci w kieszeni o 1 340 zł miesięcznie więcej (16 080 zł rocznie na czysto!) niż na podatku liniowym”</i>.</li>
+              </ul>
+            </div>
+
+            <!-- KOSZTY KUP I VAT -->
+            <div style="background:#090916;border:1pt solid var(--border);padding:11pt;border-radius:3pt;">
+              <p class="ox c" style="font-size:13pt;margin:0 0 6pt 0;">🛡️ 2. BEZPIECZNE WRZUCANIE W KOSZTY (KUP &amp; VAT)</p>
+              <ul style="margin:0;padding-left:14pt;font-size:10.5pt;line-height:1.6;">
+                <li><b>Pytasz o konkretny wydatek:</b> Czy mogę wrzucić w koszty firmy drogi telefon, laptopa, meble, paliwo do prywatnego auta, quada, sprzęt warsztatowy, czy szkolenia?</li>
+                <li><b>Sprawdza oficjalne interpretacje KIS:</b> Przeszukuje tysiące oficjalnych pism Krajowej Informacji Skarbowej i wyroków Naczelnego Sądu Administracyjnego (NSA).</li>
+                <li><b>Gotowe uzasadnienie dla Urzędu Skarbowego:</b> Podaje Ci gotową formułkę związku przyczynowo-skutkowego z przychodem (art. 22 ust. 1 ustawy o PIT), dzięki czemu w razie kontroli skarbówka nie zakwestionuje faktury.</li>
+                <li><b>Odliczenia VAT:</b> Precyzyjnie instruuje, kiedy przysługuje 50% odliczenia VAT (użytek mieszany auta), a kiedy pełne 100% (zgłoszenie VAT-26 i ewidencja przebiegu).</li>
+              </ul>
+            </div>
+
+            <!-- FAKTURY I BŁĘDY -->
+            <div style="background:#090916;border:1pt solid var(--border);padding:11pt;border-radius:3pt;">
+              <p class="ox y" style="font-size:13pt;margin:0 0 6pt 0;">🔍 3. KONTROLA FAKTUR, SPLIT PAYMENT &amp; BIAŁA LISTA</p>
+              <ul style="margin:0;padding-left:14pt;font-size:10.5pt;line-height:1.6;">
+                <li><b>Biała Lista Podatników VAT:</b> Przed puszczeniem przelewu model przypomina o sprawdzeniu, czy konto bankowe kontrahenta jest zarejestrowane w Wykazie MF (przelew powyżej 15 000 zł na niezgłoszone konto = brak prawa do zaliczenia w koszty KUP i odpowiedzialność za cudzy VAT!).</li>
+                <li><b>Split Payment (MPP):</b> Wykrywa towary wrażliwe (elektronika, części samochodowe, złom, paliwa) i pilnuje obowiązkowego dopisku <i>„mechanizm podzielonej płatności”</i> na fakturach powyżej 15 tys. zł brutto.</li>
+                <li><b>Wykrywanie błędów:</b> Błędne stawki VAT (np. 8% zamiast 23%), brakujące NIP-y, błędy w zaokrągleniach groszy, podwójnie zaksięgowane dokumenty.</li>
+              </ul>
+            </div>
+
+            <!-- PŁACE I KADRY -->
+            <div style="background:#090916;border:1pt solid var(--border);padding:11pt;border-radius:3pt;">
+              <p class="ox m" style="font-size:13pt;margin:0 0 6pt 0;">👥 4. KADRY, PŁACE I ZUS DLA PRACOWNIKÓW</p>
+              <ul style="margin:0;padding-left:14pt;font-size:10.5pt;line-height:1.6;">
+                <li><b>Kalkulator listy płac:</b> Przelicza pensje brutto na netto przy umowie o pracę, zleceniu, dziele czy kontrakcie B2B.</li>
+                <li><b>Pełny koszt pracodawcy („Duże brutto”):</b> Dokładnie wylicza składki płacone przez szefa: emerytalne (9,76%), rentowe (6,50%), wypadkowe, Fundusz Pracy (2,45%) i FGŚP (0,10%).</li>
+                <li><b>Wyliczenia kodeksowe:</b> Nadgodziny (dodatki 50% w dzień, 100% w nocy i niedziele), ekwiwalenty za niewykorzystany urlop wypoczynkowy, odprawy pracownicze i zasiłki chorobowe.</li>
+              </ul>
+            </div>
+
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <!-- MODUŁ 3: FIRMA TRANSPORTOWA & SPEDYCJA -->
+    <table class="blk" style="margin-top:12pt;">
+      <tr><td class="hd hm">🚛 SEKCJA 3: ZARZĄDZANIE FIRMĄ TRANSPORTOWĄ, SPEDYCJĄ I FLOTĄ</td></tr>
+      <tr>
+        <td class="bd bm">
+          <p class="ox m" style="font-size:14pt;margin:2pt 0 6pt 0;">CZY TEN MODEL MOŻE ZARZĄDZAĆ FIRMĄ TRANSPORTOWĄ? TAK, I TO Z ZAWROTNĄ PRECYZJĄ!</p>
+          <p style="font-size:11.5pt;line-height:1.65;margin:0 0 10pt 0;">
+            W branży transportowej (zarówno busy 3,5t, jak i ciężkie zestawy ciągnik + naczepa 40t) marże są ciasne, a ryzyko potężne. 
+            Jeden błąd w tachografie kierowcy to <b>kilka tysięcy złotych kary z ITD lub niemieckiego BALM (BAG)</b>. 
+            Jeden źle policzony fracht powrotny na pusto zjada cały zysk z tygodnia. 
+            Nasz serwer AI potrafi działać jak <b>inteligentny dyspozytor, kontroler czasu pracy i bezlitosny windykator frachtów</b>.
+          </p>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(310px, 1fr));gap:10pt;">
+
+            <!-- KARTA 1: CZAS PRACY KIEROWCÓW / TACHO -->
+            <div style="background:#090916;border:1pt solid var(--border);padding:11pt;border-radius:3pt;">
+              <p class="ox y" style="font-size:13pt;margin:0 0 6pt 0;">⏱️ 1. CZAS PRACY KIEROWCÓW I TACHOGRAFY (ROZP. 561/2006)</p>
+              <ul style="margin:0;padding-left:14pt;font-size:10.5pt;line-height:1.6;">
+                <li><b>Ścisła kontrola norm prawnych UE:</b>
+                  <br>• Jazda dzienna: max 9h (dwa razy w tygodniu można wydłużyć do 10h).
+                  <br>• Jazda ciągła: max 4h30m — obowiązkowa pauza 45 min (lub podzielona: min. 15 min + potem min. 30 min — w tej ścisłej kolejności!).
+                  <br>• Odpoczynek dobowy: regularny 11h lub skrócony 9h (max 3 razy między odpoczynkami tygodniowymi).
+                  <br>• Odpoczynek tygodniowy: regularny 45h (bezwzględny ZAKAZ spania w kabinie pod karą do 4 000 EUR w Niemczech/Francji!) oraz skrócony 24h z koniecznością rekompensaty do końca 3. tygodnia.
+                </li>
+                <li><b>Podwójna obsada (załoga wieloosobowa):</b> Rozliczanie 30-godzinnego cyklu dobowego, w którym każdy kierowca musi mieć min. 9h odpoczynku w stojącym pojeździe.</li>
+                <li><b>Pakiet Mobilności:</b> Pilnowanie obowiązkowego powrotu kierowcy do bazy co 4 tygodnie i ciężarówki co 8 tygodni.</li>
+                <li><b>Alerty w czasie rzeczywistym:</b> Wpisujesz stan tacho, a model alarmuje: <i>„Kierowca Tomek ma jeszcze tylko 38 minut jazdy. Do najbliższego bezpiecznego parkingu MOP jest 28 km. Jeśli minie ten zjazd, przekroczy czas i zarobi 500 zł mandatu dla siebie i 2000 zł dla firmy!”</i>.</li>
+              </ul>
+            </div>
+
+            <!-- KARTA 2: KALKULATOR RENTOWNOŚCI FRACHTÓW -->
+            <div style="background:#090916;border:1pt solid var(--border);padding:11pt;border-radius:3pt;">
+              <p class="ox c" style="font-size:13pt;margin:0 0 6pt 0;">💶 2. KALKULATOR OPŁACALNOŚCI FRACHTÓW W 5 SEKUND</p>
+              <p style="font-size:10.5pt;line-height:1.6;margin:0 0 6pt 0;">
+                Widzisz ładunek na giełdzie transportowej (Trans.eu, Timocom, Teleroute):<br>
+                <b>Trasa: Katowice → Hamburg (820 km), ładunek 22t, stawka oferowana: 1 100 EUR.</b><br>
+                Pytasz model: <i>„Brać to czy olać?”</i>. Model błyskawicznie przelicza:
+              </p>
+              <div class="mono" style="background:#05050A;padding:6pt 8pt;border:1pt solid var(--border);font-size:9.5pt;line-height:1.5;">
+                • Paliwo: 820 km × 30 l/100km = 246 l ON × 6,40 zł = 1 574 zł<br>
+                • Myto e-TOLL (Polska): ~180 zł<br>
+                • Maut Niemcy (Euro 6 + CO2): ~203 EUR (~870 zł)<br>
+                • Koszt kierowcy (dniówka + sanitaryjki): ~450 zł<br>
+                • Zużycie zestawu (opony, serwis, ubezpieczenie): ~330 zł<br>
+                ------------------------------------------------<br>
+                <b>ŁĄCZNY KOSZT TRASY:</b> ~3 400 zł<br>
+                <b>PRZYCHÓD (1 100 EUR × 4,30 zł):</b> 4 730 zł<br>
+                <span class="g"><b>CZYSTY ZYSK NA TRASIE:</b> +1 330 zł</span>
+              </div>
+              <p style="font-size:10.5pt;line-height:1.6;margin:6pt 0 0 0;">
+                <b>Analiza powrotu (klucz do sukcesu):</b> Model sprawdza giełdę i ostrzega: <i>„Rejon Hamburga ma dziś niską podaż ładunków do Polski. Jeśli wrócisz na pusto 350 km do Berlina, spalisz 670 zł na paliwie i 380 zł na Maucie. Zysk stopnieje do 280 zł! Negocjuj ze spedytorem stawkę min. 1 300 EUR albo szukaj doładunku!”</i>.
+              </p>
+            </div>
+
+            <!-- KARTA 3: PUŁAPKI W ZLECENIACH SPEDYCYJNYCH -->
+            <div style="background:#090916;border:1pt solid var(--border);padding:11pt;border-radius:3pt;">
+              <p class="ox m" style="font-size:13pt;margin:0 0 6pt 0;">⚠️ 3. WYCHWYTYWANIE PUŁAPEK SPEDYTORÓW (ZLECENIA &amp; CMR)</p>
+              <ul style="margin:0;padding-left:14pt;font-size:10.5pt;line-height:1.6;">
+                <li><b>Spedycje nagminnie wciskają bezprawne kary:</b>
+                  <br>• Kara 150 EUR za 20 minut spóźnienia na załadunek (nawet z powodu korka na autostradzie).
+                  <br>• Kara 500 EUR za brak natychmiastowego odesłania dokumentów w 48h.
+                  <br>• Kara 80 zł za każdą nieoddana paletę euro.
+                  <br>• Zakaz cesji wierzytelności (żebyś nie mógł sprzedać faktury firmie faktoringowej).
+                  <br>• Terminy płatności 60 lub 90 dni.
+                </li>
+                <li><b>Gotowa riposta do zlecenia w 1 minutę:</b> Model skanuje PDF zlecenia i generuje profesjonalną odpowiedź do spedytora: <i>„Zlecenie przyjmujemy pod warunkiem wykreślenia punktów 7 i 11 jako sprzecznych z art. 41 Konwencji CMR oraz skrócenia terminu płatności do 30 dni”</i>. Spedytor widzi, że ma do czynienia z profesjonalistą i natychmiast odpuszcza cwaniactwo.</li>
+              </ul>
+            </div>
+
+            <!-- KARTA 4: TWARDA WINDYKACJA TRANSPORTOWA -->
+            <div style="background:#090916;border:1pt solid var(--border);padding:11pt;border-radius:3pt;">
+              <p class="ox g" style="font-size:13pt;margin:0 0 6pt 0;">💣 4. BEZWZGLĘDNA WINDYKACJA NIEPŁACĄCYCH SPEDYCJI</p>
+              <ul style="margin:0;padding-left:14pt;font-size:10.5pt;line-height:1.6;">
+                <li><b>Spedycja nie płaci faktury po terminie?</b> Model generuje sformalizowaną procedurę windykacyjną, która działa w 98% przypadków:</li>
+                <li><b>1. Ustawowa rekompensata 40 / 70 / 100 EUR:</b> Zgodnie z ustawą o terminach zapłaty w transakcjach handlowych, za KAŻDĄ przeterminowaną fakturę należy Ci się natychmiast 40 EUR (dla faktur do 5 tys. zł), 70 EUR (do 50 tys. zł) lub 100 EUR (powyżej 50 tys. zł) przeliczane na PLN wg kursu NBP. Jeśli spedycja wisi Ci 5 faktur, od razu doliczasz im dodatkowe ~1 500 zł rekompensat!</li>
+                <li><b>2. Maksymalne odsetki ustawowe:</b> Naliczanie odsetek za transakcje handlowe (obecnie ponad 15% w skali roku).</li>
+                <li><b>3. Wezwanie do Załadowcy / Nadawcy (Broń atomowa):</b> Zgodnie z art. 75 Prawa przewozowego oraz art. 13 Konwencji CMR, przewoźnik może żądać zapłaty bezpośrednio od właściciela towaru (korporacji, która zleciła transport spedycji)! Gdy model przygotuje pismo informujące załadowcę o długu spedycji, spedycja płaci pieniądze w 24 godziny, byle tylko nie stracić klienta.</li>
+              </ul>
+            </div>
+
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <!-- MODUŁ 4: STUDIO GRAFIKI, WIDEO I KREATYWNOŚCI -->
+    <table class="blk" style="margin-top:12pt;">
+      <tr><td class="hd hx">🎬 SEKCJA 4: GENEROWANIE GRAFIKI, WIDEO I MARKETINGU DLA FIRM (COMFYUI / FREEFIELD)</td></tr>
+      <tr>
+        <td class="bd bx">
+          <p style="font-size:11.5pt;line-height:1.6;">
+            <b>Twoja 4. karta RTX 3070 potrafi zamienić się w profesjonalne studio filmowo-graficzne:</b><br>
+            Dzięki zainstalowanemu środowisku ComfyUI i Freefield (otwarty odpowiednik drogich chmur typu Higgsfield czy Midjourney) możesz oferować firmom gotowe usługi marketingowe bez płacenia grafikom ani grosza:
+          </p>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:8pt;margin-top:8pt;">
+            <div style="background:#05050A;border:1pt solid var(--border);padding:9pt;border-radius:2pt;">
+              <b class="c">🎥 Generowanie Wideo Reklamowego:</b><br>
+              <span class="dim" style="font-size:10pt;">Krótkie klipy wideo z tekstu lub zdjęcia (Image-to-Video). Kinowe ruchy kamery: najazdy drona FPV, obroty kamery 360°, ujęcia Bullet Time, zmiana pogody i oświetlenia. Idealne na TikTok, Instagram Reels i reklamy na Facebooku.</span>
+            </div>
+            <div style="background:#05050A;border:1pt solid var(--border);padding:9pt;border-radius:2pt;">
+              <b class="g">📸 Fotografia Produktowa bez Studia:</b><br>
+              <span class="dim" style="font-size:10pt;">Robisz zwykłe zdjęcie smartfonem dowolnego przedmiotu na stole w kuchni. Model wycina tło, stawia produkt w luksusowym salonie, na plaży lub w nowoczesnym biurze z idealnym światłem studyjnym. Gotowe grafiki na Allegro, Amazon czy sklep online.</span>
+            </div>
+            <div style="background:#05050A;border:1pt solid var(--border);padding:9pt;border-radius:2pt;">
+              <b class="m">🌐 Tłumaczenia i Zagraniczny Lektor:</b><br>
+              <span class="dim" style="font-size:10pt;">Model tłumaczy oferty na angielski, niemiecki, francuski z idealnym zachowaniem branżowych zwrotów. Może też wygenerować naturalnie brzmiącego lektora do filmu z polskim lub obcym akcentem.</span>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <!-- MODUŁ 5: PODSUMOWANIE DLA SEBY -->
+    <table class="blk" style="margin-top:12pt;margin-bottom:14pt;">
+      <tr><td class="hd hy">💡 PODSUMOWANIE DLA SEBY // JAK NA TYM WYGRYWAĆ I ZARABIAĆ</td></tr>
+      <tr>
+        <td class="bd by">
+          <div style="font-size:11.5pt;line-height:1.7;">
+            <p style="margin:0 0 8pt 0;">
+              Seba, podsumowując w prostych żołnierskich słowach: <b>masz pod ręką prywatną armię analityków, prawników i dyspozytorów</b>.
+            </p>
+            <p style="margin:0 0 6pt 0;"><span class="tag y">1. ZASADA 95 / 5:</span> Model nie ma pieczątki radcy prawnego ani biegłego rewidenta (to te 5%), ale odwala za Ciebie 95% najcięższej, żmudnej i kosztownej roboty analitycznej. Zamiast płacić 300 zł za godzinę rozmowy z prawnikiem, przychodzisz z gotowym pismem i wiesz więcej niż druga strona.</p>
+            <p style="margin:0 0 6pt 0;"><span class="tag g">2. OSZCZĘDNOŚĆ TYSIĘCY ZŁOTYCH:</span> Brak abonamentów za ChatGPT, brak płatnych programów do analizy tacho, brak płacenia za podstawowe porady prawne i analizy umów. Sprzęt spłaca się sam w kilka miesięcy.</p>
+            <p style="margin:0 0 6pt 0;"><span class="tag c">3. NOCNA FABRYKA DANYCH:</span> Gdy idziesz spać, wrzucasz mu do analizy 100 zleceń, 30 faktur albo 400 stron dokumentacji. Wstajesz rano, pijesz kawę i masz na laptopie czysty, podsumowany raport z wnioskami.</p>
+            <p style="margin:0;"><span class="tag m">4. BEZPIECZEŃSTWO:</span> Wszystko stoi u Ciebie na stelażu. Nawet jak padnie internet na świecie, Twoja baza prawa, kalkulatory i modele działają lokalnie bez zarzutu.</p>
+          </div>
+        </td>
+      </tr>
+    </table>
+
   </div>
 
   <!-- STOPKA -->
