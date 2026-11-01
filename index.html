@@ -136,6 +136,16 @@
     background: var(--c); color: #05050A; box-shadow: 0 0 16px var(--c);
     border-color: var(--c);
   }
+  .tabs button.t-y { border-color: var(--y); color: var(--y); }
+  .tabs button.t-c { border-color: #7fdcff; color: #7fdcff; }
+  .tabs button.t-y.act {
+    background: var(--y); border-color: var(--y); color: #05050A;
+    box-shadow: 0 0 16px var(--y);
+  }
+  .tabs button.t-c.act {
+    background: #7fdcff; border-color: #7fdcff; color: #05050A;
+    box-shadow: 0 0 16px rgba(127, 220, 255, 0.75);
+  }
 
   .prog {
     height: 9pt; background: rgba(5, 5, 10, 0.8); border: 1pt solid var(--g);
@@ -526,8 +536,8 @@
       <button data-t="laptop">02 TWÓJ LAPTOP &amp; AI</button>
       <button data-t="koparka">03 Z KOPARKI (0 ZŁ)</button>
       <button data-t="plan">04 PLAN PRZYJAZDU ALEXA</button>
-      <button data-t="mozliwosci" style="border-color:var(--y);color:var(--y);">⚡ 05 CO POTRAFI TWÓJ MODEL</button>
-      <button data-t="ciezarowka" style="border-color:var(--c);color:var(--c);">🚚 06 KOPARKA W CIĘŻARÓWCE?</button>
+      <button data-t="mozliwosci" class="t-y">⚡ 05 CO POTRAFI TWÓJ MODEL</button>
+      <button data-t="ciezarowka" class="t-c">🚚 06 KOPARKA W CIĘŻARÓWCE?</button>
     </div>
   </div>
 
@@ -924,7 +934,7 @@
           <div style="background:rgba(5,5,14,0.85);border:1pt solid var(--g);padding:11pt;margin-top:12pt;border-radius:3pt;">
             <p class="ox g" style="font-size:13pt;margin:0 0 6pt 0;">⚡ JAK DZIAŁA OSZCZĘDZANIE ENERGII I WYBUDZANIE (WAKE ON LAN)</p>
             <p style="margin:0 0 8pt 0;font-size:10.8pt;line-height:1.6;">
-              Nie musisz się martwić o rachunki za prąd. Karty chodzą z limitem 150 W, więc serwer bierze <b>120–150 W w spoczynku</b> i <b>550–650 W pod pełnym obciążeniem AI</b> (szczegóły w zakładce 06). Do tego ma dwa tryby oszczędzania:
+              Nie musisz się martwić o rachunki za prąd. Karty chodzą z limitem 150 W, więc serwer bierze <b>120–150 W w spoczynku</b> i <b>550–650 W pod pełnym obciążeniem AI</b> (szczegóły w zakładce 06). Do tego ma dwa tryby oszczędzania — a jak zabraknie prądu w sieci, ratuje go UPS lub magazyn energii (zakładka 06, sekcja 5):
             </p>
             <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:8pt;margin-bottom:8pt;">
               <div style="background:#090916;border:1pt solid var(--border);padding:9pt;border-radius:2pt;">
@@ -1579,7 +1589,66 @@
       </tr>
     </table>
 
-    <!-- MODUŁ 5: TABELA PORÓWNAWCZA: DOM VS CIĘŻARÓWKA -->
+    <!-- MODUŁ 5: AWARYJNE ZASILANIE Z MAGAZYNÓW ENERGII -->
+    <table class="blk" style="margin-top:12pt;">
+      <tr><td class="hd hx">🔋 5. AWARYJNE ZASILANIE Z MAGAZYNÓW ENERGII // UPS, POWERBANK, LiFePO4</td></tr>
+      <tr>
+        <td class="bd bx">
+          <p class="ox c" style="font-size:14pt;margin:2pt 0 6pt 0;">BLACKOUT NIE MOŻE PRZERWAĆ PRACY MODELU</p>
+          <p style="font-size:11pt;line-height:1.65;margin:0 0 10pt 0;">
+            Model Qwen 177B siedzi w RAM-ie i na VRAM kart. Nagły zanik prądu = utrata tego, co akurat liczył, a przy zapisie plików — ryzyko uszkodzenia systemu na dysku SSD. Dlatego <b>każdy wariant zasilania dostaje bufor</b>: w domu UPS lub magazyn energii, w ciężarówce osobny akumulator LiFePO4. Poniżej konkretne liczby i sposób podłączenia.
+          </p>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(270px, 1fr));gap:10pt;margin-bottom:10pt;">
+            <div style="background:#05050A;border:1pt solid var(--border);border-left:3pt solid var(--c);padding:9pt 11pt;border-radius:2pt;">
+              <b class="ox c" style="font-size:10.5pt;">1. DOM // UPS POD SERWER</b>
+              <p class="dim" style="font-size:9.5pt;line-height:1.55;margin:4pt 0 0 0;">
+                UPS <b>line-interactive z czystym sinusem</b> lub tani <b>online</b>, moc ciągła min. <b>900 W</b> (szczyt 1,2 kW przez sekundę — zasilacz z PFC bierze krótki impuls przy starcie). Bateria w UPS-ie wystarcza na <b>5–10 minut</b> przy 600 W — dokładnie tyle, żeby system zdążył bezpiecznie zamknąć model i dysk.<br>
+                <span class="c">Koszt: ok. 700–1 100 zł (1500 VA) / 1 400–2 500 zł (online 1500 W).</span>
+              </p>
+            </div>
+
+            <div style="background:#05050A;border:1pt solid var(--border);border-left:3pt solid var(--g);padding:9pt 11pt;border-radius:2pt;">
+              <b class="ox g" style="font-size:10.5pt;">2. DOM // MAGAZYN ENERGII 1–5 kWh</b>
+              <p class="dim" style="font-size:9.5pt;line-height:1.55;margin:4pt 0 0 0;">
+                Przenośna stacja (EcoFlow / Bluetti / Anker) albo domowy magazyn z falownikiem. Przy 600 W i sprawności ~85%: <b>1 kWh ≈ 1,4 h</b>, <b>2 kWh ≈ 2,8 h</b>, <b>5 kWh ≈ 7 h</b> pracy AI. W trybie czuwania (150 W) ten sam 1 kWh daje <b>~5,7 h</b>.<br>
+                <span class="c">Koszt: ok. 2 500–3 500 zł (1 kWh) / 4 000–6 000 zł (2 kWh).</span>
+              </p>
+            </div>
+
+            <div style="background:#05050A;border:1pt solid var(--border);border-left:3pt solid var(--y);padding:9pt 11pt;border-radius:2pt;">
+              <b class="ox y" style="font-size:10.5pt;">3. CIĘŻARÓWKA // LiFePO4 24 V</b>
+              <p class="dim" style="font-size:9.5pt;line-height:1.55;margin:4pt 0 0 0;">
+                Osobny akumulator hotelowy <b>24 V 100–200 Ah (2,5–5 kWh)</b>, ładowany z alternatora przez ładowarkę DC-DC (Victron Orion-Tr Smart 24/24 30A), a nie bezpośrednio z instalacji auta. Inwerter <b>czysty sinus 1500–2000 W</b>. To daje <b>3,5–7 h</b> pracy serwera bez dotykania akumulatorów rozruchowych.<br>
+                <span class="c">Koszt kompletu: 6 000–9 000 zł (szczegóły w sekcji 3 wyżej).</span>
+              </p>
+            </div>
+
+            <div style="background:#05050A;border:1pt solid var(--border);border-left:3pt solid var(--m);padding:9pt 11pt;border-radius:2pt;">
+              <b class="ox m" style="font-size:10.5pt;">4. JAK TO PODŁĄCZYĆ W DOMU</b>
+              <p class="dim" style="font-size:9.5pt;line-height:1.55;margin:4pt 0 0 0;">
+                Kolejność: <b>gniazdko ścienne → listwa przeciwprzepięciowa APC → UPS → serwer</b>. Nigdy odwrotnie i nigdy dwa UPS-y jeden za drugim. W Ubuntu instalujemy monitoring <span class="mono">nut</span>, żeby przy 30% baterii sam zamknął model i system:<br>
+                <span class="mono c" style="font-size:8.6pt;">sudo apt install nut &amp;&amp; upsc nazwa_upsa@localhost</span>
+              </p>
+            </div>
+          </div>
+
+          <table class="grid">
+            <tr><th>Magazyn (pojemność użyteczna)</th><th>Praca AI ~600 W</th><th>Czuwanie ~150 W</th><th>Zastosowanie</th></tr>
+            <tr><td>UPS 1500 VA (wbudowane baterie)</td><td>5–10 min</td><td>20–30 min</td><td>Bezpieczne zamknięcie systemu</td></tr>
+            <tr><td>1 kWh</td><td>~1,4 h</td><td>~5,7 h</td><td>Krótka przerwa w dostawie</td></tr>
+            <tr><td>2 kWh</td><td>~2,8 h</td><td>~11 h</td><td>Wieczorny blackout</td></tr>
+            <tr><td>5 kWh (LiFePO4 24 V 200 Ah)</td><td>~7 h</td><td>~28 h</td><td>Cała noc bez prądu</td></tr>
+          </table>
+
+          <p class="r" style="margin:8pt 0 0 0;font-size:10pt;line-height:1.6;">
+            ⚠ ZASADY: tylko czysty sinus („modyfikowany” zabija zasilacz Platinum) · UPS nie może stać w zamkniętej szafce bez przewiewu · LiFePO4 ładuj wyłącznie powyżej 0°C · nie podłączaj serwera pod akumulatory rozruchowe ciężarówki · przy 4 kartach nie oszczędzaj na przekroju kabli (min. 2,5 mm², do inwertera 35 mm²).
+          </p>
+        </td>
+      </tr>
+    </table>
+
+    <!-- PODSUMOWANIE: DOM VS CIĘŻARÓWKA -->
     <table class="blk sum" style="margin-top:12pt;margin-bottom:14pt;">
       <tr><td colspan="3" class="hd hg">📊 PODSUMOWANIE DLA SEBY // PORÓWNANIE ROZWIĄZAŃ</td></tr>
       <tr style="background:#090915;font-weight:bold;font-size:10pt;" class="ox">
