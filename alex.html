@@ -357,7 +357,6 @@
       <button type="button" class="p-btn" data-k="OK" style="color:var(--g);font-size:11pt;">OK ✔</button>
     </div>
   </div>
-  </div>
 </div>
 
 <div class="wrap">
@@ -384,6 +383,7 @@
     <div style="display:flex;align-items:center;gap:6pt;">
       <span class="mono dim" style="font-size:9pt;">Kto teraz klika:</span>
       <button id="soundToggle" class="sound-btn on" title="Efekty dźwiękowe">🔊 DŹWIĘK: WŁ</button>
+      <button onclick="lockTerminal()" class="st-btn" style="background:#090914;color:var(--dim);border-color:var(--border);padding:2pt 6pt;font-size:8.5pt;" title="Zablokuj stronę">🔒 ZABLOKUJ</button>
       <select class="who-sel" id="whoSel">
         <option value="Alex">Alex</option>
         <option value="Seba">Seba</option>
@@ -431,22 +431,22 @@
 <div class="kpi-grid">
   <div class="kpi">
     <div class="kpi-label">Koszt części łącznie</div>
-    <div class="val y" id="kpiTotal">4 740 zł</div>
+    <div class="val y" id="kpiTotal">4 735 zł</div>
     <div class="dim" id="kpiSub">pełny zestaw z zasilaczem</div>
   </div>
   <div class="kpi">
     <div class="kpi-label">Już kupione (odhaczone)</div>
     <div class="val g" id="kpiSpent">0 zł</div>
-    <div class="dim" id="kpiCount">0 z 18 pozycji</div>
+    <div class="dim" id="kpiCount">0 z 9 pozycji</div>
   </div>
   <div class="kpi">
     <div class="kpi-label">Zostało do wydania</div>
-    <div class="val c" id="kpiLeft">4 740 zł</div>
+    <div class="val c" id="kpiLeft">4 735 zł</div>
     <div class="dim">reszta listy zakupowej</div>
   </div>
   <div class="kpi">
     <div class="kpi-label">Po sprzedaży starej bazy</div>
-    <div class="val m" id="kpiNet">4 390 zł</div>
+    <div class="val m" id="kpiNet">4 385 zł</div>
     <div class="dim">odzysk z Biostar + CPU + RAM (~350 zł)</div>
   </div>
 </div>
@@ -728,8 +728,8 @@ Pozdrawiam!</p>
 <tr><td style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">07 Risery taśmowe PCIe x16 30 cm (×4)</td><td class="num" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">276 zł</td></tr>
 <tr><td style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">08 Nawiew stelaża (5× Arctic P12 + Hub + Dummy)</td><td class="num" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">155 zł</td></tr>
 <tr><td style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">09 Pakiet montażowy (pendrive, kable, IPA, watomierz)</td><td class="num" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">166 zł</td></tr>
-<tr><td class="ox g" style="background:#05050A;border:1pt solid #39FF14;padding:7pt 10pt;">RAZEM DO WYDANIA (WG KALKULATORA)</td><td class="ox g" style="background:#05050A;border:1pt solid #39FF14;padding:7pt 10pt;text-align:right;" id="sumTotalCell">4 540 – 4 740 zł</td></tr>
-<tr><td class="dim" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">jeśli zasilacz z koparki wystarczy</td><td class="dim" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;text-align:right;">4 140 – 4 340 zł</td></tr>
+<tr><td class="ox g" style="background:#05050A;border:1pt solid #39FF14;padding:7pt 10pt;">RAZEM DO WYDANIA (WG KALKULATORA)</td><td class="ox g" style="background:#05050A;border:1pt solid #39FF14;padding:7pt 10pt;text-align:right;" id="sumTotalCell">4 535 – 4 735 zł</td></tr>
+<tr><td class="dim" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">jeśli zasilacz z koparki wystarczy</td><td class="dim" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;text-align:right;">4 136 – 4 336 zł</td></tr>
 <tr><td class="dim" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">zwrot ze sprzedaży starej płyty Biostar + CPU + RAM</td><td class="dim" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;text-align:right;">− ok. 300 – 450 zł</td></tr>
 </table>
 
@@ -1080,7 +1080,7 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
 <table class="msg"><tr><td>
 <div class="mh"><span>CZĘŚĆ 1/2 — GŁÓWNE CZĘŚCI (PŁYTA, PROCESOR, RAM, DYSK, CHŁODZENIE, ZASILACZ)</span> <button class="cp ui">KOPIUJ CZĘŚĆ 1</button></div>
 <p class="mt">Rozpisałem kompletną listę części do naszego serwera AI (Krzemowy Łeb 2077). 4× RTX 3070, stelaż i przycisk zostają z koparki.
-Koszt całości: 4 540 – 4 740 zł (lub 4 140 – 4 340 zł, jeśli nasz zasilacz z koparki wystarczy).
+Koszt całości: 4 535 – 4 735 zł (lub 4 136 – 4 336 zł, jeśli nasz zasilacz z koparki wystarczy).
 
 1) PŁYTA GŁÓWNA — ASUS X99-E WS/USB 3.1 (~1 340 zł z VAT, eBay):
 https://www.ebay.com/itm/116016463694
@@ -1498,6 +1498,12 @@ https://allegro.pl/oferta/tasma-riser-pci-e-pcie-3-0-express-x16-x16-30cm-124323
   }
   document.querySelectorAll('.tabs button').forEach(function(b){
     b.addEventListener('click', function(){ switchTab(b.dataset.t); });
+  });
+  document.querySelectorAll('a[data-go]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      switchTab(a.dataset.go);
+    });
   });
 
   // Interaktywna mapa płyty ASUS X99-E WS

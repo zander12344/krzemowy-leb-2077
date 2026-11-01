@@ -182,6 +182,7 @@
   }
   .item-card.got { border-left-color: var(--g); opacity: .88; }
   .item-card.ord { border-left-color: var(--y); }
+  .item-card.from-rig { border-left-color: var(--g); opacity: .75; background: rgba(57,255,20,0.04); }
   .item-card:hover {
     border-color: var(--border-glow);
     box-shadow: 0 10px 35px rgba(0,0,0,0.7), 0 0 20px rgba(0,240,255,0.15);
@@ -442,22 +443,22 @@
     <div class="kpi-grid">
       <div class="kpi">
         <div class="kpi-label">Łączny koszt części</div>
-        <div class="val c" id="kpiTotal">4 540 zł</div>
+        <div class="val c" id="kpiTotal">4 735 zł</div>
         <div class="dim" id="kpiSub" style="margin-top:2pt;">z zasilaczem • RAM 1800 zł</div>
       </div>
       <div class="kpi">
         <div class="kpi-label">Już opłacone / kupione</div>
         <div class="val g" id="kpiSpent">0 zł</div>
-        <div class="dim" id="kpiCount" style="margin-top:2pt;">0 z 8 pozycji</div>
+        <div class="dim" id="kpiCount" style="margin-top:2pt;">0 z 9 pozycji</div>
       </div>
       <div class="kpi">
         <div class="kpi-label">Zostało do zapłaty</div>
-        <div class="val y" id="kpiLeft">4 540 zł</div>
+        <div class="val y" id="kpiLeft">4 735 zł</div>
         <div class="dim" style="margin-top:2pt;">do skompletowania serwera</div>
       </div>
       <div class="kpi">
         <div class="kpi-label">Po sprzedaży starej płyty</div>
-        <div class="val m" id="kpiNet">4 190 zł</div>
+        <div class="val m" id="kpiNet">4 385 zł</div>
         <div class="dim" style="margin-top:2pt;">~350 zł ze starej bazy koparki</div>
       </div>
     </div>
@@ -465,7 +466,7 @@
     <!-- Pasek postępu -->
     <div style="background:#05050A;border:1pt solid var(--border);padding:6pt 8pt;margin-bottom:10pt;">
       <div class="mono" style="font-size:9.5pt;display:flex;justify-content:space-between;" id="progTxt">
-        ZAKUPY: 0 / 8 &nbsp;::&nbsp; KUPIONE ZA 0 zł &nbsp;::&nbsp; ZOSTAŁO 4 540 zł
+        ZAKUPY: 0 / 9 &nbsp;::&nbsp; KUPIONE ZA 0 zł &nbsp;::&nbsp; ZOSTAŁO 4 735 zł
       </div>
       <div class="prog"><i id="progBar" style="width:0%;"></i></div>
     </div>
@@ -1248,6 +1249,16 @@
     document.getElementById('ramPriceTxt').textContent = ramPrice.toLocaleString('pl-PL') + ' zł';
     document.getElementById('cPsu').checked = !!c.psuFromRig;
     document.getElementById('cSsd').checked = !!c.ssdFromRig;
+
+    var psuSkip = document.getElementById('psuSkipBadge');
+    if (psuSkip) psuSkip.textContent = c.psuFromRig ? '✔ MAMY SWÓJ Z KOPARKI (0 zł)' : '+399 zł oszczędności';
+    var ssdSkip = document.getElementById('ssdSkipBadge');
+    if (ssdSkip) ssdSkip.textContent = c.ssdFromRig ? '✔ MAMY SWÓJ Z KOPARKI (0 zł)' : '+300 zł oszczędności';
+
+    var psuCard = document.querySelector('.item-card[data-card="psu"]');
+    if (psuCard) psuCard.classList.toggle('from-rig', !!c.psuFromRig);
+    var ssdCard = document.querySelector('.item-card[data-card="ssd"]');
+    if (ssdCard) ssdCard.classList.toggle('from-rig', !!c.ssdFromRig);
 
     document.querySelectorAll('.ram-btn').forEach(function(b){
       b.classList.toggle('on', Number(b.dataset.ram) === ramPrice);
