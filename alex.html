@@ -336,7 +336,13 @@
 <div class="cyber-overlay"></div>
 
 <!-- SECURITY LOCK SCREEN OVERLAY -->
-<div id="lockScreen">
+<noscript>
+  <style>.wrap{display:none !important;}</style>
+  <div style="position:fixed;inset:0;background:#05050A;color:#FF3864;display:flex;align-items:center;justify-content:center;font-family:monospace;font-size:14pt;z-index:9999999;padding:20pt;text-align:center;">
+    ⛔ WYMAGANY JAVASCRIPT DO WERYFIKACJI KRYPTOGRAFICZNEJ PBKDF2-SHA256 TERMINALA.
+  </div>
+</noscript>
+<div id="lockScreen" class="show">
   <div class="lock-box">
     <div class="lock-tag">// KRZEMOWY ŁEB 2077 :: TERMINAL OCHRONNY</div>
     <svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/><line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/></svg>
@@ -366,7 +372,7 @@
   </div>
 </div>
 
-<div class="wrap">
+<div class="wrap terminal-locked">
 
 <!-- ================= TYTUŁ ================= -->
 <table class="blk"><tr><td style="background:#05050A;border:2pt solid #FF2BD6;padding:12pt 12pt;">
@@ -695,6 +701,13 @@ Pozdrawiam!</p>
 
 <!-- 08 STELAŻ -->
 <table class="blk"><tr><td class="hd hm">08 // NAWIEW NA KARTY + WTYCZKA DUMMY PLUG &nbsp;—&nbsp; 155 zł (NOWE)</td></tr><tr><td class="bd bm">
+<div class="st-bar ui" data-item="fan">
+  <span class="dim" style="font-size:8.5pt;">STATUS:</span>
+  <button class="st-btn s-todo" data-st="todo">Do kupienia</button>
+  <button class="st-btn s-ord" data-st="ord">Zamówione</button>
+  <button class="st-btn s-got" data-st="got">Kupione ✔</button>
+  <input class="note-in" data-note="fan" placeholder="Notatka (np. zamówione na Allegro)...">
+</div>
 <p>Wszystko nowe, kupujesz od razu. <span class="g">Przycisk włączania już mamy w koparce.</span></p>
 <p><span class="cb" data-id="fans" data-p="110">☐</span> &nbsp;<a href="https://allegro.pl/oferta/wentylator-arctic-p12-pro-pwm-pst-black-120mm-zestaw-5szt-acfan00307a-17977465818" target="_blank" rel="noopener">Wentylatory Arctic P12 Pro PWM PST 120mm (zestaw 5 szt.)</a> — <span class="y">109,99 zł</span> <span class="dim">(stały przewiew między 4 kartami)</span></p>
 <p><span class="cb" data-id="hub" data-p="30">☐</span> &nbsp;<a href="https://allegro.pl/oferta/arctic-case-fan-hub-10-x-pwm-4-pin-acfan00175a-na-10-wentylatorow-17372158716" target="_blank" rel="noopener">Rozdzielacz Arctic Case Fan Hub (na 10 wentylatorów, zasilany z SATA)</a> — <span class="y">29,99 zł</span></p>
@@ -703,6 +716,13 @@ Pozdrawiam!</p>
 
 <!-- 09 MONTAŻ -->
 <table class="blk"><tr><td class="hd hy">09 // DROBIAZGI MONTAŻOWE (ŻEBY NICZEGO NIE ZABRAKŁO) &nbsp;—&nbsp; 166 zł (NOWE)</td></tr><tr><td class="bd by">
+<div class="st-bar ui" data-item="parts">
+  <span class="dim" style="font-size:8.5pt;">STATUS:</span>
+  <button class="st-btn s-todo" data-st="todo">Do kupienia</button>
+  <button class="st-btn s-ord" data-st="ord">Zamówione</button>
+  <button class="st-btn s-got" data-st="got">Kupione ✔</button>
+  <input class="note-in" data-note="parts" placeholder="Notatka (np. paczka w drodze)...">
+</div>
 <p>Płyta z eBaya przychodzi sama, bez kabli i baterii. Kup od razu, żebyśmy nie utknęli w połowie składania:</p>
 <p><span class="cb" data-id="usb" data-p="48">☐</span> &nbsp;<a href="https://allegro.pl/oferta/sandisk-pendrive-ultra-flair-32gb-srebrny-18952645229" target="_blank" rel="noopener">Pendrive SanDisk Ultra Flair 32 GB</a> — <span class="y">47,89 zł</span> <span class="dim">(do instalacji Ubuntu i aktualizacji BIOS-u)</span></p>
 <p><span class="cb" data-id="sata" data-p="5">☐</span> &nbsp;<a href="https://allegro.pl/oferta/kabel-gembird-cc-satam-data-13045036934" target="_blank" rel="noopener">Kabel SATA 50 cm (weź 2 sztuki)</a> — <span class="y">5,32 zł</span> <span class="dim">(do połączenia dysku SSD z płytą)</span></p>
@@ -1169,19 +1189,40 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
   var SYNC_TOPIC = 'krzemowy_leb_2077_sync_9f4b2e8a';
   var SYNC_URL = 'https://ntfy.sh/' + SYNC_TOPIC;
   var pushTimer = null;
+  var activeEs = null;
+
+  var GROUP_SUBS = {
+    cool: ['fera', 'paste'],
+    fan: ['fans', 'hub', 'dummy'],
+    parts: ['usb', 'sata', 'cr2032', 'lan', 'molex', 'ipa', 'air', 'esd', 'rzep', 'watt']
+  };
+
+  function syncGroupFlags(srvState){
+    if (!srvState || !srvState.checks) return;
+    Object.keys(GROUP_SUBS).forEach(function(g){
+      var subs = GROUP_SUBS[g];
+      var allChecked = subs.every(function(k){ return !!srvState.checks[k]; });
+      var anyChecked = subs.some(function(k){ return !!srvState.checks[k]; });
+      if (allChecked) {
+        srvState.checks[g] = true;
+        srvState.statuses[g] = 'got';
+      } else if (srvState.statuses[g] === 'got' || srvState.checks[g]) {
+        subs.forEach(function(k){ srvState.checks[k] = true; });
+      } else if (anyChecked && (!srvState.statuses[g] || srvState.statuses[g] === 'todo')) {
+        srvState.statuses[g] = 'ord';
+      }
+    });
+  }
 
   function pushToServer(isReset){
     state.updatedAt = Date.now();
     state.updatedBy = whoSel.value || 'użytkownik';
     saveLocal();
-    
-  
-
-  render();
+    render();
     clearTimeout(pushTimer);
-    pushTimer = setTimeout(function(){
-      var payloadStr = JSON.stringify(state);
-      // 1) Synchronizacja chmurowa Live Sync (ntfy.sh SSE + cache) — działa na Render Static, GitHub Pages i lokalnie
+    pushTimer = setTimeout(async function(){
+      var payloadStr = await encryptSyncPayload(state);
+      // 1) Synchronizacja chmurowa Live Sync (ntfy.sh SSE + E2EE AES-GCM-256)
       fetch(SYNC_URL, {
         method: 'POST',
         body: payloadStr
@@ -1207,7 +1248,7 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
     var upd = document.getElementById('lastUpd');
     if (online) {
       dot.className = 'sync-dot live';
-      txt.textContent = 'LIVE SYNC AKTYWNY :: ALEX ↔ SEBA' + (count ? ' • ' + count + ' online' : '');
+      txt.textContent = 'LIVE SYNC (E2EE) :: ALEX ↔ SEBA' + (count ? ' • ' + count + ' online' : '');
     } else {
       dot.className = 'sync-dot off';
       txt.textContent = 'ZAPIS LOKALNY W PRZEGLĄDARCE';
@@ -1226,15 +1267,15 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
     if (!srv || typeof srv !== 'object' || !srv.checks) return;
     if ((srv.updatedAt || 0) <= (state.updatedAt || 0)) return;
     srv.updatedBy = normName(srv.updatedBy);
+    syncGroupFlags(srv);
     state = Object.assign(defaultState(), srv);
     saveLocal();
     render();
     updateSyncBadge(true);
   }
 
-  function connectLiveSync(){
-    // Pobierz ostatni zapisany stan z chmury (ostatnie 12h w buforze ntfy)
-    fetch(SYNC_URL + '/json?poll=1&since=12h').then(function(r){ return r.text(); }).then(function(txt){
+  function pollRecentSync(){
+    fetch(SYNC_URL + '/json?poll=1&since=12h').then(function(r){ return r.text(); }).then(async function(txt){
       updateSyncBadge(true);
       var lines = txt.trim().split('\n');
       for (var i = lines.length - 1; i >= 0; i--) {
@@ -1242,30 +1283,47 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
           var ev = JSON.parse(lines[i]);
           if (ev && ev.event === 'message' && ev.message) {
             var parsed = JSON.parse(ev.message);
-            if (parsed && parsed.checks) { applyIncoming(parsed); break; }
+            var unpacked = await decryptSyncPayload(parsed);
+            if (unpacked && unpacked.checks) { applyIncoming(unpacked); break; }
           }
         } catch (e) {}
       }
     }).catch(function(){});
+  }
+
+  function connectLiveSync(){
+    pollRecentSync();
 
     // Strumień SSE na żywo
     if (window.EventSource) {
       try {
+        if (activeEs) { try { activeEs.close(); } catch (_) {} }
+        var hadError = false;
         var es = new EventSource(SYNC_URL + '/sse');
-        es.onopen = function(){ updateSyncBadge(true); };
+        activeEs = es;
+        es.onopen = function(){
+          updateSyncBadge(true);
+          if (hadError) { hadError = false; pollRecentSync(); }
+        };
         es.onmessage = function(ev){
           try {
             var wrapper = JSON.parse(ev.data);
-            var msg = wrapper && wrapper.message ? JSON.parse(wrapper.message) : wrapper;
-            applyIncoming(msg);
+            var rawMsg = wrapper && wrapper.message ? JSON.parse(wrapper.message) : wrapper;
+            decryptSyncPayload(rawMsg).then(function(msg){
+              if (msg) applyIncoming(msg);
+            });
           } catch (e) {}
         };
-        es.onerror = function(){ updateSyncBadge(false); };
+        es.onerror = function(){ hadError = true; updateSyncBadge(false); };
+        window.addEventListener('pagehide', function(){
+          if (activeEs) { try { activeEs.close(); } catch (_) {} activeEs = null; }
+        });
       } catch (e) {}
     }
   }
 
   function render(){
+    syncGroupFlags(state);
     var c = state.calc || defaultState().calc;
     var ramPrice = Number(c.ramPrice) || 1800;
 
@@ -1322,26 +1380,35 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
       }
     });
 
-    // Obliczenia budżetowe
+    // Obliczenia budżetowe (spójne 1:1 z panelem Seby: 9 pozycji głównych + opcjonalne APC/Wi-Fi)
+    var hasApc = !!(c.optApc || state.checks['apc']);
+    var hasWifi = !!(c.optWifi || state.checks['wifi']);
     var baseTotal = 1340 + 149 + ramPrice + (c.ssdFromRig ? 0 : 300) + 150 + (c.psuFromRig ? 0 : 399) + 276 + 155 + 166;
-    if (c.optApc) baseTotal += 229;
-    if (c.optWifi) baseTotal += 125;
+    if (hasApc) baseTotal += 229;
+    if (hasWifi) baseTotal += 125;
 
-    var items = document.querySelectorAll('#zakupy .cb[data-p]');
+    var canonicalItems = [
+      { id:'mb', price: 1340 },
+      { id:'cpu', price: 149 },
+      { id:'ram', price: ramPrice },
+      { id:'ssd', price: c.ssdFromRig ? 0 : 300, skip: c.ssdFromRig },
+      { id:'cool', price: 150 },
+      { id:'psu', price: c.psuFromRig ? 0 : 399, skip: c.psuFromRig },
+      { id:'riser', price: 276 },
+      { id:'fan', price: 155 },
+      { id:'parts', price: 166 },
+      { id:'apc', price: 229, skip: !hasApc },
+      { id:'wifi', price: 125, skip: !hasWifi }
+    ];
+
     var totalCount = 0, boughtCount = 0, spent = 0;
-    items.forEach(function(el){
-      var id = el.dataset.id;
-      var isOpt = el.dataset.opt === '1';
-      if (id === 'psu' && c.psuFromRig) return;
-      if (id === 'ssd' && c.ssdFromRig) return;
-      if (id === 'apc' && !c.optApc && !state.checks[id]) return;
-      if (id === 'wifi' && !c.optWifi && !state.checks[id]) return;
-      if (!isOpt || (id === 'apc' && c.optApc) || (id === 'wifi' && c.optWifi) || state.checks[id]) {
-        totalCount++;
-        if (state.checks[id]) {
-          boughtCount++;
-          spent += Number(el.dataset.p);
-        }
+    canonicalItems.forEach(function(it){
+      if (it.skip) return;
+      totalCount++;
+      var st = state.statuses[it.id] || (state.checks[it.id] ? 'got' : 'todo');
+      if (st === 'got' || st === 'ord' || state.checks[it.id]) {
+        boughtCount++;
+        spent += it.price;
       }
     });
 
@@ -1352,7 +1419,7 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
     document.getElementById('kpiSub').textContent =
       (c.psuFromRig ? 'bez zasilacza' : 'z zasilaczem') + ' • RAM ' + ramPrice + ' zł';
     document.getElementById('kpiSpent').textContent = spent.toLocaleString('pl-PL') + ' zł';
-    document.getElementById('kpiCount').textContent = boughtCount + ' z ' + totalCount + ' pozycji kupione';
+    document.getElementById('kpiCount').textContent = boughtCount + ' z ' + totalCount + ' pozycji zamówione/kupione';
     document.getElementById('kpiLeft').textContent = left.toLocaleString('pl-PL') + ' zł';
     document.getElementById('kpiNet').textContent = netAfterSell.toLocaleString('pl-PL') + ' zł';
 
@@ -1362,7 +1429,7 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
     document.getElementById('sumTotalCell').textContent = baseTotal.toLocaleString('pl-PL') + ' zł';
 
     document.getElementById('progTxt').textContent =
-      'ZAKUPY: ' + boughtCount + ' / ' + totalCount + '  ::  KUPIONE ZA ' + spent.toLocaleString('pl-PL') + ' zł  ::  ZOSTAŁO ' + left.toLocaleString('pl-PL') + ' zł';
+      'ZAKUPY: ' + boughtCount + ' / ' + totalCount + '  ::  OPŁACONE ' + spent.toLocaleString('pl-PL') + ' zł  ::  ZOSTAŁO ' + left.toLocaleString('pl-PL') + ' zł';
     document.getElementById('progBar').style.width = (totalCount ? (100 * boughtCount / totalCount) : 0) + '%';
   }
 
@@ -1375,6 +1442,14 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
       if (state.statuses[id] || id === 'mb' || id === 'cpu' || id === 'ram' || id === 'ssd' || id === 'psu' || id === 'riser') {
         state.statuses[id] = state.checks[id] ? 'got' : 'todo';
       }
+      Object.keys(GROUP_SUBS).forEach(function(g){
+        if (GROUP_SUBS[g].indexOf(id) !== -1) {
+          var allOn = GROUP_SUBS[g].every(function(k){ return !!state.checks[k]; });
+          var anyOn = GROUP_SUBS[g].some(function(k){ return !!state.checks[k]; });
+          state.checks[g] = allOn;
+          state.statuses[g] = allOn ? 'got' : (anyOn ? 'ord' : 'todo');
+        }
+      });
       pushToServer(false);
     } else if (t.classList.contains('st-btn')) {
       var bar = t.closest('.st-bar');
@@ -1382,11 +1457,11 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
       var item = bar.dataset.item;
       var st = t.dataset.st;
       state.statuses[item] = st;
-      if (item === 'cool') {
-        state.checks['fera'] = (st === 'got');
-        state.checks['paste'] = (st === 'got');
-      } else {
-        state.checks[item] = (st === 'got');
+      state.checks[item] = (st === 'got');
+      if (GROUP_SUBS[item]) {
+        GROUP_SUBS[item].forEach(function(sub){
+          state.checks[sub] = (st === 'got');
+        });
       }
       pushToServer(false);
     } else if (t.classList.contains('ram-btn')) {
@@ -1567,14 +1642,34 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
 
   
   // =========================================================================
-  // ZERO-KNOWLEDGE AUTHENTICATION & DEFENSE CORE (PBKDF2-HMAC-SHA256)
+  // ZERO-KNOWLEDGE AUTHENTICATION & E2EE SYNC CORE (PBKDF2 + AES-GCM-256)
   // =========================================================================
   var _AUTH_TOKEN_KEY = 'krzemowy_sec_vault_token_v3';
+  var _ENC_JWK_KEY = 'krzemowy_sec_aes_jwk_v3';
   var _AUTH_SALT = 'krzemowy-leb-2077-quantum-salt-x99ews';
+  var _ENC_SALT = 'krzemowy-leb-2077-aes-gcm-sync-salt-v3';
   var _AUTH_ITERATIONS = 100000;
   var _VAULT_SIGNATURE = '7327f449cc755bd172a66775f7cc5c7349f40dfb1f06060de234e28e64ab3ee1';
   var _FAIL_KEY = 'krzemowy_sec_fail_count';
   var _LOCK_UNTIL_KEY = 'krzemowy_sec_lock_until';
+  var _cachedAesKey = null;
+
+  function constantTimeEqual(a, b) {
+    if (typeof a !== 'string' || typeof b !== 'string' || a.length !== b.length) return false;
+    var diff = 0;
+    for (var i = 0; i < a.length; i++) {
+      diff |= (a.charCodeAt(i) ^ b.charCodeAt(i));
+    }
+    return diff === 0;
+  }
+
+  function isVaultUnlocked() {
+    try {
+      return constantTimeEqual(localStorage.getItem(_AUTH_TOKEN_KEY) || '', _VAULT_SIGNATURE);
+    } catch (e) {
+      return false;
+    }
+  }
 
   async function deriveVaultSignature(val) {
     var enc = new TextEncoder();
@@ -1599,6 +1694,108 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
     );
     var raw = await crypto.subtle.exportKey('raw', derivedKey);
     return Array.from(new Uint8Array(raw)).map(function(b){ return b.toString(16).padStart(2, '0'); }).join('');
+  }
+
+  async function deriveAndCacheSyncKey(val) {
+    try {
+      var enc = new TextEncoder();
+      var keyMaterial = await crypto.subtle.importKey(
+        'raw',
+        enc.encode(val),
+        { name: 'PBKDF2' },
+        false,
+        ['deriveKey']
+      );
+      var aesKey = await crypto.subtle.deriveKey(
+        {
+          name: 'PBKDF2',
+          salt: enc.encode(_ENC_SALT),
+          iterations: _AUTH_ITERATIONS,
+          hash: 'SHA-256'
+        },
+        keyMaterial,
+        { name: 'AES-GCM', length: 256 },
+        true,
+        ['encrypt', 'decrypt']
+      );
+      _cachedAesKey = aesKey;
+      var jwk = await crypto.subtle.exportKey('jwk', aesKey);
+      localStorage.setItem(_ENC_JWK_KEY, JSON.stringify(jwk));
+    } catch (e) {}
+  }
+
+  async function getSyncAesKey() {
+    if (_cachedAesKey) return _cachedAesKey;
+    try {
+      var rawJwk = localStorage.getItem(_ENC_JWK_KEY);
+      if (!rawJwk) return null;
+      _cachedAesKey = await crypto.subtle.importKey(
+        'jwk',
+        JSON.parse(rawJwk),
+        { name: 'AES-GCM', length: 256 },
+        false,
+        ['encrypt', 'decrypt']
+      );
+      return _cachedAesKey;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function bytesToB64(bytes) {
+    var bin = '';
+    for (var i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+    return btoa(bin);
+  }
+
+  function b64ToBytes(b64) {
+    var bin = atob(b64);
+    var out = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+    return out;
+  }
+
+  async function encryptSyncPayload(stateObj) {
+    var plain = JSON.stringify(stateObj);
+    try {
+      var key = await getSyncAesKey();
+      if (!key) return plain;
+      var iv = crypto.getRandomValues(new Uint8Array(12));
+      var ctBuf = await crypto.subtle.encrypt(
+        { name: 'AES-GCM', iv: iv },
+        key,
+        new TextEncoder().encode(plain)
+      );
+      return JSON.stringify({
+        v: 3,
+        e2e: true,
+        iv: bytesToB64(iv),
+        ct: bytesToB64(new Uint8Array(ctBuf)),
+        updatedAt: stateObj.updatedAt
+      });
+    } catch (e) {
+      return plain;
+    }
+  }
+
+  async function decryptSyncPayload(obj) {
+    if (!obj || typeof obj !== 'object') return null;
+    if (obj.checks) return obj;
+    if (obj.e2e && obj.iv && obj.ct) {
+      try {
+        var key = await getSyncAesKey();
+        if (!key) return null;
+        var ptBuf = await crypto.subtle.decrypt(
+          { name: 'AES-GCM', iv: b64ToBytes(obj.iv) },
+          key,
+          b64ToBytes(obj.ct)
+        );
+        return JSON.parse(new TextDecoder().decode(ptBuf));
+      } catch (e) {
+        return null;
+      }
+    }
+    return null;
   }
 
   function checkLockout() {
@@ -1643,7 +1840,10 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
     } catch(e) {}
   }
 
+  var _watchdogBusy = false;
+
   function unlockPage(){
+    _watchdogBusy = true;
     var ls = document.getElementById('lockScreen');
     if (ls) {
       ls.classList.remove('show');
@@ -1654,13 +1854,18 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
       wr.classList.remove('terminal-locked');
       wr.style.setProperty('display', 'block', 'important');
     }
+    _watchdogBusy = false;
   }
 
   function lockPage(){
+    if (_watchdogBusy) return;
+    _watchdogBusy = true;
     var ls = document.getElementById('lockScreen');
     if (ls) {
       ls.classList.add('show');
       ls.style.setProperty('display', 'flex', 'important');
+      ls.style.setProperty('opacity', '1', 'important');
+      ls.style.setProperty('visibility', 'visible', 'important');
     }
     var wr = document.querySelector('.wrap');
     if (wr) {
@@ -1672,15 +1877,27 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
       inp.value = '';
       if (!checkLockout()) inp.focus();
     }
+    _watchdogBusy = false;
   }
 
-  try {
-    if (localStorage.getItem(_AUTH_TOKEN_KEY) === _VAULT_SIGNATURE) {
-      unlockPage();
-    } else {
+  function enforceLockIntegrity(){
+    if (_watchdogBusy || isVaultUnlocked()) return;
+    var ls = document.getElementById('lockScreen');
+    var wr = document.querySelector('.wrap');
+    if (!ls || !wr) {
+      document.body.innerHTML = '';
+      return;
+    }
+    var lsStyle = window.getComputedStyle(ls);
+    var wrStyle = window.getComputedStyle(wr);
+    if (lsStyle.display !== 'flex' || lsStyle.visibility === 'hidden' || Number(lsStyle.opacity) < 0.9 || wrStyle.display !== 'none' || !wr.classList.contains('terminal-locked')) {
       lockPage();
     }
-  } catch (e) {
+  }
+
+  if (isVaultUnlocked()) {
+    unlockPage();
+  } else {
     lockPage();
   }
 
@@ -1689,29 +1906,20 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
     if (err && err.textContent.indexOf('BLOKADA ANTYWŁAMANIOWA') !== -1) {
       checkLockout();
     }
+    enforceLockIntegrity();
   }, 1000);
 
   // ANTI-TAMPER WATCHDOG
   if (window.MutationObserver) {
     var observer = new MutationObserver(function(){
-      var isAuth = false;
-      try { isAuth = localStorage.getItem(_AUTH_TOKEN_KEY) === _VAULT_SIGNATURE; } catch(e){}
-      if (!isAuth) {
-        var ls = document.getElementById('lockScreen');
-        var wr = document.querySelector('.wrap');
-        if (!ls || ls.style.display === 'none' || (wr && !wr.classList.contains('terminal-locked'))) {
-          lockPage();
-        }
-      }
+      enforceLockIntegrity();
     });
-    observer.observe(document.body, { childList: true, subtree: true, attributes: true });
+    observer.observe(document.documentElement, { childList: true, subtree: true, attributes: true });
   }
 
   // Ochrona przed skrótami inspekcji kodu na ekranie blokady
   document.addEventListener('keydown', function(e){
-    var isAuth = false;
-    try { isAuth = localStorage.getItem(_AUTH_TOKEN_KEY) === _VAULT_SIGNATURE; } catch(e){}
-    if (!isAuth) {
+    if (!isVaultUnlocked()) {
       if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || (e.ctrlKey && e.key === 'u')) {
         e.preventDefault();
         return false;
@@ -1727,14 +1935,42 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
       return;
     }
 
+    var PIN_EASTER_EGGS = {
+      '1337': '😎 ELO HACKERZYSTA :: Kod elitarny, ale niepoprawny!',
+      '0420': '🌿 420 DETECTED :: Chłodzenie ciekłym azotem i pełen chill!',
+      '6969': '🔞 NICE TRY :: To serwer obliczeniowy AI, a nie portal randkowy!',
+      '0000': '💳 To nie PIN do karty z dyskontu!',
+      '1234': '🔐 Standardowe kody fabryczne są trwale zablokowane.',
+      '2077': '🤖 CYBERPUNK 2077 :: Wake up samurai, ale podaj właściwy klucz!'
+    };
+    if (PIN_EASTER_EGGS[val]) {
+      if (typeof CyberAudio !== 'undefined' && CyberAudio.boop) CyberAudio.boop();
+      if (err) {
+        err.textContent = PIN_EASTER_EGGS[val];
+        err.style.color = 'var(--y)';
+        err.style.display = 'block';
+      }
+      var inp = document.getElementById('pinInput');
+      if (inp) {
+        inp.value = '';
+        inp.style.borderColor = 'var(--y)';
+        setTimeout(function(){ inp.style.borderColor = ''; inp.focus(); }, 1400);
+      }
+      return;
+    }
+
     var sig = await deriveVaultSignature(val);
-    if (sig === _VAULT_SIGNATURE) {
+    if (constantTimeEqual(sig, _VAULT_SIGNATURE)) {
       resetFailedAttempts();
       try { localStorage.setItem(_AUTH_TOKEN_KEY, sig); } catch (e) {}
+      await deriveAndCacheSyncKey(val);
       unlockPage();
+      if (typeof CyberAudio !== 'undefined' && CyberAudio.unlock) CyberAudio.unlock();
       showToast('DOSTĘP PRZYZNANY 🔓');
+      pollRecentSync();
     } else {
       recordFailedAttempt();
+      if (typeof CyberAudio !== 'undefined' && CyberAudio.error) CyberAudio.error();
       if (err) {
         var fails = Number(localStorage.getItem(_FAIL_KEY)) || 1;
         err.textContent = '⚠ BŁĘDNY KOD (' + fails + '/3) :: ODMOWA DOSTĘPU';
@@ -1751,7 +1987,11 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
   }
 
   window.lockTerminal = function(){
-    try { localStorage.removeItem(_AUTH_TOKEN_KEY); } catch(e){}
+    _cachedAesKey = null;
+    try {
+      localStorage.removeItem(_AUTH_TOKEN_KEY);
+      localStorage.removeItem(_ENC_JWK_KEY);
+    } catch(e){}
     lockPage();
   };
 
@@ -1866,15 +2106,20 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
     }, 4500);
 
     function animate(){
+      if (document.hidden) {
+        requestAnimationFrame(animate);
+        return;
+      }
       ctx.clearRect(0, 0, width, height);
 
-      // Connecting constellation lines
+      // Connecting constellation lines (squared-distance prefilter avoids 8000+ Math.hypot calls/frame)
       for (var i = 0; i < stars.length; i++) {
         for (var j = i + 1; j < stars.length; j++) {
           var dx = stars[i].x - stars[j].x;
           var dy = stars[i].y - stars[j].y;
-          var dist = Math.hypot(dx, dy);
-          if (dist < 80) {
+          var d2 = dx * dx + dy * dy;
+          if (d2 < 6400) {
+            var dist = Math.sqrt(d2);
             ctx.strokeStyle = 'rgba(0, 240, 255, ' + (0.12 * (1 - dist / 80)) + ')';
             ctx.lineWidth = 0.5;
             ctx.beginPath();
@@ -1885,8 +2130,9 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
         }
         var mdx = stars[i].x - mouse.x;
         var mdy = stars[i].y - mouse.y;
-        var mdist = Math.hypot(mdx, mdy);
-        if (mdist < 100) {
+        var md2 = mdx * mdx + mdy * mdy;
+        if (md2 < 10000) {
+          var mdist = Math.sqrt(md2);
           ctx.strokeStyle = 'rgba(255, 43, 214, ' + (0.3 * (1 - mdist / 100)) + ')';
           ctx.lineWidth = 0.8;
           ctx.beginPath();
@@ -1969,6 +2215,7 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
   // --- WEB AUDIO SYNTH & SOUND ENGINE ---
   var CyberAudio = (function(){
     var ctx = null;
+    var gestureUnlocked = false;
     var SOUND_KEY = 'krzemowy_sound_enabled';
     var enabled = true;
     try {
@@ -1980,27 +2227,44 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
       if (!ctx && (window.AudioContext || window.webkitAudioContext)) {
         ctx = new (window.AudioContext || window.webkitAudioContext)();
       }
-      if (ctx && ctx.state === 'suspended') ctx.resume();
+      if (ctx && ctx.state === 'suspended') {
+        ctx.resume().catch(function(){});
+      }
     }
 
+    function unlockOnFirstGesture(){
+      if (gestureUnlocked) return;
+      gestureUnlocked = true;
+      initCtx();
+    }
+    window.addEventListener('pointerdown', unlockOnFirstGesture, { once: true, passive: true });
+    window.addEventListener('keydown', unlockOnFirstGesture, { once: true, passive: true });
+
     function playTone(freq, type, duration, endFreq){
-      if (!enabled) return;
+      if (!enabled || !gestureUnlocked) return;
       try {
         initCtx();
         if (!ctx) return;
-        var osc = ctx.createOscillator();
-        var gain = ctx.createGain();
-        osc.type = type || 'sine';
-        osc.frequency.setValueAtTime(freq, ctx.currentTime);
-        if (endFreq) {
-          osc.frequency.exponentialRampToValueAtTime(endFreq, ctx.currentTime + duration);
+        var run = function(){
+          var osc = ctx.createOscillator();
+          var gain = ctx.createGain();
+          osc.type = type || 'sine';
+          osc.frequency.setValueAtTime(freq, ctx.currentTime);
+          if (endFreq) {
+            osc.frequency.exponentialRampToValueAtTime(endFreq, ctx.currentTime + duration);
+          }
+          gain.gain.setValueAtTime(0.06, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + duration);
+        };
+        if (ctx.state === 'suspended') {
+          ctx.resume().then(run).catch(function(){});
+        } else {
+          run();
         }
-        gain.gain.setValueAtTime(0.06, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + duration);
       } catch(e){}
     }
 
@@ -2020,7 +2284,15 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
         setTimeout(function(){ playTone(440, 'sine', 0.2); }, 60);
         setTimeout(function(){ playTone(660, 'sine', 0.3, 880); }, 130);
       },
-      error: function(){ playTone(160, 'sawtooth', 0.12, 110); }
+      error: function(){ playTone(160, 'sawtooth', 0.12, 110); },
+      boop: function(){ playTone(400, 'square', 0.08, 600); },
+      turbo: function(){ playTone(130, 'sawtooth', 0.5, 920); },
+      fanfare: function(){
+        var notes = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99, 1046.50];
+        notes.forEach(function(f, idx){
+          setTimeout(function(){ playTone(f, 'triangle', 0.16, f * 1.04); }, idx * 70);
+        });
+      }
     };
   })();
 
