@@ -8,6 +8,7 @@
 <meta name="bingbot" content="noindex,nofollow,noarchive">
 <meta name="referrer" content="no-referrer">
 <meta name="rating" content="general">
+<meta name="description" content="Panel techniczny Alexa: specyfikacja i montaż serwera AI ASUS X99-E WS, Xeon E5-2690 v4, 128 GB ECC, 4× RTX 3070, BIOS, Q-Code i konfiguracja Qwen 177B.">
 <title>KRZEMOWY ŁEB 2077 // Panel Techniczny :: Alex</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&amp;family=Chakra+Petch:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap">
 <style>
@@ -248,17 +249,87 @@
   }
 
   /* Motherboard SVG slot interactive map */
-  .mb-map {
+  .mb-map, .mb-board {
     position: relative; background: #030408; border: 1.5pt solid var(--c);
     border-radius: 4pt; padding: 12pt; margin: 8pt 0;
     box-shadow: inset 0 0 25px rgba(0,240,255,0.1);
   }
+  .mb-wrap { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 10pt; align-items: start; }
+  .mb-detail {
+    background: var(--panel); border: 1pt solid var(--border); border-radius: 4pt;
+    padding: 10pt 12pt; position: sticky; top: 10pt;
+  }
   .mb-spot {
-    cursor: pointer; transition: all .2s;
+    display: flex; justify-content: space-between; align-items: center; gap: 8pt;
+    cursor: pointer; transition: all .2s; padding: 6pt 8pt; margin: 0 0 4pt 0;
+    border: 1pt solid rgba(255,255,255,0.08); border-left: 3pt solid var(--dim);
+    background: rgba(5,5,10,0.65); border-radius: 2pt; font-size: 9.5pt;
   }
+  .mb-spot span:last-child { white-space: nowrap; font-size: 8.5pt; }
   .mb-spot:hover {
-    filter: drop-shadow(0 0 8px var(--c));
+    filter: drop-shadow(0 0 8px rgba(0,240,255,0.35)); border-color: var(--c);
+    background: rgba(0,240,255,0.08);
   }
+  .mb-spot.act { border-color: var(--c); background: rgba(0,240,255,0.12); box-shadow: 0 0 12px rgba(0,240,255,0.25); }
+  .mb-spot.ok { border-left-color: var(--g); }
+  .mb-spot.warn { border-left-color: var(--y); }
+  .mb-spot.info { border-left-color: var(--c); }
+  @media (max-width: 860px) {
+    .mb-wrap { grid-template-columns: 1fr; }
+    .mb-detail { position: static; }
+  }
+
+  /* Tryb pełnej strony / wydruku (wcześniej klasa .docs nie miała CSS) */
+  body.docs .pane { display: block; animation: none; }
+
+  /* Wiadomości do sprzedawców i przyciski kopiowania */
+  .mh {
+    display: flex; justify-content: space-between; align-items: center; gap: 8pt;
+    flex-wrap: wrap; margin-bottom: 4pt; font-family: 'Oxanium', sans-serif;
+    font-size: 8.5pt; color: var(--dim); letter-spacing: .3pt;
+  }
+  .cp {
+    font-family: 'Oxanium', sans-serif; font-size: 8pt; font-weight: bold;
+    background: rgba(0,240,255,0.1); color: var(--c); border: 1pt solid var(--border);
+    padding: 2.5pt 7pt; border-radius: 2pt; cursor: pointer; white-space: nowrap; transition: all .15s;
+  }
+  .cp:hover { background: var(--c); color: #05050A; border-color: var(--c); }
+  table.msg { width: 100%; border-collapse: collapse; margin: 6pt 0; background: rgba(5,5,10,0.6); border: 1pt solid var(--border); }
+  table.msg td { padding: 8pt; }
+  .mt {
+    font-family: 'JetBrains Mono', monospace; font-size: 9pt; line-height: 1.55;
+    color: #dfe6ff; background: #05050A; border: 1pt dashed rgba(255,255,255,0.12);
+    padding: 8pt 10pt; margin: 0; white-space: pre-wrap; overflow-x: auto;
+  }
+
+  /* Kody Q-Code */
+  .q-btns { display: flex; flex-wrap: wrap; gap: 5pt; margin: 6pt 0; }
+  .q-btn {
+    font-family: 'Oxanium', sans-serif; font-size: 8.5pt; font-weight: bold;
+    background: rgba(9,9,20,0.85); color: var(--txt); border: 1pt solid var(--border);
+    padding: 4.5pt 8pt; border-radius: 2pt; cursor: pointer; transition: all .15s;
+  }
+  .q-btn:hover { border-color: var(--c); color: var(--c); }
+  .q-btn.on { background: var(--c); color: #05050A; border-color: var(--c); box-shadow: 0 0 10px rgba(0,240,255,0.35); }
+
+  /* Status "wysłano pytanie" */
+  .st-btn.s-ask.on { background: var(--m); color: #05050A; border-color: var(--m); font-weight: bold; }
+
+  /* Wybór użytkownika i notka o roli */
+  .who-sel {
+    background: #090914; color: var(--y); border: 1pt solid var(--border);
+    padding: 2.5pt 6pt; font-family: 'Oxanium', sans-serif; font-size: 9pt; border-radius: 2pt;
+  }
+  .role-note {
+    background: rgba(0,240,255,0.06); border: 1pt solid var(--border);
+    border-left: 3pt solid var(--c); padding: 8pt 10pt; margin: 0 0 10pt 0; font-size: 10pt;
+  }
+  .role-note ul { margin: 4pt 0 0 16pt; padding: 0; }
+  .role-note li { margin: 2pt 0; }
+  /* Role-based visibility (przywrócone po redesignie) */
+  body[data-role="seba"] [data-only="alex"] { display: none !important; }
+  body[data-role="alex"] [data-only="seba"] { display: none !important; }
+  body[data-role="seba"] table.msg { display: none !important; }
 
   /* Hardware Icon Chip */
   .icon-chip {
@@ -372,7 +443,7 @@
   </div>
 </div>
 
-<div class="wrap terminal-locked">
+<main class="wrap terminal-locked">
 
 <!-- ================= TYTUŁ ================= -->
 <table class="blk"><tr><td style="background:#05050A;border:2pt solid #FF2BD6;padding:12pt 12pt;">
@@ -380,7 +451,7 @@
   <span class="mono m" style="font-size:9.8pt;">// PROJEKT KRZEMOWY ŁEB 2077 &nbsp;::&nbsp;ALEX ↔ SEBA &nbsp;::&nbsp; LIVE</span>
   <span class="mono g" style="font-size:9.5pt;">ASUS X99-E WS + XEON E5-2690 v4 + 128 GB ECC + 4× RTX 3070</span>
 </div>
-<p class="ox c" style="font-size:20pt;margin:2pt 0;">KRZEMOWY ŁEB 2077 // SPECYFIKACJA TECHNICZNA :: ALEX</p>
+<h1 class="ox c" style="font-size:20pt;margin:2pt 0;">KRZEMOWY ŁEB 2077 // SPECYFIKACJA TECHNICZNA :: ALEX</h1>
 <p class="ox y" style="font-size:12pt;margin:0 0 4pt 0;">DOKUMENTACJA SPRZĘTOWA, PROCEDURA MONTAŻU, BIOS I ŚRODOWISKO QWEN 177B</p>
 <p style="margin:0;">Dokumentacja techniczna węzła AI na bazie ASUS X99-E WS i 4× RTX 3070. Zawiera listę podzespołów, weryfikację sprzętu z koparki, mapę slotów płyty, nastawy BIOS oraz konfigurację systemu. Wszystkie statusy synchronizują się na bieżąco z panelem zamówień Seby.</p>
 </td></tr></table>
@@ -394,7 +465,7 @@
       <span class="mono dim" style="font-size:9pt;margin-left:6pt;" id="lastUpd"></span>
     </div>
     <div style="display:flex;align-items:center;gap:6pt;">
-      <span class="mono dim" style="font-size:9pt;">Kto teraz klika:</span>
+      <label for="whoSel" class="mono dim" style="font-size:9pt;">Kto teraz klika:</label>
       <button id="soundToggle" class="sound-btn on" title="Efekty dźwiękowe">🔊 DŹWIĘK: WŁ</button>
       <button onclick="lockTerminal()" class="st-btn" style="background:#090914;color:var(--dim);border-color:var(--border);padding:2pt 6pt;font-size:8.5pt;" title="Zablokuj stronę">🔒 ZABLOKUJ</button>
       <select class="who-sel" id="whoSel">
@@ -526,7 +597,7 @@
   <button class="st-btn s-ask" data-st="ask">Wysłano pytanie</button>
   <button class="st-btn s-ord" data-st="ord">Zamówione / Płynie</button>
   <button class="st-btn s-got" data-st="got">Kupione / Na miejscu ✔</button>
-  <input class="note-in" data-note="mb" placeholder="Notatka na żywo (np. jaką wersję BIOS-u podał sprzedawca, numer przesyłki)...">
+  <input type="text" class="note-in" data-note="mb" placeholder="Notatka na żywo (np. jaką wersję BIOS-u podał sprzedawca, numer przesyłki)...">
 </div>
 <p><span class="dim">CO TO:</span> „kręgosłup” serwera. Musi być <b>DOKŁADNIE ASUS X99-E WS</b> (lub <b>X99-E WS/USB 3.1</b>) — ma 7 pełnych slotów na karty i jako jedyna obsługuje nasz serwerowy RAM 32 GB (`2Rx4`). Tańsze płyty (Gigabyte/MSI) z tym RAM-em w ogóle się nie włączą.</p>
 <p>W Polsce jej nie ma (sprawdzone Allegro, OLX, Allegro Lokalnie). Bierzemy z eBaya — idzie z Chin 2–3 tygodnie. Przy odbiorze kurier pobierze <b>VAT 23% + ok. 30 zł</b> odprawy (wliczone w kwotę 1 340 zł). Cła na płyty główne jest 0%.</p>
@@ -559,7 +630,7 @@ Thank you!</p>
   <button class="st-btn s-ask" data-st="ask">Wysłano pytanie</button>
   <button class="st-btn s-ord" data-st="ord">Zamówione</button>
   <button class="st-btn s-got" data-st="got">Kupione ✔</button>
-  <input class="note-in" data-note="cpu" placeholder="Notatka (np. potwierdzony grawer SR2N2)...">
+  <input type="text" class="note-in" data-note="cpu" placeholder="Notatka (np. potwierdzony grawer SR2N2)...">
 </div>
 <p><span class="dim">CO TO:</span> serwerowy procesor 14 rdzeni / 28 wątków (135W). Na metalowej pokrywie musi mieć wygrawerowany kod <b>SR2N2</b>.<br>
 <span class="r">✖ NIE KUPUJ</span>, jeśli na procesorze lub w opisie jest napis „ES”, „QS” albo „Intel Confidential” (to niestabilne próbki testowe).</p>
@@ -586,7 +657,7 @@ Pozdrawiam!</p>
   <button class="st-btn s-ask" data-st="ask">Wysłano pytanie</button>
   <button class="st-btn s-ord" data-st="ord">Zamówione</button>
   <button class="st-btn s-got" data-st="got">Kupione ✔</button>
-  <input class="note-in" data-note="ram" placeholder="Notatka (np. utargowana kwota, dokładny kod z naklejki od p. Grzegorza)...">
+  <input type="text" class="note-in" data-note="ram" placeholder="Notatka (np. utargowana kwota, dokładny kod z naklejki od p. Grzegorza)...">
 </div>
 <p><span class="dim">CO TO:</span> pamięć robocza, w której siedzą eksperci modelu AI 177B. Potrzebujemy 4 identycznych kości po 32 GB od jednego sprzedawcy (tryb 4-kanałowy Quad-Channel).</p>
 <p>Na naklejce kości muszą być <b>DWA oznaczenia</b>: <b>„2Rx4”</b> oraz litera <b>„R”</b> na końcu kodu (np. <span class="mono">PC4-2400T-R</span>).<br>
@@ -619,7 +690,7 @@ Pozdrawiam!</p>
   <button class="st-btn s-ask" data-st="ask">Wysłano pytanie</button>
   <button class="st-btn s-ord" data-st="ord">Zamówione</button>
   <button class="st-btn s-got" data-st="got">Kupione ✔</button>
-  <input class="note-in" data-note="ssd" placeholder="Notatka (np. zdrowie dysku z CrystalDiskInfo)...">
+  <input type="text" class="note-in" data-note="ssd" placeholder="Notatka (np. zdrowie dysku z CrystalDiskInfo)...">
 </div>
 <p><span class="dim">CO TO:</span> dysk na system Ubuntu i pliki modelu AI (~85,5 GB). Wpinamy go zwykłym kablem SATA, żeby nie zabierał linii PCIe kartom graficznym.</p>
 <p style="margin-top:8pt;"><span class="tag g">[ KUP TEN ]</span><br><a href="https://www.olx.pl/d/oferta/dysk-ssd-1tb-2-5-sata-sandisk-ultra-3d-sdssdh31000g-dram-stan-95-gwarancja-faktura-vat-marza-CID99-ID1cRAY0.html" target="_blank" rel="noopener">▶ OLX — SanDisk Ultra 3D 1 TB, 2,5" SATA (z DRAM), stan 95%, gwarancja i faktura, Przesyłka OLX — 429 zł</a></p>
@@ -648,7 +719,7 @@ Pozdrawiam!</p>
   <button class="st-btn s-todo" data-st="todo">Do kupienia</button>
   <button class="st-btn s-ord" data-st="ord">Zamówione</button>
   <button class="st-btn s-got" data-st="got">Kupione ✔</button>
-  <input class="note-in" data-note="cool" placeholder="Notatka...">
+  <input type="text" class="note-in" data-note="cool" placeholder="Notatka...">
 </div>
 <p><span class="dim">CO TO:</span> nowy radiator z 2 wentylatorami (220W TDP — duży zapas dla naszego Xeona 135W). W nowym pudełku ze sklepu są od razu <b>śruby dystansowe M4 pod nasze gniazdo LGA 2011-3</b> (w używanych chłodzeniach z OLX ludzie prawie zawsze je gubią). <b>Kupujesz od razu bez pisania.</b></p>
 <p><span class="cb" data-id="fera" data-p="129">☐</span> &nbsp;<a href="https://www.morele.net/chlodzenie-cpu-endorfy-fera-5-dual-fan-ey3a006-11788461/" target="_blank" rel="noopener">Morele.net — Endorfy Fera 5 Dual Fan (EY3A006)</a> — <span class="y">129 zł</span> (darmowa dostawa)</p>
@@ -664,7 +735,7 @@ Pozdrawiam!</p>
   <button class="st-btn s-ask" data-st="ask">Wysłano pytanie</button>
   <button class="st-btn s-ord" data-st="ord">Zamówione</button>
   <button class="st-btn s-got" data-st="got">Kupione / Mamy swój ✔</button>
-  <input class="note-in" data-note="psu" placeholder="Notatka (np. jaki zasilacz siedzi teraz w koparce)...">
+  <input type="text" class="note-in" data-note="psu" placeholder="Notatka (np. jaki zasilacz siedzi teraz w koparce)...">
 </div>
 <p><span class="m ox">⏸ ZANIM KUPISZ:</span> zrób zdjęcie tabliczki naszego zasilacza z koparki (zakładka <a href="#" data-go="mamy">02 Z KOPARKI</a>). Jeśli ma <b>min. 1000 W</b>, <b>8 wtyczek PCIe 8-pin (6+2)</b> do kart i <b>2 wtyczki CPU 8-pin (EPS)</b> — zostaje nasz i oszczędzamy 399 zł!</p>
 <p style="margin-top:8pt;"><span class="tag g">[ KUP TEN, JEŚLI NASZ Z KOPARKI NIE WYSTARCZY ]</span><br><a href="https://allegro.pl/oferta/zasilacz-corsair-hx1200-1200-w-80-plus-platinum-19032704470" target="_blank" rel="noopener">▶ Allegro — Corsair HX1200 1200W 80+ Platinum — 399 zł, Super Sprzedawca</a></p>
@@ -690,7 +761,7 @@ Pozdrawiam!</p>
   <button class="st-btn s-todo" data-st="todo">Do kupienia (po pomiarze miarką)</button>
   <button class="st-btn s-ord" data-st="ord">Zamówione</button>
   <button class="st-btn s-got" data-st="got">Kupione ✔</button>
-  <input class="note-in" data-note="riser" placeholder="Notatka (np. zmierzona odległość w cm)...">
+  <input type="text" class="note-in" data-note="riser" placeholder="Notatka (np. zmierzona odległość w cm)...">
 </div>
 <p><span class="dim">CO TO:</span> szerokie, 164-żyłowe taśmy łączące płytę główną z 4 kartami na górnej belce stelaża.<br>
 <span class="r">✖ Czerwone risery z kablem USB z naszej koparki odpadają</span> — mają tylko 1 linię PCIe (16× za wolno do przerzucania warstw modelu AI między kartami).</p>
@@ -706,7 +777,7 @@ Pozdrawiam!</p>
   <button class="st-btn s-todo" data-st="todo">Do kupienia</button>
   <button class="st-btn s-ord" data-st="ord">Zamówione</button>
   <button class="st-btn s-got" data-st="got">Kupione ✔</button>
-  <input class="note-in" data-note="fan" placeholder="Notatka (np. zamówione na Allegro)...">
+  <input type="text" class="note-in" data-note="fan" placeholder="Notatka (np. zamówione na Allegro)...">
 </div>
 <p>Wszystko nowe, kupujesz od razu. <span class="g">Przycisk włączania już mamy w koparce.</span></p>
 <p><span class="cb" data-id="fans" data-p="110">☐</span> &nbsp;<a href="https://allegro.pl/oferta/wentylator-arctic-p12-pro-pwm-pst-black-120mm-zestaw-5szt-acfan00307a-17977465818" target="_blank" rel="noopener">Wentylatory Arctic P12 Pro PWM PST 120mm (zestaw 5 szt.)</a> — <span class="y">109,99 zł</span> <span class="dim">(stały przewiew między 4 kartami)</span></p>
@@ -721,7 +792,7 @@ Pozdrawiam!</p>
   <button class="st-btn s-todo" data-st="todo">Do kupienia</button>
   <button class="st-btn s-ord" data-st="ord">Zamówione</button>
   <button class="st-btn s-got" data-st="got">Kupione ✔</button>
-  <input class="note-in" data-note="parts" placeholder="Notatka (np. paczka w drodze)...">
+  <input type="text" class="note-in" data-note="parts" placeholder="Notatka (np. paczka w drodze)...">
 </div>
 <p>Płyta z eBaya przychodzi sama, bez kabli i baterii. Kup od razu, żebyśmy nie utknęli w połowie składania:</p>
 <p><span class="cb" data-id="usb" data-p="48">☐</span> &nbsp;<a href="https://allegro.pl/oferta/sandisk-pendrive-ultra-flair-32gb-srebrny-18952645229" target="_blank" rel="noopener">Pendrive SanDisk Ultra Flair 32 GB</a> — <span class="y">47,89 zł</span> <span class="dim">(do instalacji Ubuntu i aktualizacji BIOS-u)</span></p>
@@ -770,19 +841,19 @@ Pozdrawiam!</p>
 <p>Zanim zamówimy zasilacz, dysk i risery, musimy sprawdzić, co dokładnie siedzi teraz w koparce. Zrób zdjęcia telefonem (wyślij mi na Signal) lub wpisz odczytane dane prosto w poniższe pola — zobaczę je od razu u siebie:</p>
 
 <p><span class="cb" data-id="f1">☐</span> &nbsp;<b>1. Tabliczka znamionowa na zasilaczu</b> (marka, model, moc w W; jeśli są dwa zasilacze — obu):
-<input class="rig-in" data-rig="psuModel" placeholder="Wpisz tutaj model i moc zasilacza z naklejki (np. Corsair HX1200 / EVGA 1000 G2)..."></p>
+<input type="text" class="rig-in" data-rig="psuModel" placeholder="Wpisz tutaj model i moc zasilacza z naklejki (np. Corsair HX1200 / EVGA 1000 G2)..."></p>
 
 <p><span class="cb" data-id="f2">☐</span> &nbsp;<b>2. Wtyczki zasilające do kart (PCIe 6+2 pin) i do procesora (CPU 8-pin)</b> — policz ile ich jest łącznie:
-<input class="rig-in" data-rig="psuPcieCount" placeholder="Wpisz ile jest wtyczek 6+2 pin do kart i 8-pin CPU (np. 8x PCIe, 2x CPU)..."></p>
+<input type="text" class="rig-in" data-rig="psuPcieCount" placeholder="Wpisz ile jest wtyczek 6+2 pin do kart i 8-pin CPU (np. 8x PCIe, 2x CPU)..."></p>
 
 <p><span class="cb" data-id="f3">☐</span> &nbsp;<b>3. Naklejki z tyłu wszystkich 4 kart RTX 3070</b> (dokładny model każdej z 4 sztuk):
-<input class="rig-in" data-rig="gpuModels" placeholder="Wpisz modele 4 kart (np. 2x MSI Gaming X Trio, 2x Zotac...)..."></p>
+<input type="text" class="rig-in" data-rig="gpuModels" placeholder="Wpisz modele 4 kart (np. 2x MSI Gaming X Trio, 2x Zotac...)..."></p>
 
 <p><span class="cb" data-id="f4">☐</span> &nbsp;<b>4. Dysk w koparce</b> — sprawdź, czy jest tam dysk SSD i jaką ma pojemność na naklejce:
-<input class="rig-in" data-rig="ssdModel" placeholder="Wpisz jaki dysk jest w koparce (np. brak / pendrive / 120 GB / Samsung 1 TB)..."></p>
+<input type="text" class="rig-in" data-rig="ssdModel" placeholder="Wpisz jaki dysk jest w koparce (np. brak / pendrive / 120 GB / Samsung 1 TB)..."></p>
 
 <p style="margin:0;"><span class="cb" data-id="f5">☐</span> &nbsp;<b>5. Miarka: odległość od tacki płyty głównej do spodu najdalszej karty na górze (w cm)</b>:
-<input class="rig-in" data-rig="riserDistanceCm" placeholder="Wpisz zmierzoną odległość w cm (np. 25 cm — potwierdzi, że risery 30 cm wystarczą)..."></p>
+<input type="text" class="rig-in" data-rig="riserDistanceCm" placeholder="Wpisz zmierzoną odległość w cm (np. 25 cm — potwierdzi, że risery 30 cm wystarczą)..."></p>
 </td></tr></table>
 
 <div style="text-align:center;margin:10pt 0 16pt 0;">
@@ -1127,7 +1198,7 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
 <p class="mono m" style="font-size:10pt;text-align:center;margin:0;">// KRZEMOWY ŁEB 2077 :: Wszelkie kliknięcia i notatki zapisują się automatycznie :: Coś niejasne → pisz na Signal</p>
 </td></tr></table>
 
-</div>
+</main>
 <div class="toast" id="toast">ZAPISANO ✔</div>
 
 <script>
@@ -1150,24 +1221,42 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
 
   function normName(n){ if (!n) return 'Alex'; return n.indexOf('Seba') !== -1 ? 'Seba' : 'Alex'; }
 
+  // Uodparnia stan z localStorage / chmury na brakujące lub puste sekcje.
+  function normalizeState(src){
+    var base = defaultState();
+    if (!src || typeof src !== 'object' || Array.isArray(src)) return base;
+    var out = Object.assign(base, src);
+    ['checks','statuses','notes','rigInfo'].forEach(function(k){
+      if (!out[k] || typeof out[k] !== 'object' || Array.isArray(out[k])) out[k] = {};
+    });
+    var calSrc = (out.calc && typeof out.calc === 'object' && !Array.isArray(out.calc)) ? out.calc : {};
+    out.calc = Object.assign(defaultState().calc, calSrc);
+    out.calc.optApc = !!(out.checks.apc || out.calc.optApc);
+    out.calc.optWifi = !!(out.checks.wifi || out.calc.optWifi);
+    if (out.calc.optApc) out.checks.apc = true;
+    if (out.calc.optWifi) out.checks.wifi = true;
+    out.updatedAt = Number(out.updatedAt) || 0;
+    return out;
+  }
+
   var state = defaultState();
   try {
     var saved = JSON.parse(localStorage.getItem(LS_KEY) || 'null');
-    if (saved && typeof saved === 'object') state = Object.assign(defaultState(), saved);
+    if (saved && typeof saved === 'object') state = normalizeState(saved);
   } catch (e) {}
   state.updatedBy = normName(state.updatedBy);
 
   var whoSel = document.getElementById('whoSel');
-  var ROLE_OF = { 'Seba': 'seba', 'Alex': 'alex' };
   var ROLE_NOTES = {
     seba: '<b>WIDOK: SEBA — zakupy i odbiór części.</b><ul>' +
           '<li>Widok zamówień z linkami do sklepów i statusami paczek.</li>' +
+          '<li>Wiadomości do sprzedawców (szablony Alexa) są ukryte.</li>' +
           '<li>Każde kliknięcie i notatka zapisują się na żywo.</li></ul>',
     alex: '<b>WIDOK: ALEX — panel inżynierski i specyfikacja techniczna.</b><ul>' +
           '<li>Pełna lista części, mapa płyty, nastawy BIOS i skrypty wdrożeniowe.</li>' +
           '<li>Synchronizacja na żywo z panelem zamówień Seby.</li></ul>'
   };
-  function currentRole(){ return 'alex'; }
+  function currentRole(){ return normName(whoSel && whoSel.value).toLowerCase(); }
   function applyRole(){
     var role = currentRole();
     document.body.dataset.role = role;
@@ -1185,11 +1274,7 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
 
   try {
     var savedWho = localStorage.getItem(WHO_KEY);
-    if (savedWho) {
-      var mapped = normName(savedWho);
-      whoSel.value = 'Alex';
-      if (mapped !== savedWho) localStorage.setItem(WHO_KEY, mapped);
-    }
+    whoSel.value = savedWho ? normName(savedWho) : 'Alex';
   } catch (e) {}
   whoSel.addEventListener('change', function(){
     try { localStorage.setItem(WHO_KEY, whoSel.value); } catch (e) {}
@@ -1222,6 +1307,7 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
 
   function syncGroupFlags(srvState){
     if (!srvState || !srvState.checks) return;
+    if (!srvState.statuses || typeof srvState.statuses !== 'object') srvState.statuses = {};
     Object.keys(GROUP_SUBS).forEach(function(g){
       var subs = GROUP_SUBS[g];
       var allChecked = subs.every(function(k){ return !!srvState.checks[k]; });
@@ -1245,6 +1331,7 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
     clearTimeout(pushTimer);
     pushTimer = setTimeout(async function(){
       var payloadStr = await encryptSyncPayload(state);
+      if (!payloadStr) { updateSyncBadge(false); return; }
       // 1) Synchronizacja chmurowa Live Sync (ntfy.sh SSE + E2EE AES-GCM-256)
       fetch(SYNC_URL, {
         method: 'POST',
@@ -1253,8 +1340,9 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
         if (r.ok) updateSyncBadge(true);
       }).catch(function(){});
 
-      // 2) Lokalny endpoint /api/state (jeśli uruchomiono przez `node server.js`)
-      if (location.protocol !== 'file:') {
+      // 2) Lokalny endpoint /api/state (tylko gdy strona działa na localhost)
+      var isLocalHost = /^(localhost|127\.0\.0\.1|\[::1\])$/i.test(location.hostname);
+      if (location.protocol !== 'file:' && isLocalHost) {
         var body = isReset ? { reset: true, updatedBy: state.updatedBy } : state;
         fetch('/api/state', {
           method: 'POST',
@@ -1263,6 +1351,10 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
         }).catch(function(){});
       }
     }, 150);
+  }
+
+  function hasSubtle(){
+    return !!(window.crypto && window.crypto.subtle && crypto.subtle.importKey);
   }
 
   function updateSyncBadge(online, count){
@@ -1274,7 +1366,9 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
       txt.textContent = 'LIVE SYNC (E2EE) :: ALEX ↔ SEBA' + (count ? ' • ' + count + ' online' : '');
     } else {
       dot.className = 'sync-dot off';
-      txt.textContent = 'ZAPIS LOKALNY W PRZEGLĄDARCE';
+      txt.textContent = hasSubtle()
+        ? 'ZAPIS LOKALNY W PRZEGLĄDARCE'
+        : 'ZAPIS LOKALNY :: SYNC NIEDOSTĘPNY PO HTTP';
     }
     if (state.updatedAt > 0) {
       var d = new Date(state.updatedAt);
@@ -1291,13 +1385,14 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
     if ((srv.updatedAt || 0) <= (state.updatedAt || 0)) return;
     srv.updatedBy = normName(srv.updatedBy);
     syncGroupFlags(srv);
-    state = Object.assign(defaultState(), srv);
+    state = normalizeState(srv);
     saveLocal();
     render();
     updateSyncBadge(true);
   }
 
   function pollRecentSync(){
+    if (!hasSubtle()) return;
     fetch(SYNC_URL + '/json?poll=1&since=12h').then(function(r){ return r.text(); }).then(async function(txt){
       updateSyncBadge(true);
       var lines = txt.trim().split('\n');
@@ -1315,6 +1410,10 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
   }
 
   function connectLiveSync(){
+    if (!hasSubtle()) {
+      updateSyncBadge(false);
+      return;
+    }
     pollRecentSync();
 
     // Strumień SSE na żywo
@@ -1426,7 +1525,8 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
 
     var totalCount = 0, boughtCount = 0, spent = 0;
     canonicalItems.forEach(function(it){
-      if (it.skip) return;
+      // APC / Wi-Fi to opcje dodatkowe: wchodzą do kwoty, ale nie do licznika pozycji.
+      if (it.skip || it.id === 'apc' || it.id === 'wifi') return;
       totalCount++;
       var st = state.statuses[it.id] || (state.checks[it.id] ? 'got' : 'todo');
       if (st === 'got' || st === 'ord' || state.checks[it.id]) {
@@ -1462,6 +1562,8 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
     if (t.classList.contains('cb')) {
       var id = t.dataset.id;
       state.checks[id] = !state.checks[id];
+      if (id === 'apc') state.calc.optApc = !!state.checks[id];
+      if (id === 'wifi') state.calc.optWifi = !!state.checks[id];
       if (state.statuses[id] || id === 'mb' || id === 'cpu' || id === 'ram' || id === 'ssd' || id === 'psu' || id === 'riser') {
         state.statuses[id] = state.checks[id] ? 'got' : 'todo';
       }
@@ -1505,6 +1607,8 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
       state.calc.ssdFromRig = document.getElementById('cSsd').checked;
       state.calc.optApc = document.getElementById('cApc').checked;
       state.calc.optWifi = document.getElementById('cWifi').checked;
+      state.checks.apc = state.calc.optApc;
+      state.checks.wifi = state.calc.optWifi;
       pushToServer(false);
     });
   });
@@ -1694,8 +1798,81 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
     }
   }
 
+  // ===== FALLBACK PBKDF2-HMAC-SHA256 =====
+  // Chromium udostępnia crypto.subtle tylko w bezpiecznym kontekście (HTTPS/localhost).
+  // Strona jest używana także po http://krzemowy-leb.local:8080, więc bez tego
+  // fallbacku PIN w ogóle nie działa na laptopie w domowej sieci.
+  function _rotr(x, n){ return (x >>> n) | (x << (32 - n)); }
+  function _sha256Bytes(bytes){
+    var K = [0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+      0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+      0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+      0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+      0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+      0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+      0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+      0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+    var H = [0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+    var l = bytes.length;
+    var total = ((l + 9 + 63) >> 6) << 6;
+    var buf = new Uint8Array(total);
+    buf.set(bytes); buf[l] = 0x80;
+    var dv = new DataView(buf.buffer);
+    dv.setUint32(total - 8, Math.floor(l / 0x20000000));
+    dv.setUint32(total - 4, (l * 8) >>> 0);
+    var w = new Uint32Array(64), i, j, off;
+    for (off = 0; off < total; off += 64) {
+      for (i = 0; i < 16; i++) w[i] = dv.getUint32(off + i * 4);
+      for (i = 16; i < 64; i++) {
+        var s0 = _rotr(w[i-15],7) ^ _rotr(w[i-15],18) ^ (w[i-15] >>> 3);
+        var s1 = _rotr(w[i-2],17) ^ _rotr(w[i-2],19) ^ (w[i-2] >>> 10);
+        w[i] = (w[i-16] + s0 + w[i-7] + s1) >>> 0;
+      }
+      var a=H[0], b=H[1], c=H[2], d=H[3], e=H[4], f=H[5], g=H[6], h=H[7];
+      for (i = 0; i < 64; i++) {
+        var S1 = _rotr(e,6) ^ _rotr(e,11) ^ _rotr(e,25);
+        var ch = (e & f) ^ (~e & g);
+        var t1 = (h + S1 + ch + K[i] + w[i]) >>> 0;
+        var S0 = _rotr(a,2) ^ _rotr(a,13) ^ _rotr(a,22);
+        var maj = (a & b) ^ (a & c) ^ (b & c);
+        var t2 = (S0 + maj) >>> 0;
+        h=g; g=f; f=e; e=(d + t1) >>> 0; d=c; c=b; b=a; a=(t1 + t2) >>> 0;
+      }
+      H[0]=(H[0]+a)>>>0; H[1]=(H[1]+b)>>>0; H[2]=(H[2]+c)>>>0; H[3]=(H[3]+d)>>>0;
+      H[4]=(H[4]+e)>>>0; H[5]=(H[5]+f)>>>0; H[6]=(H[6]+g)>>>0; H[7]=(H[7]+h)>>>0;
+    }
+    var out = new Uint8Array(32), odv = new DataView(out.buffer);
+    for (i = 0; i < 8; i++) odv.setUint32(i * 4, H[i]);
+    return out;
+  }
+  function _hmacSha256(key, msg){
+    if (key.length > 64) key = _sha256Bytes(key);
+    var k = new Uint8Array(64); k.set(key);
+    var ip = new Uint8Array(64 + msg.length), op = new Uint8Array(96), i;
+    for (i = 0; i < 64; i++) ip[i] = k[i] ^ 0x36;
+    ip.set(msg, 64);
+    var inner = _sha256Bytes(ip);
+    for (i = 0; i < 64; i++) op[i] = k[i] ^ 0x5c;
+    op.set(inner, 64);
+    return _sha256Bytes(op);
+  }
+  function _pbkdf2Sha256Hex(pass, salt, iterations){
+    var msg = new Uint8Array(salt.length + 4);
+    msg.set(salt);
+    new DataView(msg.buffer).setUint32(salt.length, 1);
+    var u = _hmacSha256(pass, msg), out = u.slice();
+    for (var it = 1; it < iterations; it++) {
+      u = _hmacSha256(pass, u);
+      for (var j = 0; j < 32; j++) out[j] ^= u[j];
+    }
+    return Array.prototype.map.call(out, function(b){ return ('0' + b.toString(16)).slice(-2); }).join('');
+  }
+
   async function deriveVaultSignature(val) {
     var enc = new TextEncoder();
+    if (!(window.crypto && window.crypto.subtle && crypto.subtle.importKey)) {
+      return _pbkdf2Sha256Hex(enc.encode(val), enc.encode(_AUTH_SALT), _AUTH_ITERATIONS);
+    }
     var keyMaterial = await crypto.subtle.importKey(
       'raw',
       enc.encode(val),
@@ -1721,6 +1898,7 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
 
   async function deriveAndCacheSyncKey(val) {
     try {
+      if (!hasSubtle()) return;
       var enc = new TextEncoder();
       var keyMaterial = await crypto.subtle.importKey(
         'raw',
@@ -1782,7 +1960,7 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
     var plain = JSON.stringify(stateObj);
     try {
       var key = await getSyncAesKey();
-      if (!key) return plain;
+      if (!key) return null;
       var iv = crypto.getRandomValues(new Uint8Array(12));
       var ctBuf = await crypto.subtle.encrypt(
         { name: 'AES-GCM', iv: iv },
@@ -1797,7 +1975,7 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
         updatedAt: stateObj.updatedAt
       });
     } catch (e) {
-      return plain;
+      return null;
     }
   }
 
@@ -1839,6 +2017,11 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
       } else {
         var pinInp = document.getElementById('pinInput');
         if (pinInp && pinInp.disabled) pinInp.disabled = false;
+        var errEl = document.getElementById('pinError');
+        if (errEl && errEl.textContent.indexOf('BLOKADA ANTYWŁAMANIOWA') !== -1) {
+          errEl.textContent = '';
+          errEl.style.display = 'none';
+        }
         return false;
       }
     } catch(e) { return false; }
@@ -1982,9 +2165,16 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
       return;
     }
 
+    if (!hasSubtle() && err) {
+      err.textContent = '⏳ WERYFIKACJA PBKDF2-SHA256 (100 000 iteracji)...';
+      err.style.color = 'var(--c)';
+      err.style.display = 'block';
+      await new Promise(function(res){ setTimeout(res, 30); });
+    }
     var sig = await deriveVaultSignature(val);
     if (constantTimeEqual(sig, _VAULT_SIGNATURE)) {
       resetFailedAttempts();
+      if (err) { err.textContent = ''; err.style.display = 'none'; }
       try { localStorage.setItem(_AUTH_TOKEN_KEY, sig); } catch (e) {}
       await deriveAndCacheSyncKey(val);
       unlockPage();
@@ -1995,7 +2185,7 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
       recordFailedAttempt();
       if (typeof CyberAudio !== 'undefined' && CyberAudio.error) CyberAudio.error();
       if (err) {
-        var fails = Number(localStorage.getItem(_FAIL_KEY)) || 1;
+        var fails = Math.min(Number(localStorage.getItem(_FAIL_KEY)) || 1, 3);
         err.textContent = '⚠ BŁĘDNY KOD (' + fails + '/3) :: ODMOWA DOSTĘPU';
         err.style.color = 'var(--r)';
         err.style.display = 'block';
@@ -2052,21 +2242,8 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
   });
 
   
-  // INCOGNITO MESH REVEAL / MASK
-  window.toggleIncognito = function(){
-    var isOff = document.body.classList.toggle('incognito-off');
-    var btn = document.getElementById('incogBtn');
-    if (btn) btn.textContent = isOff ? '🕶️ ZAMASKUJ DANE (INCOGNITO)' : '👁️ ODSŁOŃ DANE WĘZŁA';
-    document.querySelectorAll('.spoiler').forEach(function(el){
-      el.classList.toggle('revealed', isOff);
-    });
-  };
-
-  document.addEventListener('click', function(ev){
-    if (ev.target.classList.contains('spoiler')) {
-      ev.target.classList.toggle('revealed');
-    }
-  });
+  // INCOGNITO: usunięte — funkcja nie miała żadnego przycisku ani elementów .spoiler,
+  // więc była martwym kodem. Maskowanie danych węzła nie jest obecnie częścią UI.
 
   render();
   connectLiveSync();

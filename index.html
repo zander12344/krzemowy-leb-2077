@@ -8,7 +8,8 @@
 <meta name="bingbot" content="noindex,nofollow,noarchive">
 <meta name="referrer" content="no-referrer">
 <meta name="rating" content="general">
-<title>KRZEMOWY ŁEB 2077 // Centrum Zamówień & AI :: Seba</title>
+<meta name="description" content="Krzemowy Łeb 2077 — centrum zamówień Seby: lista części serwera AI na X99 z 4× RTX 3070, budżet, statusy zakupów, instrukcje montażu i lokalny model Qwen 177B.">
+<title>KRZEMOWY ŁEB 2077 // Centrum Zamówień &amp; AI :: Seba</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&amp;family=Chakra+Petch:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap">
 <style>
   :root {
@@ -81,6 +82,19 @@
     display: flex; align-items: center; gap: 8px;
   }
   td.bd { background: var(--panel); padding: 11pt; }
+
+  /* Tabele porównawcze (wcześniej bez żadnego stylu) */
+  table.grid {
+    width: 100%; border-collapse: collapse; margin: 6pt 0; font-size: 9.5pt;
+    background: rgba(5, 5, 10, 0.55); border: 1pt solid var(--border);
+  }
+  table.grid th {
+    background: rgba(0, 240, 255, 0.12); color: var(--c); text-align: left;
+    padding: 5pt 7pt; border: 1pt solid rgba(0, 240, 255, 0.25);
+    font-family: 'Oxanium', sans-serif; font-size: 9pt; text-transform: uppercase; letter-spacing: .3pt;
+  }
+  table.grid td { padding: 5pt 7pt; border: 1pt solid rgba(255, 255, 255, 0.08); vertical-align: top; }
+  table.grid tr:nth-child(even) td { background: rgba(255, 255, 255, 0.02); }
   .hc { background: var(--c); border: 1pt solid var(--c); } .bc { border: 1pt solid var(--c); }
   .hm { background: var(--m); border: 1pt solid var(--m); } .bm { border: 1pt solid var(--m); }
   .hy { background: var(--y); border: 1pt solid var(--y); } .by { border: 1pt solid var(--y); }
@@ -146,6 +160,13 @@
     background: #7fdcff; border-color: #7fdcff; color: #05050A;
     box-shadow: 0 0 16px rgba(127, 220, 255, 0.75);
   }
+
+  .tool {
+    font-family: 'Oxanium', sans-serif; font-size: 9pt; font-weight: bold;
+    background: rgba(18, 18, 31, 0.85); color: var(--txt); border: 1pt solid var(--border);
+    padding: 4pt 8pt; cursor: pointer; border-radius: 2pt; transition: all .15s;
+  }
+  .tool:hover { background: rgba(0, 240, 255, 0.15); border-color: var(--c); color: var(--c); }
 
   .prog {
     height: 9pt; background: rgba(5, 5, 10, 0.8); border: 1pt solid var(--g);
@@ -502,14 +523,14 @@
   </div>
 </div>
 
-<div class="wrap terminal-locked">
+<main class="wrap terminal-locked">
 
   <!-- BANNER GŁÓWNY SEBA -->
   <table class="blk">
     <tr><td class="hd hm">// PROJEKT KRZEMOWY ŁEB 2077 &nbsp;::&nbsp; ALEX ↔ SEBA &nbsp;::&nbsp; LIVE SYNC</td></tr>
     <tr>
       <td class="bd bm">
-        <p class="ox c" id="heroTitle" style="font-size:21pt;margin:2pt 0;cursor:pointer;" title="Kliknij 5 razy, aby podkręcić stelaż...">KRZEMOWY ŁEB 2077 // TWÓJ SERWER AI :: SEBA</p>
+        <h1 class="ox c" id="heroTitle" style="font-size:21pt;margin:2pt 0;cursor:pointer;" title="Kliknij 5 razy, aby podkręcić stelaż...">KRZEMOWY ŁEB 2077 // TWÓJ SERWER AI :: SEBA</h1>
         <p style="margin:0 0 6pt 0;font-size:11.5pt;">
           Cześć <b>Seba</b>! Serwer stanie u Ciebie. To normalny, fizyczny komputer stacjonarny PC, ale w otwartej obudowie (stelaż) z 4 kartami graficznymi RTX 3070 — wygląda czysto, solidnie i cyberpunkowo. Poniżej masz listę części do zamówienia. Jak przyjdzie płyta, procesor i RAM — Alex przyjeżdża złożyć sprzęt. Wszystko, co tu klikniesz (np. <i>ZAMÓWIONE</i> / <i>W DOMU</i>), zapisuje się na bieżąco.
         </p>
@@ -538,6 +559,7 @@
       <button data-t="plan">04 PLAN PRZYJAZDU ALEXA</button>
       <button data-t="mozliwosci" class="t-y">⚡ 05 CO POTRAFI TWÓJ MODEL</button>
       <button data-t="ciezarowka" class="t-c">🚚 06 KOPARKA W CIĘŻARÓWCE?</button>
+      <a href="alex.html" class="tool" style="text-decoration:none;display:inline-block;padding:5.5pt 8.5pt;">PANEL TECHNICZNY (ALEX) →</a>
     </div>
   </div>
 
@@ -824,6 +846,25 @@
               <button class="st-btn s-got" data-st="got">W DOMU ✔</button>
             </div>
             <input type="text" class="note-in" data-note="parts" placeholder="Notatka...">
+          </div>
+
+          <!-- OPCJE DODATKOWE: APC + WI-FI -->
+          <div class="item-card" data-card="options">
+            <div class="item-title">
+              <div><span class="tag y">OPCJE</span> &nbsp;<b style="font-size:11.5pt;"><span class="icon-chip y"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/><circle cx="12" cy="12" r="3.5"/></svg></span> Dodatki opcjonalne (poza bazowym budżetem)</b></div>
+              <div><span class="sub-progress mono g" style="font-size:8.5pt;"></span> <span class="y ox" style="font-size:13pt;">do +354 zł</span></div>
+            </div>
+            <p class="dim" style="margin:4pt 0;">Zaznacz tylko wtedy, gdy naprawdę potrzebujesz. Po zaznaczeniu kwota w KPI rośnie automatycznie — tak samo jak w panelu Alexa.</p>
+            <div class="sub-grid">
+              <div class="sub-item" data-sub="apc">
+                <div class="sub-left"><span class="sub-cb" data-sub-id="apc">☐</span><span class="sub-name" title="APC PMF83VT-FR — listwa przeciwprzepięciowa 8 gniazd (3 m), ochrona serwera i zasilacza">Listwa APC PMF83VT-FR (8 gniazd, 3 m)</span></div>
+                <div class="sub-right"><span class="sub-price">229 zł</span><a class="sub-buy" href="https://allegro.pl/oferta/listwa-zasilajaca-apc-pmf83vt-fr-8-gniazd-3-m-bialy-19044403121" target="_blank" rel="noopener">ALLEGRO ↗</a></div>
+              </div>
+              <div class="sub-item" data-sub="wifi">
+                <div class="sub-left"><span class="sub-cb" data-sub-id="wifi">☐</span><span class="sub-name" title="Intel AX210 — Wi-Fi 6 + Bluetooth 5.3 PCIe; tylko jeśli nie da się doprowadzić kabla LAN">Karta Wi-Fi 6 + BT 5.3 (Intel AX210)</span></div>
+                <div class="sub-right"><span class="sub-price">125 zł</span><a class="sub-buy" href="https://allegro.pl/oferta/karta-sieciowa-z-intel-ax210-wifi-6-i-bluetooth-5-3-pci-e-do-komputera-pc-18328437509" target="_blank" rel="noopener">ALLEGRO ↗</a></div>
+              </div>
+            </div>
           </div>
 
         </td>
@@ -1695,7 +1736,7 @@
     // KRZEMOWY ŁEB 2077 &nbsp;::&nbsp;  CENTRUM ZAMÓWIEŃ SEBY
   </div>
 
-</div>
+</main>
 
 <!-- SKRYPT LOGIKI I LIVE SYNC -->
 <script>
@@ -1721,10 +1762,25 @@
     return u.indexOf('Alex') !== -1 ? 'Alex' : 'Seba';
   }
 
+  // Uodparnia stan z localStorage / chmury na brakujące lub puste sekcje.
+  function normalizeState(src){
+    var base = defaultState();
+    if (!src || typeof src !== 'object' || Array.isArray(src)) return base;
+    var out = Object.assign(base, src);
+    ['checks','statuses','notes','rigInfo'].forEach(function(k){
+      if (!out[k] || typeof out[k] !== 'object' || Array.isArray(out[k])) out[k] = {};
+    });
+    out.calc = Object.assign(defaultState().calc, (out.calc && typeof out.calc === 'object' && !Array.isArray(out.calc)) ? out.calc : {});
+    out.calc.optApc = !!(out.checks.apc || out.calc.optApc);
+    out.calc.optWifi = !!(out.checks.wifi || out.calc.optWifi);
+    out.updatedAt = Number(out.updatedAt) || 0;
+    return out;
+  }
+
   var state = defaultState();
   try {
     var saved = JSON.parse(localStorage.getItem(LS_KEY) || 'null');
-    if (saved && typeof saved === 'object') state = Object.assign(defaultState(), saved);
+    if (saved && typeof saved === 'object') state = normalizeState(saved);
   } catch (e) {}
   state.updatedBy = cleanUser(state.updatedBy);
 
@@ -1745,11 +1801,14 @@
 
   function showToast(msg){
     var t = document.getElementById('toast');
+    if (!t) return;
     t.textContent = msg || 'ZAPISANO ✔';
     t.style.display = 'block';
     clearTimeout(showToast._tm);
     showToast._tm = setTimeout(function(){ t.style.display = 'none'; }, 1500);
   }
+  // Drugi <script> (efekty / easter eggi) działa poza tym IIFE.
+  window.showToast = showToast;
 
   function pushToServer(){
     state.updatedAt = Date.now();
@@ -1759,6 +1818,7 @@
     clearTimeout(pushTimer);
     pushTimer = setTimeout(async function(){
       var bodyStr = await encryptSyncPayload(state);
+      if (!bodyStr) { updateSyncBadge(false); return; }
       fetch(SYNC_URL, {
         method: 'POST',
         body: bodyStr
@@ -1766,6 +1826,10 @@
         if (r.ok) updateSyncBadge(true);
       }).catch(function(){});
     }, 150);
+  }
+
+  function hasSubtle(){
+    return !!(window.crypto && window.crypto.subtle && crypto.subtle.importKey);
   }
 
   function updateSyncBadge(online){
@@ -1777,7 +1841,9 @@
       txt.textContent = 'POŁĄCZONO (E2EE) :: ALEX ↔ SEBA';
     } else {
       dot.className = 'sync-dot off';
-      txt.textContent = 'ZAPIS LOKALNY (OFFLINE)';
+      txt.textContent = hasSubtle()
+        ? 'ZAPIS LOKALNY (OFFLINE)'
+        : 'ZAPIS LOKALNY :: SYNC NIEDOSTĘPNY PO HTTP';
     }
     if (state.updatedAt > 0) {
       var d = new Date(state.updatedAt);
@@ -1789,6 +1855,7 @@
 
   function syncGroupFlags(srvState){
     if (!srvState || !srvState.checks) return;
+    if (!srvState.statuses || typeof srvState.statuses !== 'object') srvState.statuses = {};
     Object.keys(GROUP_SUBS).forEach(function(g){
       var subs = GROUP_SUBS[g];
       var allChecked = subs.every(function(k){ return !!srvState.checks[k]; });
@@ -1809,13 +1876,14 @@
     if ((srv.updatedAt || 0) <= (state.updatedAt || 0)) return;
     srv.updatedBy = cleanUser(srv.updatedBy);
     syncGroupFlags(srv);
-    state = Object.assign(defaultState(), srv);
+    state = normalizeState(srv);
     saveLocal();
     render();
     updateSyncBadge(true);
   }
 
   function pollRecentSync(){
+    if (!hasSubtle()) return;
     fetch(SYNC_URL + '/json?poll=1&since=12h').then(function(r){ return r.text(); }).then(async function(txt){
       updateSyncBadge(true);
       var lines = txt.trim().split('\n');
@@ -1833,6 +1901,10 @@
   }
 
   function connectLiveSync(){
+    if (!hasSubtle()) {
+      updateSyncBadge(false);
+      return;
+    }
     pollRecentSync();
 
     if (window.EventSource) {
@@ -1908,7 +1980,8 @@
 
     var totalCount = 0, boughtCount = 0, spent = 0;
     items.forEach(function(it){
-      if (it.skip) return;
+      // APC / Wi-Fi to opcje dodatkowe: wchodzą do kwoty, ale nie do licznika pozycji.
+      if (it.skip || it.id === 'apc' || it.id === 'wifi') return;
       totalCount++;
       var st = state.statuses[it.id] || (state.checks[it.id] ? 'got' : 'todo');
       if (st === 'got' || st === 'ord' || state.checks[it.id]) {
@@ -1949,11 +2022,14 @@
     // Pozycje składowe (chłodzenie, nawiew, drobiazgi) — własne ☐/☑
     document.querySelectorAll('.sub-cb').forEach(function(el){
       var sid = el.dataset.subId;
-      var on = !!state.checks[sid];
+      var on = !!state.checks[sid] ||
+        (sid === 'apc' && !!c.optApc) ||
+        (sid === 'wifi' && !!c.optWifi);
       el.textContent = on ? '☑' : '☐';
       el.classList.toggle('on', on);
       var row = el.closest('.sub-item');
-      if (row) row.classList.toggle('done', on);
+      var optCard = row && row.closest('.item-card[data-card="options"]');
+      if (row) row.classList.toggle('done', on && !optCard);
     });
 
     // Licznik pozycji w kartach zbiorczych (np. 3 / 10 kupione)
@@ -1963,7 +2039,7 @@
       var bought = 0;
       cbs.forEach(function(cb){ if (state.checks[cb.dataset.subId]) bought++; });
       var prog = card.querySelector('.sub-progress');
-      if (prog) prog.textContent = bought + ' / ' + cbs.length + ' kupione';
+      if (prog) prog.textContent = bought + ' / ' + cbs.length + (card.dataset.card === 'options' ? ' wybrane' : ' kupione');
     });
 
     // Notatki
@@ -1991,7 +2067,10 @@
     if (scb || subRow) {
       var sid = (scb || subRow).dataset.subId || (subRow ? subRow.dataset.sub : null);
       if (!sid) return;
-      state.checks[sid] = !state.checks[sid];
+      var optKey = sid === 'apc' ? 'optApc' : (sid === 'wifi' ? 'optWifi' : null);
+      var effective = !!state.checks[sid] || !!(optKey && state.calc && state.calc[optKey]);
+      state.checks[sid] = !effective;
+      if (optKey) state.calc[optKey] = !effective;
       Object.keys(GROUP_SUBS).forEach(function(g){
         if (GROUP_SUBS[g].indexOf(sid) !== -1) {
           var allOn = GROUP_SUBS[g].every(function(k){ return !!state.checks[k]; });
@@ -2095,8 +2174,81 @@
     }
   }
 
+  // ===== FALLBACK PBKDF2-HMAC-SHA256 =====
+  // Chromium udostępnia crypto.subtle tylko w bezpiecznym kontekście (HTTPS/localhost).
+  // Strona jest używana także po http://krzemowy-leb.local:8080, więc bez tego
+  // fallbacku PIN w ogóle nie działa na laptopie w domowej sieci.
+  function _rotr(x, n){ return (x >>> n) | (x << (32 - n)); }
+  function _sha256Bytes(bytes){
+    var K = [0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+      0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+      0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+      0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+      0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+      0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+      0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+      0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+    var H = [0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+    var l = bytes.length;
+    var total = ((l + 9 + 63) >> 6) << 6;
+    var buf = new Uint8Array(total);
+    buf.set(bytes); buf[l] = 0x80;
+    var dv = new DataView(buf.buffer);
+    dv.setUint32(total - 8, Math.floor(l / 0x20000000));
+    dv.setUint32(total - 4, (l * 8) >>> 0);
+    var w = new Uint32Array(64), i, j, off;
+    for (off = 0; off < total; off += 64) {
+      for (i = 0; i < 16; i++) w[i] = dv.getUint32(off + i * 4);
+      for (i = 16; i < 64; i++) {
+        var s0 = _rotr(w[i-15],7) ^ _rotr(w[i-15],18) ^ (w[i-15] >>> 3);
+        var s1 = _rotr(w[i-2],17) ^ _rotr(w[i-2],19) ^ (w[i-2] >>> 10);
+        w[i] = (w[i-16] + s0 + w[i-7] + s1) >>> 0;
+      }
+      var a=H[0], b=H[1], c=H[2], d=H[3], e=H[4], f=H[5], g=H[6], h=H[7];
+      for (i = 0; i < 64; i++) {
+        var S1 = _rotr(e,6) ^ _rotr(e,11) ^ _rotr(e,25);
+        var ch = (e & f) ^ (~e & g);
+        var t1 = (h + S1 + ch + K[i] + w[i]) >>> 0;
+        var S0 = _rotr(a,2) ^ _rotr(a,13) ^ _rotr(a,22);
+        var maj = (a & b) ^ (a & c) ^ (b & c);
+        var t2 = (S0 + maj) >>> 0;
+        h=g; g=f; f=e; e=(d + t1) >>> 0; d=c; c=b; b=a; a=(t1 + t2) >>> 0;
+      }
+      H[0]=(H[0]+a)>>>0; H[1]=(H[1]+b)>>>0; H[2]=(H[2]+c)>>>0; H[3]=(H[3]+d)>>>0;
+      H[4]=(H[4]+e)>>>0; H[5]=(H[5]+f)>>>0; H[6]=(H[6]+g)>>>0; H[7]=(H[7]+h)>>>0;
+    }
+    var out = new Uint8Array(32), odv = new DataView(out.buffer);
+    for (i = 0; i < 8; i++) odv.setUint32(i * 4, H[i]);
+    return out;
+  }
+  function _hmacSha256(key, msg){
+    if (key.length > 64) key = _sha256Bytes(key);
+    var k = new Uint8Array(64); k.set(key);
+    var ip = new Uint8Array(64 + msg.length), op = new Uint8Array(96), i;
+    for (i = 0; i < 64; i++) ip[i] = k[i] ^ 0x36;
+    ip.set(msg, 64);
+    var inner = _sha256Bytes(ip);
+    for (i = 0; i < 64; i++) op[i] = k[i] ^ 0x5c;
+    op.set(inner, 64);
+    return _sha256Bytes(op);
+  }
+  function _pbkdf2Sha256Hex(pass, salt, iterations){
+    var msg = new Uint8Array(salt.length + 4);
+    msg.set(salt);
+    new DataView(msg.buffer).setUint32(salt.length, 1);
+    var u = _hmacSha256(pass, msg), out = u.slice();
+    for (var it = 1; it < iterations; it++) {
+      u = _hmacSha256(pass, u);
+      for (var j = 0; j < 32; j++) out[j] ^= u[j];
+    }
+    return Array.prototype.map.call(out, function(b){ return ('0' + b.toString(16)).slice(-2); }).join('');
+  }
+
   async function deriveVaultSignature(val) {
     var enc = new TextEncoder();
+    if (!(window.crypto && window.crypto.subtle && crypto.subtle.importKey)) {
+      return _pbkdf2Sha256Hex(enc.encode(val), enc.encode(_AUTH_SALT), _AUTH_ITERATIONS);
+    }
     var keyMaterial = await crypto.subtle.importKey(
       'raw',
       enc.encode(val),
@@ -2122,6 +2274,7 @@
 
   async function deriveAndCacheSyncKey(val) {
     try {
+      if (!hasSubtle()) return;
       var enc = new TextEncoder();
       var keyMaterial = await crypto.subtle.importKey(
         'raw',
@@ -2183,7 +2336,7 @@
     var plain = JSON.stringify(stateObj);
     try {
       var key = await getSyncAesKey();
-      if (!key) return plain;
+      if (!key) return null;
       var iv = crypto.getRandomValues(new Uint8Array(12));
       var ctBuf = await crypto.subtle.encrypt(
         { name: 'AES-GCM', iv: iv },
@@ -2198,7 +2351,7 @@
         updatedAt: stateObj.updatedAt
       });
     } catch (e) {
-      return plain;
+      return null;
     }
   }
 
@@ -2240,6 +2393,11 @@
       } else {
         var pinInp = document.getElementById('pinInput');
         if (pinInp && pinInp.disabled) pinInp.disabled = false;
+        var errEl = document.getElementById('pinError');
+        if (errEl && errEl.textContent.indexOf('BLOKADA ANTYWŁAMANIOWA') !== -1) {
+          errEl.textContent = '';
+          errEl.style.display = 'none';
+        }
         return false;
       }
     } catch(e) { return false; }
@@ -2384,9 +2542,16 @@
       return;
     }
 
+    if (!hasSubtle() && err) {
+      err.textContent = '⏳ WERYFIKACJA PBKDF2-SHA256 (100 000 iteracji)...';
+      err.style.color = 'var(--c)';
+      err.style.display = 'block';
+      await new Promise(function(res){ setTimeout(res, 30); });
+    }
     var sig = await deriveVaultSignature(val);
     if (constantTimeEqual(sig, _VAULT_SIGNATURE)) {
       resetFailedAttempts();
+      if (err) { err.textContent = ''; err.style.display = 'none'; }
       try { localStorage.setItem(_AUTH_TOKEN_KEY, sig); } catch (e) {}
       await deriveAndCacheSyncKey(val);
       unlockPage();
@@ -2397,7 +2562,7 @@
       recordFailedAttempt();
       if (typeof CyberAudio !== 'undefined' && CyberAudio.error) CyberAudio.error();
       if (err) {
-        var fails = Number(localStorage.getItem(_FAIL_KEY)) || 1;
+        var fails = Math.min(Number(localStorage.getItem(_FAIL_KEY)) || 1, 3);
         err.textContent = '⚠ BŁĘDNY KOD (' + fails + '/3) :: ODMOWA DOSTĘPU';
         err.style.color = 'var(--r)';
         err.style.display = 'block';
