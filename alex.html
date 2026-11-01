@@ -18,7 +18,7 @@
   }
   *{box-sizing:border-box;}
   body{background:var(--bg);margin:0;padding:10pt;color:var(--txt);font-family:'Chakra Petch',sans-serif;font-size:11pt;line-height:1.48;}
-  .wrap{max-width:940px;margin:0 auto;}
+  .wrap{max-width:940px;margin:0 auto;display:none;}
   a{color:var(--c);font-weight:bold;text-decoration:none;}
   a:hover{text-decoration:underline;}
   b{color:#FFFFFF;}
@@ -127,9 +127,127 @@
   .role-note ul{margin:3pt 0 0 14pt;padding:0;}
   .role-note li{margin:1pt 0;}
   .toast{position:fixed;bottom:16pt;left:50%;transform:translateX(-50%);background:var(--g);color:#05050A;font-family:'Oxanium',sans-serif;font-weight:bold;padding:6pt 14pt;display:none;z-index:30;box-shadow:0 0 12px var(--g);}
+
+  
+
+
+  /* ---- SECURITY LOCK SCREEN ---- */
+  #lockScreen{
+    position:fixed;top:0;left:0;width:100vw;height:100vh;background:#080810;
+    z-index:999999;display:flex;align-items:center;justify-content:center;padding:12pt;
+  }
+  .lock-box{
+    background:#12121F;border:1.5pt solid var(--c);box-shadow:0 0 35px rgba(0,240,255,0.3);
+    max-width:350px;width:100%;padding:18pt;text-align:center;border-radius:4pt;
+  }
+  .lock-tag{
+    font-family:'Oxanium',sans-serif;font-size:8.5pt;font-weight:bold;color:var(--dim);letter-spacing:1pt;margin-bottom:6pt;
+  }
+  .pin-input{
+    width:160px;font-family:'JetBrains Mono',monospace;font-size:24pt;font-weight:bold;
+    letter-spacing:8pt;text-align:center;background:#05050A;color:var(--y);border:1.5pt solid var(--border);
+    padding:6pt 10pt;outline:none;border-radius:2pt;
+  }
+  .pin-input:focus{border-color:var(--c);box-shadow:0 0 10px var(--c);}
+  .pin-pad{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:5pt;margin-top:12pt;
+  }
+  .pin-pad button{
+    background:#090914;color:var(--txt);border:1pt solid var(--border);font-family:'Oxanium',sans-serif;
+    font-size:14pt;font-weight:bold;padding:10pt 0;cursor:pointer;transition:all .1s;border-radius:2pt;
+  }
+  .pin-pad button:hover{background:#1B1B30;border-color:var(--c);color:var(--c);}
+  .pin-pad button:active{background:var(--c);color:#000;}
+
+
+  /* ---- INCOGNITO MESH MASKING ---- */
+  .spoiler {
+    filter: blur(6px);
+    background: rgba(0, 240, 255, 0.12);
+    padding: 2px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: filter 0.25s ease, background 0.25s ease;
+    user-select: none;
+    display: inline-block;
+    color: var(--c);
+    border: 1pt dashed var(--dim);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .spoiler:hover, .spoiler.revealed, body.incognito-off .spoiler {
+    filter: blur(0) !important;
+    background: rgba(57, 255, 20, 0.15) !important;
+    border-color: var(--g) !important;
+    color: var(--g) !important;
+    user-select: text !important;
+  }
+  .incog-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6pt;
+    font-family: 'Oxanium', sans-serif;
+    font-size: 9pt;
+    font-weight: bold;
+    background: #05050A;
+    border: 1pt solid var(--y);
+    padding: 3pt 8pt;
+    color: var(--y);
+  }
+  .incog-btn {
+    background: #12121F;
+    color: var(--y);
+    border: 1pt solid var(--y);
+    font-family: 'Oxanium', sans-serif;
+    font-size: 9pt;
+    font-weight: bold;
+    padding: 3pt 8pt;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .incog-btn:hover {
+    background: var(--y);
+    color: #05050A;
+  }
+
 </style>
 </head>
 <body>
+
+<!-- SECURITY LOCK SCREEN OVERLAY -->
+<div id="lockScreen">
+  <div class="lock-box">
+    <div class="lock-tag">// KRZEMOWY ŁEB 2077 :: TERMINAL OCHRONNY</div>
+    <div style="font-size:28pt;margin:4pt 0;">🔒</div>
+    <div class="ox c" style="font-size:15pt;margin-bottom:4pt;">DOSTĘP ZASTRZEŻONY</div>
+    <p class="dim" style="font-size:10pt;margin-bottom:12pt;">Wpisz 4-cyfrowy kod PIN, aby odblokować panel:</p>
+    
+    <div>
+      <input type="password" id="pinInput" class="pin-input" maxlength="4" placeholder="••••" autofocus inputmode="numeric">
+    </div>
+
+    <div id="pinError" class="r mono" style="display:none;font-size:9.5pt;margin-top:8pt;">⚠ BŁĘDNY KOD PIN :: ODMOWA DOSTĘPU</div>
+
+    <div class="pin-pad">
+      <button type="button" class="p-btn" data-k="1">1</button>
+      <button type="button" class="p-btn" data-k="2">2</button>
+      <button type="button" class="p-btn" data-k="3">3</button>
+      <button type="button" class="p-btn" data-k="4">4</button>
+      <button type="button" class="p-btn" data-k="5">5</button>
+      <button type="button" class="p-btn" data-k="6">6</button>
+      <button type="button" class="p-btn" data-k="7">7</button>
+      <button type="button" class="p-btn" data-k="8">8</button>
+      <button type="button" class="p-btn" data-k="9">9</button>
+      <button type="button" class="p-btn" data-k="C" style="color:var(--r);">C</button>
+      <button type="button" class="p-btn" data-k="0">0</button>
+      <button type="button" class="p-btn" data-k="OK" style="color:var(--g);font-size:11pt;">OK ✔</button>
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
 <div class="wrap">
 
 <!-- ================= TYTUŁ ================= -->
@@ -140,7 +258,7 @@
 </div>
 <p class="ox c" style="font-size:21pt;margin:2pt 0;">KRZEMOWY ŁEB 2077 // PANEL DOWODZENIA (ALEX RZ)</p>
 <p class="ox y" style="font-size:13pt;margin:0 0 4pt 0;">ZAKUPY + SPRAWDZENIE KOPARKI + MONTAŻ + BIOS + SYSTEM</p>
-<p style="margin:0;">Zarządzasz architekturą i zdalnym wdrożeniem z RZ. Seba w LBL zamawia i opłaca części. Jak dotrą kluczowe elementy (płyta, procesor, RAM) — jedziesz do LBL złożyć maszynę. Po powrocie zarządzasz węzłem zdalnie przez Tailscale/SSH, a Seba korzysta ze swojego laptopa w domu (Wi-Fi) lub w trasie (4G). Wszystko synchronizuje się na żywo z jego stroną index.html! Karty (4× RTX 3070), stelaż i przycisk włączania zostają. Z koparki wyjmujemy płytę Biostar, procesor i RAM, a w ich miejsce wkładamy części z tej listy. Wszystko, co tu klikniesz lub wpiszesz, zapisuje się od razu dla nas obu.</p>
+<p style="margin:0;">Zarządzasz architekturą i zdalnym wdrożeniem z RZ. Seba w LBL zamawia i opłaca części. Jak dotrą kluczowe elementy (płyta, procesor, RAM) — jedziesz do LBL złożyć maszynę. Po powrocie z LBL łączysz się z serwerem zdalnie przez <b>szyfrowany tunel Tailscale (WireGuard Mesh)</b>. Dostęp inżynierski (SSH/tmux, API 8080) jest w pełni zamaskowany w trybie <b>INCOGNITO</b> — wrażliwe adresy i komendy są zamazane i chronione przed podglądem. Wszystko synchronizuje się na żywo z jego stroną index.html! Karty (4× RTX 3070), stelaż i przycisk włączania zostają. Z koparki wyjmujemy płytę Biostar, procesor i RAM, a w ich miejsce wkładamy części z tej listy. Wszystko, co tu klikniesz lub wpiszesz, zapisuje się od razu dla nas obu.</p>
 </td></tr></table>
 
 <!-- ================= PASEK NAWIGACJI + LIVE SYNC ================= -->
@@ -982,7 +1100,10 @@ https://allegro.pl/oferta/tasma-riser-pci-e-pcie-3-0-express-x16-x16-30cm-124323
     state.updatedAt = Date.now();
     state.updatedBy = whoSel.value || 'użytkownik';
     saveLocal();
-    render();
+    
+  
+
+  render();
     clearTimeout(pushTimer);
     pushTimer = setTimeout(function(){
       var payloadStr = JSON.stringify(state);
@@ -1361,6 +1482,119 @@ https://allegro.pl/oferta/tasma-riser-pci-e-pcie-3-0-express-x16-x16-30cm-124323
       state.checks = {};
       state.statuses = {};
       pushToServer(false);
+    }
+  });
+
+  
+  // SECURITY PIN LOCK LOGIC (PIN: 2137 - SHA256)
+  var AUTH_KEY = 'krzemowy_pin_auth_token_v2';
+  var EXPECTED_HASH = 'ea3a03b4971eeb62730e1de238225cc4e6145f0eb50ad28b1379f2a2ee71e16e';
+
+  async function sha256(str) {
+    var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(function(b){ return b.toString(16).padStart(2, '0'); }).join('');
+  }
+
+  function unlockPage(){
+    var ls = document.getElementById('lockScreen');
+    if (ls) ls.style.setProperty('display', 'none', 'important');
+    var wr = document.querySelector('.wrap');
+    if (wr) wr.style.setProperty('display', 'block', 'important');
+  }
+
+  function lockPage(){
+    var ls = document.getElementById('lockScreen');
+    if (ls) ls.style.setProperty('display', 'flex', 'important');
+    var wr = document.querySelector('.wrap');
+    if (wr) wr.style.setProperty('display', 'none', 'important');
+    var inp = document.getElementById('pinInput');
+    if (inp) { inp.value = ''; inp.focus(); }
+  }
+
+  try {
+    if (localStorage.getItem(AUTH_KEY) === EXPECTED_HASH) {
+      unlockPage();
+    } else {
+      lockPage();
+    }
+  } catch (e) {
+    lockPage();
+  }
+
+  async function checkPin(val){
+    var err = document.getElementById('pinError');
+    if (!val || val.length !== 4) {
+      if (err) { err.textContent = 'Wpisz dokładnie 4 cyfry'; err.style.display = 'block'; }
+      return;
+    }
+    var h = await sha256(val);
+    if (h === EXPECTED_HASH) {
+      try { localStorage.setItem(AUTH_KEY, h); } catch (e) {}
+      unlockPage();
+      showToast('DOSTĘP PRZYZNANY 🔓');
+    } else {
+      if (err) { err.textContent = '⚠ BŁĘDNY KOD PIN :: ODMOWA DOSTĘPU'; err.style.display = 'block'; }
+      var inp = document.getElementById('pinInput');
+      if (inp) {
+        inp.value = '';
+        inp.style.borderColor = 'var(--r)';
+        setTimeout(function(){ inp.style.borderColor = ''; inp.focus(); }, 600);
+      }
+    }
+  }
+
+  window.lockTerminal = function(){
+    try { localStorage.removeItem(AUTH_KEY); } catch(e){}
+    lockPage();
+  };
+
+  var pinInp = document.getElementById('pinInput');
+  if (pinInp) {
+    pinInp.addEventListener('input', function(){
+      var err = document.getElementById('pinError');
+      if (err) err.style.display = 'none';
+      if (pinInp.value.length === 4) {
+        checkPin(pinInp.value);
+      }
+    });
+    pinInp.addEventListener('keydown', function(e){
+      if (e.key === 'Enter') checkPin(pinInp.value);
+    });
+  }
+
+  document.querySelectorAll('.p-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var k = btn.dataset.k;
+      if (!pinInp) return;
+      if (k === 'C') {
+        pinInp.value = '';
+        var err = document.getElementById('pinError');
+        if (err) err.style.display = 'none';
+      } else if (k === 'OK') {
+        checkPin(pinInp.value);
+      } else {
+        if (pinInp.value.length < 4) {
+          pinInp.value += k;
+          if (pinInp.value.length === 4) checkPin(pinInp.value);
+        }
+      }
+    });
+  });
+
+  
+  // INCOGNITO MESH REVEAL / MASK
+  window.toggleIncognito = function(){
+    var isOff = document.body.classList.toggle('incognito-off');
+    var btn = document.getElementById('incogBtn');
+    if (btn) btn.textContent = isOff ? '🕶️ ZAMASKUJ DANE (INCOGNITO)' : '👁️ ODSŁOŃ DANE WĘZŁA';
+    document.querySelectorAll('.spoiler').forEach(function(el){
+      el.classList.toggle('revealed', isOff);
+    });
+  };
+
+  document.addEventListener('click', function(ev){
+    if (ev.target.classList.contains('spoiler')) {
+      ev.target.classList.toggle('revealed');
     }
   });
 

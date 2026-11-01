@@ -18,7 +18,7 @@
   }
   *{box-sizing:border-box;}
   body{background:var(--bg);margin:0;padding:10pt;color:var(--txt);font-family:'Chakra Petch',sans-serif;font-size:11pt;line-height:1.48;}
-  .wrap{max-width:940px;margin:0 auto;}
+  .wrap{max-width:940px;margin:0 auto;display:none;}
   a{color:var(--c);font-weight:bold;text-decoration:none;}
   a:hover{text-decoration:underline;}
   b{color:#FFFFFF;}
@@ -89,9 +89,77 @@
   .pane{display:none;}
   .pane.show{display:block;}
   #toast{display:none;position:fixed;bottom:16pt;right:16pt;background:var(--g);color:#05050A;padding:8pt 14pt;font-family:'Oxanium',sans-serif;font-weight:bold;z-index:99;box-shadow:0 0 12px var(--g);}
+
+  
+
+
+  /* ---- SECURITY LOCK SCREEN ---- */
+  #lockScreen{
+    position:fixed;top:0;left:0;width:100vw;height:100vh;background:#080810;
+    z-index:999999;display:flex;align-items:center;justify-content:center;padding:12pt;
+  }
+  .lock-box{
+    background:#12121F;border:1.5pt solid var(--c);box-shadow:0 0 35px rgba(0,240,255,0.3);
+    max-width:350px;width:100%;padding:18pt;text-align:center;border-radius:4pt;
+  }
+  .lock-tag{
+    font-family:'Oxanium',sans-serif;font-size:8.5pt;font-weight:bold;color:var(--dim);letter-spacing:1pt;margin-bottom:6pt;
+  }
+  .pin-input{
+    width:160px;font-family:'JetBrains Mono',monospace;font-size:24pt;font-weight:bold;
+    letter-spacing:8pt;text-align:center;background:#05050A;color:var(--y);border:1.5pt solid var(--border);
+    padding:6pt 10pt;outline:none;border-radius:2pt;
+  }
+  .pin-input:focus{border-color:var(--c);box-shadow:0 0 10px var(--c);}
+  .pin-pad{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:5pt;margin-top:12pt;
+  }
+  .pin-pad button{
+    background:#090914;color:var(--txt);border:1pt solid var(--border);font-family:'Oxanium',sans-serif;
+    font-size:14pt;font-weight:bold;padding:10pt 0;cursor:pointer;transition:all .1s;border-radius:2pt;
+  }
+  .pin-pad button:hover{background:#1B1B30;border-color:var(--c);color:var(--c);}
+  .pin-pad button:active{background:var(--c);color:#000;}
+
 </style>
 </head>
 <body>
+
+<!-- SECURITY LOCK SCREEN OVERLAY -->
+<div id="lockScreen">
+  <div class="lock-box">
+    <div class="lock-tag">// KRZEMOWY ŁEB 2077 :: TERMINAL OCHRONNY</div>
+    <div style="font-size:28pt;margin:4pt 0;">🔒</div>
+    <div class="ox c" style="font-size:15pt;margin-bottom:4pt;">DOSTĘP ZASTRZEŻONY</div>
+    <p class="dim" style="font-size:10pt;margin-bottom:12pt;">Wpisz 4-cyfrowy kod PIN, aby odblokować panel:</p>
+    
+    <div>
+      <input type="password" id="pinInput" class="pin-input" maxlength="4" placeholder="••••" autofocus inputmode="numeric">
+    </div>
+
+    <div id="pinError" class="r mono" style="display:none;font-size:9.5pt;margin-top:8pt;">⚠ BŁĘDNY KOD PIN :: ODMOWA DOSTĘPU</div>
+
+    <div class="pin-pad">
+      <button type="button" class="p-btn" data-k="1">1</button>
+      <button type="button" class="p-btn" data-k="2">2</button>
+      <button type="button" class="p-btn" data-k="3">3</button>
+      <button type="button" class="p-btn" data-k="4">4</button>
+      <button type="button" class="p-btn" data-k="5">5</button>
+      <button type="button" class="p-btn" data-k="6">6</button>
+      <button type="button" class="p-btn" data-k="7">7</button>
+      <button type="button" class="p-btn" data-k="8">8</button>
+      <button type="button" class="p-btn" data-k="9">9</button>
+      <button type="button" class="p-btn" data-k="C" style="color:var(--r);">C</button>
+      <button type="button" class="p-btn" data-k="0">0</button>
+      <button type="button" class="p-btn" data-k="OK" style="color:var(--g);font-size:11pt;">OK ✔</button>
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
 <div id="toast">ZAPISANO ✔</div>
 
 <div class="wrap">
@@ -120,6 +188,7 @@
       </div>
       <div style="font-size:9.5pt;" class="ox">
         <span class="dim">UŻYTKOWNIK:</span> <span class="c">SEBA LBL</span>
+      <button onclick="lockTerminal()" class="st-btn" style="background:#090914;color:var(--dim);border-color:var(--border);padding:2pt 6pt;font-size:8.5pt;" title="Zablokuj stronę">🔒 ZABLOKUJ</button>
       </div>
     </div>
 
@@ -525,7 +594,10 @@
     state.updatedAt = Date.now();
     state.updatedBy = CURRENT_USER;
     saveLocal();
-    render();
+    
+  
+
+  render();
     clearTimeout(pushTimer);
     pushTimer = setTimeout(function(){
       fetch(SYNC_URL, {
@@ -734,6 +806,102 @@
   }
   document.querySelectorAll('.tabs button').forEach(function(b){
     b.addEventListener('click', function(){ switchTab(b.dataset.t); });
+  });
+
+  
+  // SECURITY PIN LOCK LOGIC (PIN: 2137 - SHA256)
+  var AUTH_KEY = 'krzemowy_pin_auth_token_v2';
+  var EXPECTED_HASH = 'ea3a03b4971eeb62730e1de238225cc4e6145f0eb50ad28b1379f2a2ee71e16e';
+
+  async function sha256(str) {
+    var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(function(b){ return b.toString(16).padStart(2, '0'); }).join('');
+  }
+
+  function unlockPage(){
+    var ls = document.getElementById('lockScreen');
+    if (ls) ls.style.setProperty('display', 'none', 'important');
+    var wr = document.querySelector('.wrap');
+    if (wr) wr.style.setProperty('display', 'block', 'important');
+  }
+
+  function lockPage(){
+    var ls = document.getElementById('lockScreen');
+    if (ls) ls.style.setProperty('display', 'flex', 'important');
+    var wr = document.querySelector('.wrap');
+    if (wr) wr.style.setProperty('display', 'none', 'important');
+    var inp = document.getElementById('pinInput');
+    if (inp) { inp.value = ''; inp.focus(); }
+  }
+
+  try {
+    if (localStorage.getItem(AUTH_KEY) === EXPECTED_HASH) {
+      unlockPage();
+    } else {
+      lockPage();
+    }
+  } catch (e) {
+    lockPage();
+  }
+
+  async function checkPin(val){
+    var err = document.getElementById('pinError');
+    if (!val || val.length !== 4) {
+      if (err) { err.textContent = 'Wpisz dokładnie 4 cyfry'; err.style.display = 'block'; }
+      return;
+    }
+    var h = await sha256(val);
+    if (h === EXPECTED_HASH) {
+      try { localStorage.setItem(AUTH_KEY, h); } catch (e) {}
+      unlockPage();
+      showToast('DOSTĘP PRZYZNANY 🔓');
+    } else {
+      if (err) { err.textContent = '⚠ BŁĘDNY KOD PIN :: ODMOWA DOSTĘPU'; err.style.display = 'block'; }
+      var inp = document.getElementById('pinInput');
+      if (inp) {
+        inp.value = '';
+        inp.style.borderColor = 'var(--r)';
+        setTimeout(function(){ inp.style.borderColor = ''; inp.focus(); }, 600);
+      }
+    }
+  }
+
+  window.lockTerminal = function(){
+    try { localStorage.removeItem(AUTH_KEY); } catch(e){}
+    lockPage();
+  };
+
+  var pinInp = document.getElementById('pinInput');
+  if (pinInp) {
+    pinInp.addEventListener('input', function(){
+      var err = document.getElementById('pinError');
+      if (err) err.style.display = 'none';
+      if (pinInp.value.length === 4) {
+        checkPin(pinInp.value);
+      }
+    });
+    pinInp.addEventListener('keydown', function(e){
+      if (e.key === 'Enter') checkPin(pinInp.value);
+    });
+  }
+
+  document.querySelectorAll('.p-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var k = btn.dataset.k;
+      if (!pinInp) return;
+      if (k === 'C') {
+        pinInp.value = '';
+        var err = document.getElementById('pinError');
+        if (err) err.style.display = 'none';
+      } else if (k === 'OK') {
+        checkPin(pinInp.value);
+      } else {
+        if (pinInp.value.length < 4) {
+          pinInp.value += k;
+          if (pinInp.value.length === 4) checkPin(pinInp.value);
+        }
+      }
+    });
   });
 
   render();
