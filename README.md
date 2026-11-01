@@ -1,30 +1,30 @@
-# KRZEMOWY ŁEB 2077 — strona na GitHub Pages
+# KRZEMOWY ŁEB 2077 — Strony na GitHub Pages
 
-Publiczne lustro poradnika z repozytorium [`zander12344/krzemowy_leb`](https://github.com/zander12344/krzemowy_leb).
+Publiczne lustro projektu z repozytorium prywatnego [`zander12344/krzemowy_leb`](https://github.com/zander12344/krzemowy_leb).
 
-**Strona:** https://zander12344.github.io/krzemowy-leb-2077/
+## Dedykowane widoki:
 
-## Co to jest
+1. **Strona Seby (LBL) — Centrum Zamówień & Laptop AI:**  
+   👉 [https://zander12344.github.io/krzemowy-leb-2077/](https://zander12344.github.io/krzemowy-leb-2077/) (`index.html`)  
+   Dedykowana strona dla Seby: proste linki do zamówień, statusy paczek, budżet oraz instrukcja korzystania z gotowego serwera na laptopie w domu (Wi-Fi) i w trasie (4G przez Tailscale).
 
-Interaktywna lista zakupów i poradnik budowy serwera AI:
-Xeon E5-2690 v4 na LGA 2011-3 (X99), 4× RTX 3070 8 GB, 128 GB DDR4 ECC,
-silnik `ik_llama.cpp` + natywny runtime Strata pod model Qwen 177B MoE.
+2. **Panel Techniczny Alexa (RZ) — Master Inżynierski:**  
+   👉 [https://zander12344.github.io/krzemowy-leb-2077/alex.html](https://zander12344.github.io/krzemowy-leb-2077/alex.html) (`alex.html`)  
+   Pełen panel dowodzenia dla Alexa: telemetria zamówień Seby na żywo (Live Sync), kalkulator budżetu, interaktywna mapa płyty ASUS X99-E WS, BIOS, procedury Linux/CUDA, kody Q-Code oraz szablony ofert Signal.
 
-## Indeksowanie
+## Indeksowanie i Prywatność
 
-Strona jest zablokowana przed wyszukiwarkami: `robots.txt` (`Disallow: /`) + meta `noindex,nofollow,noarchive` w `index.html`. Link jest znany tylko osobom, ktorym go wyslano.
+Obie strony są zablokowane przed wyszukiwarkami: `robots.txt` (`Disallow: /`) + meta `noindex,nofollow,noarchive`. Linki są znane tylko osobom uprawnionym.
 
-## Synchronizacja
+## Live Sync
 
-`index.html` jest kopią `LISTA_ZAKUPOW_GOOGLE_DOCS.html` z głównego repozytorium.
-Aktualizacja: podmień plik i wypchnij na `main` — Pages przebuduje stronę automatycznie.
-
-Stan checklisty między urządzeniami (Rzeszów ↔ Frampol) synchronizuje się przez
-`ntfy.sh` (POST + SSE + poll `since=12h`), więc działa bez backendu.
+Obie strony wymieniają stan na żywo w czasie rzeczywistym przez `ntfy.sh` (POST + SSE + poll `since=12h`). Zmiana statusu lub notatki u Seby natychmiast pojawia się w panelu Alexa i odwrotnie.
 
 ## Struktura
 
 ```
-index.html    # cały poradnik + logika Live Sync (jeden plik, zero zależności)
-.nojekyll     # wyłącza przetwarzanie przez Jekyll
+index.html    # Strona Seba LBL (zamówienia, koszyk, laptop Wi-Fi/4G)
+alex.html     # Strona Alex RZ (pełen panel techniczny, montaż, BIOS, Q-Code, Signal)
+.nojekyll     # Wyłącza Jekyll na GitHub Pages
+robots.txt    # Blokada robotów indeksujących
 ```
