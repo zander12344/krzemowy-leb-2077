@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /
+
+# Wyszukiwarki: crawl dozwolony, aby odczytaly meta noindex (szybsze usuniecie z indeksu)
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
