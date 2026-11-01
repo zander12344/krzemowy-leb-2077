@@ -8,7 +8,7 @@
 <meta name="bingbot" content="noindex,nofollow,noarchive">
 <meta name="referrer" content="no-referrer">
 <meta name="rating" content="general">
-<title>KRZEMOWY ŁEB 2077 // Panel Techniczny (Alex RZ)</title>
+<title>KRZEMOWY ŁEB 2077 // Panel Techniczny :: Alex RZ</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&amp;family=Chakra+Petch:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap">
 <style>
   :root{
@@ -256,9 +256,9 @@
   <span class="mono m" style="font-size:9.8pt;">// PROJEKT KRZEMOWY ŁEB 2077 &nbsp;::&nbsp;LBL ↔ RZ &nbsp;::&nbsp; LIVE</span>
   <span class="mono g" style="font-size:9.5pt;">ASUS X99-E WS + XEON E5-2690 v4 + 128 GB ECC + 4× RTX 3070</span>
 </div>
-<p class="ox c" style="font-size:21pt;margin:2pt 0;">KRZEMOWY ŁEB 2077 // PANEL DOWODZENIA (ALEX RZ)</p>
-<p class="ox y" style="font-size:13pt;margin:0 0 4pt 0;">ZAKUPY + SPRAWDZENIE KOPARKI + MONTAŻ + BIOS + SYSTEM</p>
-<p style="margin:0;">Zarządzasz architekturą i zdalnym wdrożeniem z RZ. Seba w LBL zamawia i opłaca części. Jak dotrą kluczowe elementy (płyta, procesor, RAM) — jedziesz do LBL złożyć maszynę. Po powrocie z LBL łączysz się z serwerem zdalnie przez <b>szyfrowany tunel Tailscale (WireGuard Mesh)</b>. Dostęp inżynierski (SSH/tmux, API 8080) jest w pełni zamaskowany w trybie <b>INCOGNITO</b> — wrażliwe adresy i komendy są zamazane i chronione przed podglądem. Wszystko synchronizuje się na żywo z jego stroną index.html! Karty (4× RTX 3070), stelaż i przycisk włączania zostają. Z koparki wyjmujemy płytę Biostar, procesor i RAM, a w ich miejsce wkładamy części z tej listy. Wszystko, co tu klikniesz lub wpiszesz, zapisuje się od razu dla nas obu.</p>
+<p class="ox c" style="font-size:20pt;margin:2pt 0;">KRZEMOWY ŁEB 2077 // SPECYFIKACJA TECHNICZNA :: ALEX RZ</p>
+<p class="ox y" style="font-size:12pt;margin:0 0 4pt 0;">DOKUMENTACJA SPRZĘTOWA, PROCEDURA MONTAŻU, BIOS I ŚRODOWISKO QWEN 177B</p>
+<p style="margin:0;">Dokumentacja techniczna węzła AI na bazie ASUS X99-E WS i 4× RTX 3070. Zawiera listę podzespołów, weryfikację sprzętu z koparki, mapę slotów płyty, nastawy BIOS oraz konfigurację systemu. Wszystkie statusy synchronizują się na bieżąco z panelem zamówień Seby w LBL.</p>
 </td></tr></table>
 
 <!-- ================= PASEK NAWIGACJI + LIVE SYNC ================= -->
@@ -284,10 +284,9 @@
     <button data-t="mamy">02 Z KOPARKI (ZDJĘCIA)</button>
     <button data-t="montaz">03 MONTAŻ &amp; MAPA PŁYTY</button>
     <button data-t="bios">04 BIOS</button>
-    <button data-t="system">05 SYSTEM &amp; ZDALNY</button>
+    <button data-t="system">05 SYSTEM &amp; MODEL</button>
     <button data-t="problemy">06 Q-CODE &amp; PROBLEMY</button>
     <button data-t="signal">07 TEKSTY SIGNAL</button>
-    <button data-t="zdalny">08 SEBA LAPTOP &amp; RZ</button>
     <a href="index.html" class="tool" style="text-decoration:none;display:inline-block;padding:5.5pt 8.5pt;">← STRONA SEBY (INDEX)</a>
   </div>
   <div style="margin-top:6pt;display:flex;gap:6pt;flex-wrap:wrap;align-items:center;justify-content:space-between;">
@@ -812,12 +811,12 @@ Pozdrawiam!</p>
 </div>
 
 <!-- ======================================================= -->
-<!-- 05 SYSTEM & ZDALNY DOSTĘP -->
+<!-- 05 SYSTEM & MODEL -->
 <!-- ======================================================= -->
 <div class="pane" id="system">
 
-<table class="blk"><tr><td class="hd hc">05 // INSTALACJA UBUNTU SERVER 24.04 LTS (ZROBISZ W 20 MINUT)</td></tr><tr><td class="bd bc">
-<p class="y">Ty wykonujesz punkty 1–4 przy monitorze. Od punktu 5 wszystko przejmuję zdalnie z RZ!</p>
+<table class="blk"><tr><td class="hd hc">05 // INSTALACJA UBUNTU SERVER 24.04 LTS I WDROŻENIE ŚRODOWISKA</td></tr><tr><td class="bd bc">
+<p class="y">Procedura instalacji systemu Ubuntu Server 24.04 LTS oraz automatycznego wdrożenia środowiska Qwen 177B MoE.</p>
 <p><span class="cb" data-id="s1">☐</span> &nbsp;<b>1. Pobierz obraz Ubuntu Server 24.04 LTS:</b> <a href="https://ubuntu.com/download/server" target="_blank" rel="noopener">ubuntu.com/download/server</a></p>
 <p><span class="cb" data-id="s2">☐</span> &nbsp;<b>2. Nagraj na pendrive 32 GB</b> programem <a href="https://etcher.balena.io/" target="_blank" rel="noopener">balenaEtcher</a> (Select image → Select target → Flash).</p>
 <p><span class="cb" data-id="s3">☐</span> &nbsp;<b>3. Włóż pendrive do serwera, włącz (F8 przy starcie → wybierz UEFI Pendrive)</b> i przeklikaj instalator:</p>
@@ -830,9 +829,8 @@ Pozdrawiam!</p>
 <tr><td><b>SSH Setup</b></td><td><span class="g"><b>[X] Install OpenSSH server — KONIECZNIE ZAZNACZ SPACJĄ!</b></span></td></tr>
 <tr><td>Featured Server Snaps</td><td><b>Nic nie zaznaczaj</b> (wszystko zainstaluje nasz automatyczny skrypt)</td></tr>
 </table>
-<p><span class="cb" data-id="s4">☐</span> &nbsp;<b>4. Po napisie „Reboot Now”:</b> wyjmij pendrive, wciśnij Enter, zaloguj się i wpisz tę jedną linijkę, żeby podłączył się do naszej prywatnej sieci Tailscale:</p>
-<table class="cmd"><tr><td>curl -fsSL https://tailscale.com/install.sh | sh &amp;&amp; sudo tailscale up --ssh</td></tr></table>
-<p style="margin:0;"><span class="cb" data-id="s5">☐</span> &nbsp;<b>5. Wyślij mi link z ekranu (zaczyna się od <span class="mono">https://login.tailscale.com/a/...</span>)</b> — klikam go w RZ i od tej sekundy mam pełny dostęp SSH bez ruszania Waszego routera!</p>
+<p><span class="cb" data-id="s4">◻</span> &nbsp;<b>4. Po restarcie:</b> logujesz się do systemu i uruchamiasz skrypt wdrożeniowy:</p>
+<table class="cmd"><tr><td>chmod +x setup_node_177b.sh && sudo ./setup_node_177b.sh</td></tr></table>
 </td></tr></table>
 
 <table class="blk"><tr><td class="hd hx">⌘ // ŚCIĄGAWKA AUTOMATYCZNEGO WDROŻENIA SERWERA 177B (PO WEJŚCIU PRZEZ SSH)</td></tr><tr><td class="bd bx">
@@ -885,7 +883,7 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
 <tr><td><b>Q-Code stoi na 53, b0, b7 lub AF</b></td><td>Kość RAM niedociśnięta. Wyłącz zasilacz, dociśnij mocno wszystkie 4 kości w szarych slotach <b>A1, B1, C1, D1</b>, aż zatrzaski klikną, i wciśnij przycisk <b>MemOK!</b> na płycie.</td></tr>
 <tr><td><b>System Ubuntu widzi mniej niż 4 karty GPU</b></td><td>1) W BIOS-ie musi być włączone <b>Above 4G Decoding = Enabled</b> oraz <b>Launch CSM = Disabled</b>.<br>2) Sprawdź, czy taśma risera jest równo wciśnięta w slot na płycie i czy karta ma wpięte obie wtyczki 8-pin.</td></tr>
 <tr><td><b>Komputer gaśnie pod obciążeniem</b></td><td>Zadziałało zabezpieczenie zasilacza lub luźna wtyczka. Sprawdź, czy uruchomiono <span class="mono">sudo ./scripts/tune_gpus.sh</span> (ustawia bezpieczny limit 150W na kartę).</td></tr>
-<tr><td><b>Coś pachnie spalenizną lub iskrzy</b></td><td><span class="r">NATYCHMIAST wyciągnij kabel zasilający z gniazdka!</span> Nie włączaj ponownie, zrób zdjęcie złączy i zadzwoń do mnie.</td></tr>
+<tr><td><b>Coś pachnie spalenizną lub iskrzy</b></td><td><span class="r">NATYCHMIAST wyciągnij kabel zasilający z gniazdka!</span> Nie włączaj ponownie, dokładnie sprawdź stan kabli modularnych i złączy PCIe zasilacza.</td></tr>
 </table>
 </td></tr></table>
 
@@ -902,44 +900,7 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
 <!-- 07 GOTOWE WIADOMOŚCI NA SIGNAL -->
 <!-- ======================================================= -->
 
-<!-- ==================== ZAKŁADKA 08: SEBA LAPTOP & RZ REMOTE ==================== -->
-<div class="pane" id="zdalny">
-  <table class="blk">
-    <tr><td class="hd hg">DOSTĘP DO SERWERA // LAPTOP SEBY (LBL) &amp; ZDALNY INŻYNIER (ALEX RZ)</td></tr>
-    <tr>
-      <td class="bd bg">
-        <p style="font-size:11.5pt;">Architektura dostępu do węzła po zakończeniu montażu w LBL:</p>
 
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10pt;margin:10pt 0;">
-          <div style="background:#090914;border:1pt solid var(--border);padding:12pt;border-top:3pt solid var(--c);">
-            <p class="ox c" style="font-size:13pt;margin:0 0 6pt 0;">💻 1. SEBA W LBL // WI-FI W DOMU</p>
-            <p>Seba w domu łączy się ze swoim domowym Wi-Fi. Otwiera przeglądarkę na laptopie i wpisuje lokalny adres:</p>
-            <div class="mono y" style="background:#05050A;padding:4pt 8pt;margin:4pt 0;border:1pt solid var(--border);">http://krzemowy-leb.local:8080</div>
-            <p class="dim">Port 8080 nasłuchuje lokalnie. Zero opóźnień, zero limitów tokenów.</p>
-          </div>
-
-          <div style="background:#090914;border:1pt solid var(--border);padding:12pt;border-top:3pt solid var(--m);">
-            <p class="ox m" style="font-size:13pt;margin:0 0 6pt 0;">🚗 2. SEBA W TRASIE // 4G / LTE (TAILSCALE)</p>
-            <p>Gdy Seba jest poza domem z laptopem (hotspot 4G/LTE z telefonu), odpala jednym kliknięciem aplikację Tailscale:</p>
-            <div class="mono g" style="background:#05050A;padding:4pt 8pt;margin:4pt 0;border:1pt solid var(--border);">Tailscale: CONNECTED ✔</div>
-            <p class="dim">Wpisuje ten sam adres i łączy się przez szyfrowany tunel WireGuard z serwerem w domu.</p>
-          </div>
-
-          <div style="background:#090914;border:1pt solid var(--border);padding:12pt;border-top:3pt solid var(--y);">
-            <p class="ox y" style="font-size:13pt;margin:0 0 6pt 0;">🛠️ 3. ALEX Z RZ // SSH + TMUX (TAILSCALE)</p>
-            <p>Ty zarządzasz serwerem ze swojego komputera w RZ przez prywatną sieć Tailscale:</p>
-            <div class="mono c" style="background:#05050A;padding:4pt 8pt;margin:4pt 0;border:1pt solid var(--border);">ssh alex@100.x.y.z</div>
-            <p class="dim">Sesje w tmux chronią przed zerwaniem łącza. Pełna kontrola nad modelami, pamięcią i skryptami.</p>
-          </div>
-        </div>
-
-        <div style="background:#05050A;border:1pt dashed var(--y);padding:9pt;margin-top:8pt;">
-          <b class="y">BEZPIECZEŃSTWO:</b> Port 8080 nie jest wystawiony na świat w routerze u Seby (brak otwartych portów). Dostęp z zewnątrz mają wyłącznie autoryzowane urządzenia w sieci Tailscale.
-        </div>
-      </td>
-    </tr>
-  </table>
-</div>
 
 <div class="pane" id="signal" data-only="alex">
 
@@ -1040,15 +1001,12 @@ https://allegro.pl/oferta/tasma-riser-pci-e-pcie-3-0-express-x16-x16-30cm-124323
   var whoSel = document.getElementById('whoSel');
   var ROLE_OF = { 'Seba LBL': 'seba', 'Alex RZ': 'alex' };
   var ROLE_NOTES = {
-    seba: '<b>WIDOK: SEBA LBL (LBL) — kupujecie razem u Ciebie, Ty składasz zamówienia.</b><ul>' +
-          '<li>Widzisz <b>01 ZAKUPY</b> z linkami, ofertami zapasowymi i wiadomościami do sprzedawców — po to, żeby zamawiać razem z Alexem.</li>' +
-          '<li>Twoje zakładki przy sprzęcie: <b>00 START</b>, <b>02 Z KOPARKI</b>, <b>03 MONTAŻ</b>, <b>04 BIOS</b>, <b>05 SYSTEM</b>, <b>06 Q-CODE</b>.</li>' +
-          '<li>Ukryty u Ciebie jest tylko <b>07 TEKSTY SIGNAL</b> (skróty do wysyłania na komunikatorze — to narzędzie Alexa).</li>' +
-          '<li>Każde Twoje kliknięcie i notatka lecą do Alexa na żywo — nie musisz nic dodatkowo zgłaszać.</li></ul>',
-    alex: '<b>WIDOK: ALEX (RZ) — prowadzisz listę, zamówienia i zdalne wdrożenie.</b><ul>' +
-          '<li>Widzisz całą stronę, w tym <b>01 ZAKUPY</b> i <b>07 TEKSTY SIGNAL</b>.</li>' +
-          '<li>Fizyczne kroki (02, 03, 04, 06) robicie razem u Seby w LBLu — czytasz jego statusy i notatki na żywo.</li>' +
-          '<li>Od <b>05 SYSTEM</b> wchodzisz zdalnie przez Tailscale/SSH.</li></ul>'
+    seba: '<b>WIDOK: SEBA LBL — zakupy i odbiór części.</b><ul>' +
+          '<li>Widok zamówień z linkami do sklepów i statusami paczek.</li>' +
+          '<li>Każde kliknięcie i notatka zapisują się na żywo.</li></ul>',
+    alex: '<b>WIDOK: ALEX RZ — panel inżynierski i specyfikacja techniczna.</b><ul>' +
+          '<li>Pełna lista części, mapa płyty, nastawy BIOS i skrypty wdrożeniowe.</li>' +
+          '<li>Synchronizacja na żywo z panelem zamówień Seby w LBL.</li></ul>'
   };
   function currentRole(){ return 'alex'; }
   function applyRole(){
@@ -1133,7 +1091,7 @@ https://allegro.pl/oferta/tasma-riser-pci-e-pcie-3-0-express-x16-x16-30cm-124323
     var upd = document.getElementById('lastUpd');
     if (online) {
       dot.className = 'sync-dot live';
-      txt.textContent = 'LIVE SYNC AKTYWNY (RZ ↔ LBL)' + (count ? ' • ' + count + ' online' : '');
+      txt.textContent = 'LIVE SYNC AKTYWNY :: LBL ↔ RZ' + (count ? ' • ' + count + ' online' : '');
     } else {
       dot.className = 'sync-dot off';
       txt.textContent = 'ZAPIS LOKALNY W PRZEGLĄDARCE';
