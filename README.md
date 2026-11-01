@@ -10,6 +10,10 @@ Interaktywna lista zakupów i poradnik budowy serwera AI:
 Xeon E5-2690 v4 na LGA 2011-3 (X99), 4× RTX 3070 8 GB, 128 GB DDR4 ECC,
 silnik `ik_llama.cpp` + natywny runtime Strata pod model Qwen 177B MoE.
 
+## Indeksowanie
+
+Strona jest zablokowana przed wyszukiwarkami: `robots.txt` (`Disallow: /`) + meta `noindex,nofollow,noarchive` w `index.html`. Link jest znany tylko osobom, ktorym go wyslano.
+
 ## Synchronizacja
 
 `index.html` jest kopią `LISTA_ZAKUPOW_GOOGLE_DOCS.html` z głównego repozytorium.
