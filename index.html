@@ -243,6 +243,42 @@
     box-shadow: 0 0 18px var(--g); border-radius: 3pt;
   }
 
+  /* Easter Egg Styles */
+  @keyframes cyberShake {
+    0%, 100% { transform: translate(0, 0); }
+    20% { transform: translate(-4px, 2px); }
+    40% { transform: translate(4px, -2px); }
+    60% { transform: translate(-3px, -1px); }
+    80% { transform: translate(3px, 1px); }
+  }
+  .cyber-shake { animation: cyberShake 0.4s ease-in-out; }
+  .egg-overlay {
+    display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(4, 5, 12, 0.82); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    z-index: 9999999; align-items: center; justify-content: center; padding: 12pt;
+  }
+  .egg-card {
+    background: rgba(14, 15, 32, 0.94); border: 1.5pt solid var(--y);
+    box-shadow: 0 0 50px rgba(252, 238, 10, 0.35), inset 0 0 25px rgba(252, 238, 10, 0.08);
+    max-width: 440px; width: 100%; padding: 20pt 18pt; text-align: center; border-radius: 4pt;
+    animation: eggPop 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  @keyframes eggPop { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .egg-badge {
+    display: inline-block; background: var(--y); color: #05050A;
+    font-family: 'Oxanium', sans-serif; font-size: 10pt; font-weight: bold;
+    padding: 2.5pt 10pt; border-radius: 2pt; margin-bottom: 8pt; letter-spacing: 0.5pt;
+  }
+  @keyframes ravePulse {
+    0% { border-color: var(--c); box-shadow: 0 0 15px var(--c); }
+    33% { border-color: var(--m); box-shadow: 0 0 15px var(--m); }
+    66% { border-color: var(--y); box-shadow: 0 0 15px var(--y); }
+    100% { border-color: var(--g); box-shadow: 0 0 15px var(--g); }
+  }
+  .rave-mode .item-card, .rave-mode .laptop-card, .rave-mode table.blk {
+    animation: ravePulse 0.8s infinite alternate !important;
+  }
+
   /* Hardware Icon Chip */
   .icon-chip {
     display: inline-flex; align-items: center; justify-content: center;
@@ -345,6 +381,22 @@
 
 <div id="toast">ZAPISANO ✔</div>
 
+<!-- EASTER EGG MODAL: CYBER-SEBA 2077 -->
+<div id="cyberSebaModal" class="egg-overlay">
+  <div class="egg-card">
+    <div class="egg-badge">🏆 OSIĄGNIĘCIE ODBLOKOWANE!</div>
+    <div class="ox c" style="font-size:18pt;margin:4pt 0 8pt 0;">⚡ TRYB CYBER-SEBA 2077 ⚡</div>
+    <div style="font-size:10.5pt;line-height:1.6;margin:10pt 0;text-align:left;background:rgba(5,5,14,0.85);padding:10pt 12pt;border:1pt solid var(--border);border-radius:3pt;">
+      🚀 <b>Taktowanie Xeona:</b> 5.2 GHz (All-Core Turbo)<br>
+      🌪️ <b>Obroty wentylatorów:</b> 12 000 RPM (Dźwięk odrzutowca)<br>
+      ⚡ <b>Zasilanie koparki:</b> Pociągnięte od sąsiada (0,00 zł)<br>
+      ☕ <b>Zużycie Monster Energy:</b> 100% (Czysta kofeina)<br>
+      🤖 <b>Model Qwen 177B:</b> Odpowiada gwarą cyberpunkową!
+    </div>
+    <button onclick="closeCyberSebaModal()" class="buy-btn" style="width:100%;justify-content:center;font-size:11pt;padding:7pt 0;cursor:pointer;">ZAMKNIJ I WRACAJ DO ZAMÓWIEŃ 🚀</button>
+  </div>
+</div>
+
 <div class="wrap">
 
   <!-- BANNER GŁÓWNY SEBA -->
@@ -352,7 +404,7 @@
     <tr><td class="hd hm">// PROJEKT KRZEMOWY ŁEB 2077 &nbsp;::&nbsp; ALEX ↔ SEBA &nbsp;::&nbsp; LIVE SYNC</td></tr>
     <tr>
       <td class="bd bm">
-        <p class="ox c" style="font-size:21pt;margin:2pt 0;">KRZEMOWY ŁEB 2077 // TWÓJ SERWER AI :: SEBA</p>
+        <p class="ox c" id="heroTitle" style="font-size:21pt;margin:2pt 0;cursor:pointer;" title="Kliknij 5 razy, aby podkręcić stelaż...">KRZEMOWY ŁEB 2077 // TWÓJ SERWER AI :: SEBA</p>
         <p style="margin:0 0 6pt 0;font-size:11.5pt;">
           Cześć <b>Seba</b>! Serwer stanie u Ciebie. Poniżej masz listę części do zamówienia. Jak przyjdzie płyta, procesor i RAM — Alex przyjeżdża złożyć sprzęt. Wszystko, co tu klikniesz (np. <i>ZAMÓWIONE</i> / <i>W DOMU</i>), zapisuje się na bieżąco.
         </p>
@@ -682,7 +734,7 @@
           <p style="font-size:11.5pt;">Te elementy już masz — nie kupujemy ich w sklepach:</p>
           <ul style="font-size:11pt;line-height:1.7;">
             <li><b>4× Karty graficzne NVIDIA GeForce RTX 3070 8 GB</b> — posiadane, sprawne, dają łącznie 32 GB szybkiego VRAM.</li>
-            <li><b>Aluminiowy stelaż otwarty (Mining Rig)</b> — idealny na przewiew i swobodny montaż risera.</li>
+            <li onclick="easterRig()" style="cursor:pointer;" title="Kliknij, aby poznać historię stelaża..."><b>Aluminiowy stelaż otwarty (Mining Rig)</b> — idealny na przewiew i swobodny montaż risera. 💡</li>
             <li><b>Przycisk zasilania z kabelkiem (Power Switch)</b> — wpinamy go w płytę ASUS w piny PWR_SW.</li>
           </ul>
 
@@ -1036,13 +1088,43 @@
       if (err) { err.textContent = 'Wpisz dokładnie 4 cyfry'; err.style.display = 'block'; }
       return;
     }
+
+    // Easter eggi dla Seby na ekranie PIN
+    var PIN_EASTER_EGGS = {
+      '1337': '😎 ELO HACKERZYSTA :: Kod elitarny, ale prawdziwy PIN to 2137!',
+      '0420': '🌿 420 DETECTED :: Chłodzenie ciekłym azotem i pełen chill!',
+      '6969': '🔞 NICE TRY :: To serwer obliczeniowy AI, a nie Tinder!',
+      '0000': '💳 To nie PIN do karty z Biedronki, Seba!',
+      '1234': '🔐 Hasło godne prezesa cyber-korporacji. Prawdziwy PIN to 2137!',
+      '2077': '🤖 CYBERPUNK 2077 :: Wake up samurai, mamy serwer do postawienia!'
+    };
+    if (PIN_EASTER_EGGS[val]) {
+      if (typeof CyberAudio !== 'undefined' && CyberAudio.boop) CyberAudio.boop();
+      if (err) {
+        err.textContent = PIN_EASTER_EGGS[val];
+        err.style.color = 'var(--y)';
+        err.style.display = 'block';
+      }
+      var inp = document.getElementById('pinInput');
+      if (inp) {
+        inp.value = '';
+        inp.style.borderColor = 'var(--y)';
+        setTimeout(function(){ inp.style.borderColor = ''; inp.focus(); }, 1400);
+      }
+      return;
+    }
+
     var h = await sha256(val);
     if (h === EXPECTED_HASH) {
       try { localStorage.setItem(AUTH_KEY, h); } catch (e) {}
       unlockPage();
       showToast('DOSTĘP PRZYZNANY 🔓');
     } else {
-      if (err) { err.textContent = '⚠ BŁĘDNY KOD PIN :: ODMOWA DOSTĘPU'; err.style.display = 'block'; }
+      if (err) {
+        err.textContent = '⚠ BŁĘDNY KOD PIN :: ODMOWA DOSTĘPU';
+        err.style.color = 'var(--r)';
+        err.style.display = 'block';
+      }
       var inp = document.getElementById('pinInput');
       if (inp) {
         inp.value = '';
@@ -1305,7 +1387,15 @@
         setTimeout(function(){ playTone(440, 'sine', 0.2); }, 60);
         setTimeout(function(){ playTone(660, 'sine', 0.3, 880); }, 130);
       },
-      error: function(){ playTone(160, 'sawtooth', 0.12, 110); }
+      error: function(){ playTone(160, 'sawtooth', 0.12, 110); },
+      boop: function(){ playTone(400, 'square', 0.08, 600); },
+      turbo: function(){ playTone(130, 'sawtooth', 0.5, 920); },
+      fanfare: function(){
+        var notes = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99, 1046.50];
+        notes.forEach(function(f, idx){
+          setTimeout(function(){ playTone(f, 'triangle', 0.16, f * 1.04); }, idx * 70);
+        });
+      }
     };
   })();
 
@@ -1376,6 +1466,102 @@
       updateSndBtn();
     });
   }
+
+  // ==================== EASTER EGGS DLA SEBY ====================
+
+  // 1. Kliknięcie 5x w tytuł bannera -> Tryb Cyber-Seba 2077
+  var titleClicks = 0;
+  var titleTimer = null;
+  var heroTitle = document.getElementById('heroTitle');
+  if (heroTitle) {
+    heroTitle.addEventListener('click', function(e){
+      titleClicks++;
+      CyberBurst.spawn(e.clientX, e.clientY);
+      clearTimeout(titleTimer);
+      titleTimer = setTimeout(function(){ titleClicks = 0; }, 2000);
+      if (titleClicks >= 5) {
+        titleClicks = 0;
+        triggerCyberSeba();
+      }
+    });
+  }
+
+  function triggerCyberSeba(){
+    CyberAudio.fanfare();
+    var wrap = document.querySelector('.wrap');
+    if (wrap) {
+      wrap.classList.add('cyber-shake');
+      setTimeout(function(){ wrap.classList.remove('cyber-shake'); }, 500);
+    }
+    var modal = document.getElementById('cyberSebaModal');
+    if (modal) modal.style.display = 'flex';
+    for (var i = 0; i < 6; i++) {
+      setTimeout(function(){
+        CyberBurst.spawn(window.innerWidth * (0.2 + Math.random() * 0.6), window.innerHeight * (0.2 + Math.random() * 0.5));
+      }, i * 110);
+    }
+  }
+
+  window.closeCyberSebaModal = function(){
+    var modal = document.getElementById('cyberSebaModal');
+    if (modal) modal.style.display = 'none';
+  };
+
+  // 2. Easter egg stelaża w zakładce 03 (Z koparki)
+  window.easterRig = function(){
+    CyberAudio.fanfare();
+    showToast('⛏️ Ten stelaż przeszedł hossę 2021 roku! Teraz zamiast krypto będzie kopał tokeny AI!');
+  };
+
+  // 3. Konami Code (↑ ↑ ↓ ↓ ← → ← → B A)
+  var konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+  var konamiIndex = 0;
+  window.addEventListener('keydown', function(e){
+    if (e.key && e.key.toLowerCase() === konamiCode[konamiIndex].toLowerCase()) {
+      konamiIndex++;
+      if (konamiIndex === konamiCode.length) {
+        konamiIndex = 0;
+        CyberAudio.fanfare();
+        showToast('🎮 KONAMI CHEAT CODE: Odblokowano darmowy boost 4x RTX 3070 -> RTX 5090!');
+        triggerCyberSeba();
+      }
+    } else {
+      konamiIndex = 0;
+    }
+  });
+
+  // 4. Konsola F12 DevTools Cyber Terminal
+  console.log("%c╔════════════════════════════════════════════════════════════╗\n" +
+              "║  KRZEMOWY ŁEB 2077 :: TERMINAL DLA CIEKAWSKICH (F12)       ║\n" +
+              "║  Siemano Seba! Grzebiesz w konsoli jak prawdziwy hacker.   ║\n" +
+              "║  Dostępne sekretne komendy w konsoli:                      ║\n" +
+              "║    -> seba()   - Odpala tryb Cyber-Seba 2077               ║\n" +
+              "║    -> turbo()  - 120% obrotów wentylatorów (odrzutowiec)   ║\n" +
+              "║    -> browar() - Schłodzenie procesora zimnym browarkiem   ║\n" +
+              "║    -> rave()   - Dyskoteka RGB na stelażu                  ║\n" +
+              "╚════════════════════════════════════════════════════════════╝",
+              "color: #00F0FF; font-family: monospace; font-size: 11.5px; font-weight: bold; text-shadow: 0 0 5px #00F0FF;");
+
+  window.seba = function(){
+    triggerCyberSeba();
+    return "🚀 POTĘŻNY SEBA AKTYWOWANY!";
+  };
+  window.turbo = function(){
+    CyberAudio.turbo();
+    showToast('🌪️ WENTYLATORY ROZKRĘCONE NA 12 000 RPM! TRZYMAJ STELAŻ!');
+    return "🌪️ Obroty: 12 000 RPM!";
+  };
+  window.browar = window.piwko = function(){
+    CyberAudio.status();
+    showToast('🍺 CHŁODZENIE BROWARKOWE ZAŁĄCZONE! Temperatura Xeona: 14°C');
+    return "🍺 Zimne piwko schłodziło procesor do 14°C!";
+  };
+  window.rave = function(){
+    CyberAudio.fanfare();
+    document.body.classList.toggle('rave-mode');
+    showToast('✨ TRYB DYSKOTEKA RGB AKTYWNY!');
+    return "✨ Rave mode toggled!";
+  };
 
 </script>
 </body>
