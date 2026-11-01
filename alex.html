@@ -289,6 +289,13 @@
     z-index: 999999;
     display: flex; align-items: center; justify-content: center; padding: 12pt;
   }
+  .terminal-locked {
+    display: none !important;
+    filter: blur(25px) !important;
+    pointer-events: none !important;
+    user-select: none !important;
+    opacity: 0 !important;
+  }
   .lock-box {
     background: rgba(14, 15, 31, 0.88); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
     border: 1.5pt solid var(--c); box-shadow: 0 0 45px rgba(0, 240, 255, 0.3), inset 0 0 20px rgba(0,240,255,0.06);
@@ -1559,33 +1566,116 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
   });
 
   
-  // SECURITY PIN LOCK LOGIC (PIN: 2137 - SHA256)
-  var AUTH_KEY = 'krzemowy_pin_auth_token_v2';
-  var EXPECTED_HASH = 'ea3a03b4971eeb62730e1de238225cc4e6145f0eb50ad28b1379f2a2ee71e16e';
+  // =========================================================================
+  // ZERO-KNOWLEDGE AUTHENTICATION & DEFENSE CORE (PBKDF2-HMAC-SHA256)
+  // =========================================================================
+  var _AUTH_TOKEN_KEY = 'krzemowy_sec_vault_token_v3';
+  var _AUTH_SALT = 'krzemowy-leb-2077-quantum-salt-x99ews';
+  var _AUTH_ITERATIONS = 100000;
+  var _VAULT_SIGNATURE = '7327f449cc755bd172a66775f7cc5c7349f40dfb1f06060de234e28e64ab3ee1';
+  var _FAIL_KEY = 'krzemowy_sec_fail_count';
+  var _LOCK_UNTIL_KEY = 'krzemowy_sec_lock_until';
 
-  async function sha256(str) {
-    var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-    return Array.from(new Uint8Array(buf)).map(function(b){ return b.toString(16).padStart(2, '0'); }).join('');
+  async function deriveVaultSignature(val) {
+    var enc = new TextEncoder();
+    var keyMaterial = await crypto.subtle.importKey(
+      'raw',
+      enc.encode(val),
+      { name: 'PBKDF2' },
+      false,
+      ['deriveBits', 'deriveKey']
+    );
+    var derivedKey = await crypto.subtle.deriveKey(
+      {
+        name: 'PBKDF2',
+        salt: enc.encode(_AUTH_SALT),
+        iterations: _AUTH_ITERATIONS,
+        hash: 'SHA-256'
+      },
+      keyMaterial,
+      { name: 'HMAC', hash: 'SHA-256', length: 256 },
+      true,
+      ['sign']
+    );
+    var raw = await crypto.subtle.exportKey('raw', derivedKey);
+    return Array.from(new Uint8Array(raw)).map(function(b){ return b.toString(16).padStart(2, '0'); }).join('');
+  }
+
+  function checkLockout() {
+    try {
+      var lockUntil = Number(localStorage.getItem(_LOCK_UNTIL_KEY)) || 0;
+      var now = Date.now();
+      if (lockUntil > now) {
+        var remainSec = Math.ceil((lockUntil - now) / 1000);
+        var err = document.getElementById('pinError');
+        if (err) {
+          err.textContent = '⛔ BLOKADA ANTYWŁAMANIOWA :: Odczekaj ' + remainSec + 's';
+          err.style.color = 'var(--r)';
+          err.style.display = 'block';
+        }
+        var pinInp = document.getElementById('pinInput');
+        if (pinInp) { pinInp.disabled = true; pinInp.value = ''; }
+        return true;
+      } else {
+        var pinInp = document.getElementById('pinInput');
+        if (pinInp && pinInp.disabled) pinInp.disabled = false;
+        return false;
+      }
+    } catch(e) { return false; }
+  }
+
+  function recordFailedAttempt() {
+    try {
+      var fails = (Number(localStorage.getItem(_FAIL_KEY)) || 0) + 1;
+      localStorage.setItem(_FAIL_KEY, fails);
+      if (fails >= 3) {
+        var lockSec = fails >= 10 ? 900 : (fails >= 5 ? 120 : 30);
+        localStorage.setItem(_LOCK_UNTIL_KEY, Date.now() + (lockSec * 1000));
+        checkLockout();
+      }
+    } catch(e) {}
+  }
+
+  function resetFailedAttempts() {
+    try {
+      localStorage.removeItem(_FAIL_KEY);
+      localStorage.removeItem(_LOCK_UNTIL_KEY);
+    } catch(e) {}
   }
 
   function unlockPage(){
     var ls = document.getElementById('lockScreen');
-    if (ls) ls.style.setProperty('display', 'none', 'important');
+    if (ls) {
+      ls.classList.remove('show');
+      ls.style.setProperty('display', 'none', 'important');
+    }
     var wr = document.querySelector('.wrap');
-    if (wr) wr.style.setProperty('display', 'block', 'important');
+    if (wr) {
+      wr.classList.remove('terminal-locked');
+      wr.style.setProperty('display', 'block', 'important');
+    }
   }
 
   function lockPage(){
     var ls = document.getElementById('lockScreen');
-    if (ls) ls.style.setProperty('display', 'flex', 'important');
+    if (ls) {
+      ls.classList.add('show');
+      ls.style.setProperty('display', 'flex', 'important');
+    }
     var wr = document.querySelector('.wrap');
-    if (wr) wr.style.setProperty('display', 'none', 'important');
+    if (wr) {
+      wr.classList.add('terminal-locked');
+      wr.style.setProperty('display', 'none', 'important');
+    }
     var inp = document.getElementById('pinInput');
-    if (inp) { inp.value = ''; inp.focus(); }
+    if (inp) {
+      inp.value = '';
+      if (!checkLockout()) inp.focus();
+    }
   }
 
   try {
-    if (localStorage.getItem(AUTH_KEY) === EXPECTED_HASH) {
+    if (localStorage.getItem(_AUTH_TOKEN_KEY) === _VAULT_SIGNATURE) {
       unlockPage();
     } else {
       lockPage();
@@ -1594,30 +1684,74 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
     lockPage();
   }
 
+  setInterval(function(){
+    var err = document.getElementById('pinError');
+    if (err && err.textContent.indexOf('BLOKADA ANTYWŁAMANIOWA') !== -1) {
+      checkLockout();
+    }
+  }, 1000);
+
+  // ANTI-TAMPER WATCHDOG
+  if (window.MutationObserver) {
+    var observer = new MutationObserver(function(){
+      var isAuth = false;
+      try { isAuth = localStorage.getItem(_AUTH_TOKEN_KEY) === _VAULT_SIGNATURE; } catch(e){}
+      if (!isAuth) {
+        var ls = document.getElementById('lockScreen');
+        var wr = document.querySelector('.wrap');
+        if (!ls || ls.style.display === 'none' || (wr && !wr.classList.contains('terminal-locked'))) {
+          lockPage();
+        }
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true, attributes: true });
+  }
+
+  // Ochrona przed skrótami inspekcji kodu na ekranie blokady
+  document.addEventListener('keydown', function(e){
+    var isAuth = false;
+    try { isAuth = localStorage.getItem(_AUTH_TOKEN_KEY) === _VAULT_SIGNATURE; } catch(e){}
+    if (!isAuth) {
+      if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || (e.ctrlKey && e.key === 'u')) {
+        e.preventDefault();
+        return false;
+      }
+    }
+  });
+
   async function checkPin(val){
+    if (checkLockout()) return;
     var err = document.getElementById('pinError');
     if (!val || val.length !== 4) {
       if (err) { err.textContent = 'Wpisz dokładnie 4 cyfry'; err.style.display = 'block'; }
       return;
     }
-    var h = await sha256(val);
-    if (h === EXPECTED_HASH) {
-      try { localStorage.setItem(AUTH_KEY, h); } catch (e) {}
+
+    var sig = await deriveVaultSignature(val);
+    if (sig === _VAULT_SIGNATURE) {
+      resetFailedAttempts();
+      try { localStorage.setItem(_AUTH_TOKEN_KEY, sig); } catch (e) {}
       unlockPage();
       showToast('DOSTĘP PRZYZNANY 🔓');
     } else {
-      if (err) { err.textContent = '⚠ BŁĘDNY KOD PIN :: ODMOWA DOSTĘPU'; err.style.display = 'block'; }
+      recordFailedAttempt();
+      if (err) {
+        var fails = Number(localStorage.getItem(_FAIL_KEY)) || 1;
+        err.textContent = '⚠ BŁĘDNY KOD (' + fails + '/3) :: ODMOWA DOSTĘPU';
+        err.style.color = 'var(--r)';
+        err.style.display = 'block';
+      }
       var inp = document.getElementById('pinInput');
       if (inp) {
         inp.value = '';
         inp.style.borderColor = 'var(--r)';
-        setTimeout(function(){ inp.style.borderColor = ''; inp.focus(); }, 600);
+        setTimeout(function(){ inp.style.borderColor = ''; if (!checkLockout()) inp.focus(); }, 600);
       }
     }
   }
 
   window.lockTerminal = function(){
-    try { localStorage.removeItem(AUTH_KEY); } catch(e){}
+    try { localStorage.removeItem(_AUTH_TOKEN_KEY); } catch(e){}
     lockPage();
   };
 
