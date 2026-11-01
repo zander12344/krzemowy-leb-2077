@@ -887,6 +887,35 @@
 
           </div>
 
+          <!-- OPENCODE: LOKALNY MODEL W TERMINALu -->
+          <div style="background:rgba(5,5,14,0.85);border:1pt solid var(--c);padding:11pt;margin-top:12pt;border-radius:3pt;">
+            <p class="ox c" style="font-size:13pt;margin:0 0 6pt 0;">⌨️ 3. OPENCODE NA LAPTOPIE (KODOWANIE I TERMINAL NA TWOIM MODELU)</p>
+            <p style="margin:0 0 8pt 0;font-size:10.8pt;line-height:1.6;">
+              Otwierasz terminal, wpisujesz <span class="mono c">opencode</span> — i masz agenta, który czyta pliki, pisze kod, poprawia błędy i uruchamia komendy. Myśli na Twoich 4 kartach RTX w domu, więc <b>kod i dane nie wychodzą do żadnej chmury</b>, a abonamentu nie ma.
+            </p>
+            <p style="margin:0 0 4pt 0;font-size:10.5pt;"><b>Konfiguracja raz na zawsze</b> — w folderze, w którym pracujesz, utwórz plik <span class="mono y">opencode.jsonc</span>:</p>
+            <pre class="mono" style="background:#05050A;padding:8pt 10pt;border:1pt solid var(--border);font-size:9pt;line-height:1.55;overflow-x:auto;margin:0;white-space:pre;">{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "krzemowy/qwen3-177b",
+  "providers": {
+    "krzemowy": {
+      "name": "Krzemowy Łeb 2077",
+      "package": "@opencode/ai/providers/openai-compatible",
+      "settings": { "baseURL": "http://krzemowy-leb.local:8080/v1" },
+      "models": { "qwen3-177b": { "name": "Qwen 177B MoE (lokalnie)" } }
+    }
+  }
+}</pre>
+            <p style="margin:8pt 0 0 0;font-size:10.5pt;line-height:1.6;">
+              Potem w OpenCode wpisujesz <span class="mono c">/models</span> i wybierasz <b>Krzemowy Łeb 2077 → Qwen 177B MoE</b>. Gotowe — OpenCode działa lokalnie, tak samo jak zwykły czat w przeglądarce.
+            </p>
+            <p class="dim" style="margin:6pt 0 0 0;font-size:9.5pt;">
+              • Serwer musi być włączony (usługa <span class="mono">llama-server.service</span> na stelażu).<br>
+              • Jeśli OpenCode poprosi o klucz API — wpisz dowolny tekst (np. <span class="mono">local</span>), serwer go nie sprawdza.<br>
+              • W trasie działa ten sam plik — wystarczy podmienić adres na nazwę z Tailscale (Alex to skonfiguruje).
+            </p>
+          </div>
+
           <!-- ZARZĄDZANIE ENERGIĄ I WAKE ON LAN -->
           <div style="background:rgba(5,5,14,0.85);border:1pt solid var(--g);padding:11pt;margin-top:12pt;border-radius:3pt;">
             <p class="ox g" style="font-size:13pt;margin:0 0 6pt 0;">⚡ JAK DZIAŁA OSZCZĘDZANIE ENERGII I WYBUDZANIE (WAKE ON LAN)</p>

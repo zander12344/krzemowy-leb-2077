@@ -1053,6 +1053,29 @@ sudo systemctl enable --now llama-server.service
 python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok/s)</span></td></tr></table>
 </td></tr></table>
 
+<table class="blk"><tr><td class="hd hc">⌨️ // OPENCODE NA LAPTOPIE — LOKALNY MODEL PRZEZ OPENAI-COMPATIBLE API</td></tr><tr><td class="bd bc">
+<p><span class="dim">CEL:</span> Seba i Ty używacie tego samego modelu w terminalu (OpenCode V2) — bez kluczy, bez chmury, z kosztem prądu. Serwer wystawia OpenAI-compatible API na porcie 8080, więc wystarczy wskazać <span class="mono">/v1</span>.</p>
+<p><b>1. Sprawdź, czy API odpowiada</b> (na laptopie w domowej sieci):</p>
+<table class="cmd"><tr><td>curl http://krzemowy-leb.local:8080/v1/models</td></tr></table>
+<p><b>2. Plik <span class="mono y">opencode.jsonc</span> w katalogu projektu</b> (globalnie: <span class="mono">~/.config/opencode/opencode.jsonc</span>):</p>
+<table class="cmd"><tr><td>{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "krzemowy/qwen3-177b",
+  "providers": {
+    "krzemowy": {
+      "name": "Krzemowy Łeb 2077",
+      "package": "@opencode/ai/providers/openai-compatible",
+      "settings": { "baseURL": "http://krzemowy-leb.local:8080/v1" },
+      "models": {
+        "qwen3-177b": { "name": "Qwen 177B MoE (lokalnie)" }
+      }
+    }
+  }
+}</td></tr></table>
+<p><b>3. Wybór modelu:</b> uruchom <span class="mono">opencode</span>, wpisz <span class="mono">/models</span> i wybierz <b>Krzemowy Łeb 2077 → Qwen 177B MoE</b>. Zmiana configu działa bez restartu (OpenCode przeładowuje pliki po zapisie; awaryjnie <span class="mono">/reload</span>).</p>
+<p style="margin:0;"><span class="r">⚠ Uwagi:</span> jeśli OpenCode poprosi o klucz API — dowolny string (llama-server nie weryfikuje); nazwa modelu w <span class="mono">models</span> musi odpowiadać ID z <span class="mono">/v1/models</span> (alias ustawiasz w usłudze <span class="mono">llama-server</span>); w trasie podmień <span class="mono">baseURL</span> na adres Tailscale.</p>
+</td></tr></table>
+
 </div>
 
 <!-- ======================================================= -->
