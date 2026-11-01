@@ -8,7 +8,7 @@
 <meta name="bingbot" content="noindex,nofollow,noarchive">
 <meta name="referrer" content="no-referrer">
 <meta name="rating" content="general">
-<title>KRZEMOWY ŁEB 2077 // Centrum Zamówień & AI :: Seba LBL</title>
+<title>KRZEMOWY ŁEB 2077 // Centrum Zamówień & AI :: Seba</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&amp;family=Chakra+Petch:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap">
 <style>
   :root {
@@ -151,7 +151,7 @@
     position: relative; overflow: hidden;
     transition: transform .2s ease-out, border-color .2s;
   }
-  .kpi .lbl { font-family: 'Oxanium', sans-serif; font-size: 9pt; color: var(--dim); text-transform: uppercase; }
+  .kpi .kpi-label { font-family: 'Oxanium', sans-serif; font-size: 9pt; color: var(--dim); text-transform: uppercase; }
   .kpi .val { font-family: 'JetBrains Mono', monospace; font-size: 15.5pt; font-weight: bold; margin-top: 2pt; }
 
   .calc-box {
@@ -349,12 +349,12 @@
 
   <!-- BANNER GŁÓWNY SEBA -->
   <table class="blk">
-    <tr><td class="hd hm">// PROJEKT KRZEMOWY ŁEB 2077 &nbsp;::&nbsp; LBL ↔ RZ &nbsp;::&nbsp; LIVE SYNC</td></tr>
+    <tr><td class="hd hm">// PROJEKT KRZEMOWY ŁEB 2077 &nbsp;::&nbsp; ALEX ↔ SEBA &nbsp;::&nbsp; LIVE SYNC</td></tr>
     <tr>
       <td class="bd bm">
-        <p class="ox c" style="font-size:21pt;margin:2pt 0;">KRZEMOWY ŁEB 2077 // TWÓJ SERWER AI :: SEBA LBL</p>
+        <p class="ox c" style="font-size:21pt;margin:2pt 0;">KRZEMOWY ŁEB 2077 // TWÓJ SERWER AI :: SEBA</p>
         <p style="margin:0 0 6pt 0;font-size:11.5pt;">
-          Cześć <b>Seba</b>! Serwer stanie u Ciebie w <b>LBL</b>. Poniżej masz listę części do zamówienia. Jak przyjdzie płyta, procesor i RAM — Alex przyjeżdża z RZ złożyć sprzęt. Wszystko, co tu klikniesz (np. <i>ZAMÓWIONE</i> / <i>W DOMU</i>), zapisuje się na bieżąco.
+          Cześć <b>Seba</b>! Serwer stanie u Ciebie. Poniżej masz listę części do zamówienia. Jak przyjdzie płyta, procesor i RAM — Alex przyjeżdża złożyć sprzęt. Wszystko, co tu klikniesz (np. <i>ZAMÓWIONE</i> / <i>W DOMU</i>), zapisuje się na bieżąco.
         </p>
       </td>
     </tr>
@@ -364,11 +364,11 @@
   <div class="bar">
     <div class="sync-row">
       <div style="font-size:10pt;display:flex;align-items:center;flex-wrap:wrap;gap:6pt;">
-        <span><span id="syncDot" class="sync-dot live"></span><b id="syncTxt" class="g">POŁĄCZONO :: LBL ↔ RZ</b></span>
+        <span><span id="syncDot" class="sync-dot live"></span><b id="syncTxt" class="g">POŁĄCZONO :: ALEX ↔ SEBA</b></span>
         <span id="lastUpd" class="dim"></span>
       </div>
       <div style="font-size:9.5pt;" class="ox">
-        <span class="dim">UŻYTKOWNIK:</span> <span class="c">SEBA LBL</span>
+        <span class="dim">UŻYTKOWNIK:</span> <span class="c">SEBA</span>
       <button id="soundToggle" class="sound-btn on" title="Efekty dźwiękowe">🔊 DŹWIĘK: WŁ</button>
       <button onclick="lockTerminal()" class="st-btn" style="background:#090914;color:var(--dim);border-color:var(--border);padding:2pt 6pt;font-size:8.5pt;" title="Zablokuj stronę">🔒 ZABLOKUJ</button>
       </div>
@@ -388,22 +388,22 @@
     <!-- KPI Pieniądze -->
     <div class="kpi-grid">
       <div class="kpi">
-        <div class="lbl">Łączny koszt części</div>
+        <div class="kpi-label">Łączny koszt części</div>
         <div class="val c" id="kpiTotal">4 540 zł</div>
         <div class="dim" id="kpiSub" style="margin-top:2pt;">z zasilaczem • RAM 1800 zł</div>
       </div>
       <div class="kpi">
-        <div class="lbl">Już opłacone / kupione</div>
+        <div class="kpi-label">Już opłacone / kupione</div>
         <div class="val g" id="kpiSpent">0 zł</div>
         <div class="dim" id="kpiCount" style="margin-top:2pt;">0 z 8 pozycji</div>
       </div>
       <div class="kpi">
-        <div class="lbl">Zostało do zapłaty</div>
+        <div class="kpi-label">Zostało do zapłaty</div>
         <div class="val y" id="kpiLeft">4 540 zł</div>
         <div class="dim" style="margin-top:2pt;">do skompletowania serwera</div>
       </div>
       <div class="kpi">
-        <div class="lbl">Po sprzedaży starej płyty</div>
+        <div class="kpi-label">Po sprzedaży starej płyty</div>
         <div class="val m" id="kpiNet">4 190 zł</div>
         <div class="dim" style="margin-top:2pt;">~350 zł ze starej bazy koparki</div>
       </div>
@@ -457,7 +457,7 @@
                 <a href="https://www.olx.pl/d/oferta/4-sztuki-sk-hynix-32gb-ddr4-2400-ecc-rdimm-2rx4-ram-serwerowy-CID99-ID1c5THI.html" target="_blank" rel="noopener" class="buy-btn">KUP NA OLX ↗</a>
               </div>
             </div>
-            <p class="dim" style="margin:4pt 0;">Sprzedawca z RZ (Alex może odebrać osobiście lub wysyłka OLX).</p>
+            <p class="dim" style="margin:4pt 0;">Sprzedawca lokalny (Alex może odebrać osobiście lub wysyłka OLX).</p>
             <div class="st-bar" data-item="ram">
               <span class="dim ox" style="font-size:8.5pt;">STATUS:</span>
               <button class="st-btn s-todo on" data-st="todo">DO KUPIENIA</button>
@@ -705,13 +705,13 @@
   <!-- ==================== ZAKŁADKA 04: PLAN PRZYJAZDU ALEXA ==================== -->
   <div id="plan" class="pane">
     <table class="blk">
-      <tr><td class="hd hc">PLAN DZIAŁANIA // KIEDY ALEX PRZYJEŻDŻA DO LBL</td></tr>
+      <tr><td class="hd hc">PLAN DZIAŁANIA // KIEDY ALEX PRZYJEŻDŻA ZŁOŻYĆ SPRZĘT</td></tr>
       <tr>
         <td class="bd bc">
           <div style="line-height:1.6;font-size:11pt;">
             <p><span class="tag g">KROK 1</span> &nbsp;<b>Seba zamawia części:</b> Kupujesz RAM (OLX), SSD (OLX), CPU i chłodzenie (Allegro) oraz płytę (eBay). Odbierasz paczki do domu.</p>
             <p><span class="tag g">KROK 2</span> &nbsp;<b>Dajesz znać Alexowi:</b> Jak dotrą kluczowe podzespoły (płyta główna, procesor, pamięć RAM) — dzwonisz lub piszesz na Signal.</p>
-            <p><span class="tag c">KROK 3</span> &nbsp;<b>Alex przyjeżdża z RZ do LBL:</b> Alex zabiera narzędzia, pendrive z gotowym instalatorem Ubuntu i pastę termoprzewodzącą.</p>
+            <p><span class="tag c">KROK 3</span> &nbsp;<b>Alex przyjeżdża złożyć sprzęt:</b> Alex zabiera narzędzia, pendrive z gotowym instalatorem Ubuntu i pastę termoprzewodzącą.</p>
             <p><span class="tag c">KROK 4</span> &nbsp;<b>Wspólny montaż:</b> Alex montuje płytę na stelażu, podłącza risery, procesor i chłodzenie Fera 5, konfiguruje BIOS i instaluje system Linux.</p>
             <p><span class="tag m">KROK 5</span> &nbsp;<b>Test na Twoim laptopie:</b> Odpalamy serwer, łączysz się ze swojego laptopa po Wi-Fi i sprawdzamy jak śmiga model AI.</p>
             <p><span class="tag m">KROK 6</span> &nbsp;<b>Gotowe:</b> Serwer zostaje u Ciebie na stelażu, gotowy do stabilnej pracy 24/7.</p>
@@ -723,7 +723,7 @@
 
   <!-- STOPKA -->
   <div style="margin-top:20pt;padding-top:10pt;border-top:1pt solid #1B1B2F;text-align:center;font-size:9pt;color:var(--dim);">
-    // KRZEMOWY ŁEB 2077 &nbsp;::&nbsp; WĘZEŁ LBL &nbsp;::&nbsp; CENTRUM ZAMÓWIEŃ SEBY
+    // KRZEMOWY ŁEB 2077 &nbsp;::&nbsp;  CENTRUM ZAMÓWIEŃ SEBY
   </div>
 
 </div>
@@ -732,13 +732,13 @@
 <script>
 (function(){
   var LS_KEY = 'krzemowy_leb_state_v3';
-  var CURRENT_USER = 'Seba LBL';
+  var CURRENT_USER = 'Seba';
 
   function defaultState(){
     return {
       version: 2,
       updatedAt: 0,
-      updatedBy: 'Seba LBL',
+      updatedBy: 'Seba',
       checks: {},
       statuses: {},
       notes: {},
@@ -747,11 +747,17 @@
     };
   }
 
+  function cleanUser(u){
+    if (!u) return 'Seba';
+    return u.indexOf('Alex') !== -1 ? 'Alex' : 'Seba';
+  }
+
   var state = defaultState();
   try {
     var saved = JSON.parse(localStorage.getItem(LS_KEY) || 'null');
     if (saved && typeof saved === 'object') state = Object.assign(defaultState(), saved);
   } catch (e) {}
+  state.updatedBy = cleanUser(state.updatedBy);
 
   var SYNC_TOPIC = 'krzemowy_leb_2077_sync_9f4b2e8a';
   var SYNC_URL = 'https://ntfy.sh/' + SYNC_TOPIC;
@@ -794,7 +800,7 @@
     var upd = document.getElementById('lastUpd');
     if (online) {
       dot.className = 'sync-dot live';
-      txt.textContent = 'POŁĄCZONO :: LBL ↔ RZ';
+      txt.textContent = 'POŁĄCZONO :: ALEX ↔ SEBA';
     } else {
       dot.className = 'sync-dot off';
       txt.textContent = 'ZAPIS LOKALNY (OFFLINE)';
@@ -810,6 +816,7 @@
   function applyIncoming(srv){
     if (!srv || typeof srv !== 'object' || !srv.checks) return;
     if ((srv.updatedAt || 0) <= (state.updatedAt || 0)) return;
+    srv.updatedBy = cleanUser(srv.updatedBy);
     state = Object.assign(defaultState(), srv);
     saveLocal();
     render();
