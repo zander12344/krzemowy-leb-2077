@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 260" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#05020d"/>
+      <stop offset="50%" stop-color="#0d0221"/>
+      <stop offset="100%" stop-color="#06101e"/>
+    </linearGradient>
+    <linearGradient id="cyanMag" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00f0ff"/>
+      <stop offset="50%" stop-color="#ff2bd6"/>
+      <stop offset="100%" stop-color="#fcee0a"/>
+    </linearGradient>
+    <filter id="glowCyan" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#00f0ff" flood-opacity="0.85"/>
+    </filter>
+    <filter id="glowMag" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#ff2bd6" flood-opacity="0.85"/>
+    </filter>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#00f0ff" stroke-width="0.6" stroke-opacity="0.12"/>
+    </pattern>
+    <pattern id="scanlines" width="4" height="4" patternUnits="userSpaceOnUse">
+      <rect width="4" height="1.5" fill="#000000" fill-opacity="0.32"/>
+    </pattern>
+    <style>
+      .hud { font-family: 'JetBrains Mono', 'Consolas', 'Courier New', monospace; font-size: 11px; fill: #00f0ff; letter-spacing: 1.5px; }
+      .hud-y { font-family: 'JetBrains Mono', 'Consolas', 'Courier New', monospace; font-size: 11px; fill: #fcee0a; letter-spacing: 1.5px; font-weight: bold; }
+      .hud-g { font-family: 'JetBrains Mono', 'Consolas', 'Courier New', monospace; font-size: 11px; fill: #39ff14; letter-spacing: 1.4px; font-weight: bold; }
+      .title-shadow { font-family: 'Impact', 'Arial Black', 'Oxanium', sans-serif; font-size: 62px; font-weight: 900; fill: #ff2bd6; letter-spacing: 5px; opacity: 0.75; }
+      .title-main { font-family: 'Impact', 'Arial Black', 'Oxanium', sans-serif; font-size: 62px; font-weight: 900; fill: #00f0ff; letter-spacing: 5px; }
+      .sub { font-family: 'JetBrains Mono', 'Consolas', 'Courier New', monospace; font-size: 14px; font-weight: bold; fill: #fcee0a; letter-spacing: 4px; }
+      .tag { font-family: 'JetBrains Mono', 'Consolas', 'Courier New', monospace; font-size: 12px; fill: #e6e6f0; letter-spacing: 1.2px; }
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.78; }
+      }
+      @keyframes glitchShift {
+        0%, 92%, 100% { transform: translate(0, 0); }
+        94% { transform: translate(-3px, 1px); }
+        96% { transform: translate(3px, -1px); }
+        98% { transform: translate(-2px, 0); }
+      }
+      .glitch { animation: glitchShift 4.5s infinite; }
+      .blink { animation: pulse 2s infinite; }
+    </style>
+  </defs>
+
+  <!-- Tło i siatka cybernetyczna -->
+  <rect width="920" height="260" rx="8" fill="url(#bgGrad)"/>
+  <rect width="920" height="260" rx="8" fill="url(#grid)"/>
+
+  <!-- Dekoracyjne linie neonowe góra/dół -->
+  <rect x="0" y="0" width="920" height="4" fill="url(#cyanMag)"/>
+  <rect x="0" y="256" width="920" height="4" fill="url(#cyanMag)"/>
+
+  <!-- Narożniki HUD -->
+  <path d="M 16 40 L 16 16 L 48 16" fill="none" stroke="#00f0ff" stroke-width="2.5"/>
+  <path d="M 904 40 L 904 16 L 872 16" fill="none" stroke="#ff2bd6" stroke-width="2.5"/>
+  <path d="M 16 220 L 16 244 L 48 244" fill="none" stroke="#ff2bd6" stroke-width="2.5"/>
+  <path d="M 904 220 L 904 244 L 872 244" fill="none" stroke="#fcee0a" stroke-width="2.5"/>
+
+  <!-- Górny pasek telemetrii -->
+  <text x="30" y="34" class="hud">// SYS.NODE: LBL_X99_WS</text>
+  <text x="330" y="34" class="hud-g blink">● STATUS: ONLINE // 4x RTX 3070 [32 GiB VRAM]</text>
+  <text x="890" y="34" text-anchor="end" class="hud-y">BUILD // 2077.10.31</text>
+  <line x1="30" y1="44" x2="890" y2="44" stroke="#00f0ff" stroke-width="0.8" stroke-opacity="0.35"/>
+
+  <!-- Główny napis z efektem glitch/neon -->
+  <g class="glitch">
+    <text x="463" y="122" text-anchor="middle" class="title-shadow" filter="url(#glowMag)">KRZEMOWY ŁEB 2077</text>
+    <text x="460" y="120" text-anchor="middle" class="title-main" filter="url(#glowCyan)">KRZEMOWY ŁEB 2077</text>
+  </g>
+
+  <!-- Podtytuł -->
+  <rect x="195" y="138" width="530" height="26" rx="3" fill="#05020d" stroke="#fcee0a" stroke-width="1.2"/>
+  <text x="460" y="156" text-anchor="middle" class="sub">⚡ GLITCH IN THE SILICON // 177B MoE ⚡</text>
+
+  <!-- Dolne moduły specyfikacji -->
+  <g transform="translate(30, 184)">
+    <rect x="0" y="0" width="205" height="44" rx="3" fill="#090d1a" stroke="#00f0ff" stroke-width="1"/>
+    <text x="12" y="17" class="hud">SILNIK INFERENCJI</text>
+    <text x="12" y="35" class="tag">ik_llama.cpp + Strata</text>
+
+    <rect x="218" y="0" width="205" height="44" rx="3" fill="#090d1a" stroke="#ff2bd6" stroke-width="1"/>
+    <text x="230" y="17" class="hud" fill="#ff2bd6">MODEL BAZOWY</text>
+    <text x="230" y="35" class="tag">Qwen3.8-Flash 177B</text>
+
+    <rect x="436" y="0" width="205" height="44" rx="3" fill="#090d1a" stroke="#39ff14" stroke-width="1"/>
+    <text x="448" y="17" class="hud-g">PAMIĘĆ HYBRYDOWA</text>
+    <text x="448" y="35" class="tag">32G VRAM + 128G ECC</text>
+
+    <rect x="654" y="0" width="206" height="44" rx="3" fill="#090d1a" stroke="#fcee0a" stroke-width="1"/>
+    <text x="666" y="17" class="hud-y">PLATFORMA / KOSZT</text>
+    <text x="666" y="35" class="tag">X99-E WS // ~4.5k PLN</text>
+  </g>
+
+  <!-- Nakładka CRT scanlines -->
+  <rect width="920" height="260" rx="8" fill="url(#scanlines)" pointer-events="none"/>
+</svg>
