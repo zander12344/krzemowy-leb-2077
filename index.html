@@ -433,6 +433,7 @@
       <button data-t="koparka">03 Z KOPARKI (0 ZŁ)</button>
       <button data-t="plan">04 PLAN PRZYJAZDU ALEXA</button>
       <button data-t="mozliwosci" style="border-color:var(--y);color:var(--y);">⚡ 05 CO POTRAFI TWÓJ MODEL</button>
+      <button data-t="ciezarowka" style="border-color:var(--c);color:var(--c);">🚚 06 KOPARKA W CIĘŻARÓWCE?</button>
     </div>
   </div>
 
@@ -1104,6 +1105,276 @@
             <p style="margin:0;"><span class="tag m">4. BEZPIECZEŃSTWO:</span> Wszystko stoi u Ciebie na stelażu. Nawet jak padnie internet na świecie, Twoja baza prawa, kalkulatory i modele działają lokalnie bez zarzutu.</p>
           </div>
         </td>
+      </tr>
+    </table>
+
+  </div>
+
+  <!-- ==================== ZAKŁADKA 06: KOPARKA / SERWER W CIĘŻARÓWCE ==================== -->
+  <div id="ciezarowka" class="pane">
+
+    <!-- BANNER GŁÓWNY ZAKŁADKI -->
+    <table class="blk">
+      <tr><td class="hd hc">🚚 06 // CZY DA SIĘ WSTAWIĆ TEN SERWER DO CIĘŻARÓWKI? // ANALIZA DLA SEBY</td></tr>
+      <tr>
+        <td class="bd bc">
+          <p class="ox c" style="font-size:16pt;margin:2pt 0 6pt 0;">PRĄD Z CIĘŻARÓWKI CZY Z DOMU? CAŁA PRAWDA: FIZYKA, PIENIĄDZE I AKUMULATORY 24V</p>
+          <p style="font-size:11.5pt;line-height:1.65;margin:0 0 10pt 0;">
+            Seba, na 100% przeszło Ci przez myśl: <i>„A gdyby tak wsadzić ten stelaż za fotel albo do schowka bocznego w ciągniku siodłowym? Przecież alternator w ciężarówce ładuje za darmo w trasie, więc prąd brałby z auta, a nie z domowego licznika!”</i><br>
+            Poniżej masz rzetelną, techniczną odpowiedź inżynierską — bez owijania w bawełnę, z dokładnymi wyliczeniami co do ampera i złotówki.
+          </p>
+
+          <!-- 3 SZYBKIE WNIOSKI (EXECUTIVE SUMMARY) -->
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(230px, 1fr));gap:8pt;margin-bottom:8pt;">
+            <div style="background:#090915;border:1pt solid var(--r);border-radius:3pt;padding:8pt 10pt;">
+              <span class="tag r">1. CZY FIZYCZNIE SIĘ DA?</span>
+              <p class="ox r" style="font-size:12pt;margin:4pt 0 2pt 0;">TAK, DA SIĘ URUCHOMIĆ</p>
+              <p class="dim" style="font-size:9.5pt;margin:0;">Zasilacz komputera da się podłączyć przez przetwornicę 24V&nbsp;→&nbsp;230V z czystym sinusem. W czasie jazdy silnik to uciągnie.</p>
+            </div>
+            <div style="background:#090915;border:1pt solid var(--y);border-radius:3pt;padding:8pt 10pt;">
+              <span class="tag y">2. CZY TO MA SENS?</span>
+              <p class="ox y" style="font-size:12pt;margin:4pt 0 2pt 0;">NIE, TO DROGA PUŁAPKA</p>
+              <p class="dim" style="font-size:9.5pt;margin:0;">Na pauzie rozładuje akumulatory w 4h (nie odpalisz rano auta), z kabiny zrobi piekarnik 50°C, a wibracje na drodze połamią karty za 4000 zł.</p>
+            </div>
+            <div style="background:#090915;border:1pt solid var(--g);border-radius:3pt;padding:8pt 10pt;">
+              <span class="tag g">3. ROZWIĄZANIE MISTRZÓW</span>
+              <p class="ox g" style="font-size:12pt;margin:4pt 0 2pt 0;">SERWER W DOMU + DOSTĘP W AUCIE</p>
+              <p class="dim" style="font-size:9.5pt;margin:0;">Komputer stoi cicho w domu na tanim prądzie, a Ty w kabinie masz laptopa/telefon i łączysz się przez internet z pełną mocą 177B parametrów!</p>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <!-- MODUŁ 1: BILANS PRĄDOWY 24V VS POBÓR AI -->
+    <table class="blk" style="margin-top:12pt;">
+      <tr><td class="hd hy">⚡ 1. BILANS PRĄDOWY CIĘŻARÓWKI // ILE PRĄDU ZJADA TEN POTWÓR?</td></tr>
+      <tr>
+        <td class="bd by">
+          <p style="font-size:11pt;margin:0 0 10pt 0;">
+            Podliczmy dokładnie waty i ampery. Komputer serwerowy na 4 kartach RTX 3070 to nie jest ładowarka do telefonu ani mała lodówka turystyczna:
+          </p>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:10pt;margin-bottom:12pt;">
+            <div class="kpi" style="text-align:left;padding:10pt;">
+              <div class="kpi-label">Pobór w trybie czuwania (idle)</div>
+              <div class="val y" style="font-size:18pt;">~120 – 150 W</div>
+              <div class="dim" style="font-size:9pt;margin-top:4pt;">Gdy system Ubuntu jest włączony, ale model nie mieli zapytań (pobór prądu przez 4 karty, płytę i procesor Xeon).</div>
+            </div>
+            <div class="kpi" style="text-align:left;padding:10pt;">
+              <div class="kpi-label">Pobór pod pełnym obciążeniem AI</div>
+              <div class="val r" style="font-size:18pt;">~550 – 650 W</div>
+              <div class="dim" style="font-size:9pt;margin-top:4pt;">Gdy model Qwen 177B generuje odpowiedź, analizuje tacho lub liczy trasę (karty i procesor biorą pełną moc).</div>
+            </div>
+            <div class="kpi" style="text-align:left;padding:10pt;">
+              <div class="kpi-label">Prąd pobierany z instalacji 24V</div>
+              <div class="val c" style="font-size:18pt;">25 – 30 Amperów</div>
+              <div class="dim" style="font-size:9pt;margin-top:4pt;">Przy 600W i sprawności przetwornicy ~90%: 600W / (24V × 0.9) = <b>27.8 A ciągłego prądu</b> ze złącz 24V.</div>
+            </div>
+          </div>
+
+          <div style="background:#05050A;border:1pt solid var(--border);border-left:3pt solid var(--y);padding:10pt 12pt;margin-bottom:10pt;">
+            <p class="ox y" style="font-size:11.5pt;margin:0 0 4pt 0;">🚛 SYTUACJA A: GDY JEDZIESZ W TRASIE (SILNIK PRACUJE)</p>
+            <p style="font-size:10.5pt;line-height:1.6;margin:0;">
+              Alternator w ciągniku siodłowym daje 80A – 120A prądu przy napięciu ładowania ~28V. Pobór 28A jest duży, ale alternator podczas jazdy sobie z tym poradzi.<br>
+              <b>Haczyk:</b> Alternator nie wytwarza prądu z powietrza — obciąża pasek klinowy i silnik. Dodatkowe 600W obciążenia oznacza wzrost spalania o około <b>0.4 – 0.5 litra oleju napędowego na godzinę</b>.<br>
+              Przy cenie 6.50 zł/l za ON, godzina mielenia AI podczas jazdy kosztuje Cię <b>ok. 3.00 – 3.25 zł w ropie</b>.
+            </p>
+          </div>
+
+          <div style="background:#05050A;border:1pt solid var(--border);border-left:3pt solid var(--r);padding:10pt 12pt;">
+            <p class="ox r" style="font-size:11.5pt;margin:0 0 4pt 0;">⛔ SYTUACJA B: GDY STOISZ NA PAUZIE 9H / 11H (SILNIK ZGASZONY) — TU JEST DRAMAT!</p>
+            <p style="font-size:10.5pt;line-height:1.6;margin:0 0 6pt 0;">
+              Ciągnik siodłowy ma 2 akumulatory rozruchowe 12V 225Ah połączone szeregowo w 24V (łącznie mają ok. <b>5.4 kWh</b> energii brutto).<br>
+              Zwykłych akumulatorów kwasowych/AGM <b>nie wolno rozładować poniżej 50%</b>, bo po pierwsze drastycznie spada ich żywotność, a po drugie rano rozrusznik nie będzie w stanie zakręcić potężnym 13-litrowym silnikiem diesla.
+            </p>
+            <ul style="font-size:10.5pt;line-height:1.6;margin:0;padding-left:16pt;">
+              <li><b>Przy obciążeniu AI (600W):</b> Bezpieczny prąd z akumulatorów skończy się po <b>zaledwie 4 – 4.5 godzinach!</b></li>
+              <li><b>Nawet w trybie uśpienia (150W):</b> Po 15 godzinach pauzy akumulatory są kompletnie wyssane do zera.</li>
+              <li><b>Koszty ratunku:</b> Odpalanie na kable od innego auta w nocy to ruletka (elektronika ciągników tego nie lubi), a wezwanie serwisu drogowego (np. ADAC w Niemczech) do rozładowanego auta na autostradzie to koszt <b>350 – 700 EUR (1 500 – 3 000 zł)</b>.</li>
+              <li><b>A co, gdyby zostawić silnik na wolnych obrotach na pauzie?</b> Duży silnik ciężarówki na biegu jałowym pali <b>1.8 – 2.2 litra ropy na godzinę</b>. Dziewięć godzin pauzy z odpalonym silnikiem to spalenie 18 litrów paliwa = <b>117 zł za jedną noc!</b> W domu z gniazdka 230V ta sama noc obliczeń kosztuje <b>ok. 2.50 zł</b>!</li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <!-- MODUŁ 2: WIBRACJE, CIEPŁO I WARUNKI W KABINIE -->
+    <table class="blk" style="margin-top:12pt;">
+      <tr><td class="hd hr">⚠️ 2. ZAGROŻENIA MECHANICZNE I KLIMAT W KABINIE</td></tr>
+      <tr>
+        <td class="bd br">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:10pt;">
+            
+            <div style="background:#090915;border:1pt solid #2A2A40;padding:10pt;border-radius:3pt;">
+              <span class="tag r">1. WIBRACJE I DZIURY W DROGACH</span>
+              <p class="ox y" style="font-size:11.5pt;margin:4pt 0 4pt 0;">ŚMIERĆ DLA KART GRAFICZNYCH</p>
+              <p class="dim" style="font-size:9.5pt;line-height:1.6;margin:0;">
+                Karty RTX 3070 ważą ponad 1 kg każda, a chłodzenie Fera 5 na procesorze prawie 1 kg. Na polskich drogach, progach zwalniających czy torowiskach kabina ciężarówki poddawana jest ciągłym wstrząsom.<br>
+                Otwarte stelaże z risery na taśmach nie są odporne na wstrząsy. Taśmy risera będą się wysuwać, a mikrodrgania doprowadzą do <b>pęknięcia kulek cynowych pod rdzeniami kart (BGA)</b>. Jedna większa dziura w drodze może uśmiercić 4 karty warte 4000 zł.
+              </p>
+            </div>
+
+            <div style="background:#090915;border:1pt solid #2A2A40;padding:10pt;border-radius:3pt;">
+              <span class="tag y">2. PIEKARNIK W KABINIE (600W CIEPŁA)</span>
+              <p class="ox y" style="font-size:11.5pt;margin:4pt 0 4pt 0;">W LECIE NIE DA SIĘ WYTRZYMAĆ</p>
+              <p class="dim" style="font-size:9.5pt;line-height:1.6;margin:0;">
+                Zgodnie z prawami fizyki, cała energia pobrana przez komputer zamienia się w <b>100% w czyste ciepło</b>. 600W poboru mocy to dokładnie tyle samo ciepła, co włączony grzejnik elektryczny (farelka) postawiony za łóżkiem w sypialni kabiny!<br>
+                Latem na parkingu w Niemczech czy Włoszech bez tego jest w kabinie 35°C. Z włączonym serwerem zrobisz sobie <b>saunę 50°C</b>, a klimatyzacja postojowa pobierze kolejne 700W i wykończy akumulator w 2 godziny.
+              </p>
+            </div>
+
+            <div style="background:#090915;border:1pt solid #2A2A40;padding:10pt;border-radius:3pt;">
+              <span class="tag c">3. HAŁAS WENTYLATORÓW</span>
+              <p class="ox c" style="font-size:11.5pt;margin:4pt 0 4pt 0;">BRAK SNU NA PAUZIE</p>
+              <p class="dim" style="font-size:9.5pt;line-height:1.6;margin:0;">
+                Nasz serwer ma 8 wentylatorów na 4 kartach graficznych + 2 na procesorze + 5 wentylatorów Arctic P12 dmuchających w stelaż (razem 15 śmigieł).<br>
+                W serwerowni w piwnicy to nie przeszkadza, ale w ciasnej kabinie ciężarówki ten szum i świst powietrza na pauzie w nocy jest nie do zniesienia — po prostu nie uśniesz.
+              </p>
+            </div>
+
+            <div style="background:#090915;border:1pt solid #2A2A40;padding:10pt;border-radius:3pt;">
+              <span class="tag m">4. ZAPYLENIE I WILGOĆ</span>
+              <p class="ox m" style="font-size:11.5pt;margin:4pt 0 4pt 0;">KONDENSACJA PARY WODNEJ</p>
+              <p class="dim" style="font-size:9.5pt;line-height:1.6;margin:0;">
+                W kabinie podczas deszczowej nocy, gdy w środku śpi kierowca, wilgotność powietrza sięga 80–90%. Gdy wyłączysz rozgrzany komputer, na chłodnych radiatorach skrapla się para wodna.<br>
+                Otwarty stelaż górniczy nie ma żadnej ochrony przed kurzem z dróg i wilgocią — ryzyko zwarcia na płycie głównej wzrasta dziesięciokrotnie.
+              </p>
+            </div>
+
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <!-- MODUŁ 3: GDYBYŚ KONIECZNIE CHCIAŁ (INSTRUKCJA MONTAŻU DLA UPARTYCH) -->
+    <table class="blk" style="margin-top:12pt;">
+      <tr><td class="hd hg">🛠️ 3. A GDYBYŚ SIĘ UPARŁ? // JAK TO ZROBIĆ Z GŁOWĄ W CIĘŻARÓWCE</td></tr>
+      <tr>
+        <td class="bd bg">
+          <p style="font-size:11pt;line-height:1.6;margin:0 0 10pt 0;">
+            Gdybyś z jakiegoś powodu bezwzględnie <b>musiał</b> mieć ten serwer fizycznie w ciężarówce (np. mobilne centrum operacyjne, gdzie nie ma zasięgu internetu), oto jedyny profesjonalny i bezpieczny sposób, żeby nie spalić auta i nie rozładować rozruchu:
+          </p>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:8pt;margin-bottom:12pt;">
+            <div style="background:#05050A;border:1pt solid var(--border);padding:8pt 10pt;">
+              <span class="tag g">KROK 1 // OSOBNY BANK LiFePO4</span>
+              <p style="font-size:10pt;margin:4pt 0 0 0;">
+                <b>Całkowity zakaz podłączania pod akumulatory rozruchowe ciągnika!</b> Wymagany osobny akumulator hotelowy <b>LiFePO4 24V 100Ah – 200Ah</b> (2.5 – 5 kWh). Akumulatory litowo-żelazowe znoszą rozładowanie do 90% i tysiące cykli.<br>
+                <span class="dim">Koszt: ok. 2 800 – 4 500 zł.</span>
+              </p>
+            </div>
+            <div style="background:#05050A;border:1pt solid var(--border);padding:8pt 10pt;">
+              <span class="tag c">KROK 2 // ŁADOWARKA DC-DC</span>
+              <p style="font-size:10pt;margin:4pt 0 0 0;">
+                Montaż przetwornicy ładowania DC-DC (np. <b>Victron Energy Orion-Tr Smart 24/24 30A</b>). Ładuje akumulator LiFePO4 z alternatora wyłącznie wtedy, gdy silnik pracuje i wykryje napięcie powyżej 27.6V.<br>
+                <span class="dim">Koszt: ok. 1 100 zł.</span>
+              </p>
+            </div>
+            <div style="background:#05050A;border:1pt solid var(--border);padding:8pt 10pt;">
+              <span class="tag y">KROK 3 // PRZETWORNICA CZYSTY SINUS</span>
+              <p style="font-size:10pt;margin:4pt 0 0 0;">
+                Przetwornica 24V&nbsp;→&nbsp;230V o mocy ciągłej min. <b>1500W – 2000W z pełnym, czystym sinusem</b> (np. Volt Polska Sinus Pro 2000 24V). Zwykły tani "modyfikowany sinus" upali zasilacz Corsair Platinum w 5 minut!<br>
+                <span class="dim">Koszt: ok. 950 – 1 300 zł.</span>
+              </p>
+            </div>
+            <div style="background:#05050A;border:1pt solid var(--border);padding:8pt 10pt;">
+              <span class="tag m">KROK 4 // SKRZYNIA Z AMORTYZACJĄ</span>
+              <p style="font-size:10pt;margin:4pt 0 0 0;">
+                Zamknięta skrzynia aluminiowa (np. w schowku międzyosiowym lub skrzyni narzędziowej naczepy) podwieszona na <b>wibroizolatorach gumowo-metalowych (silentblokach)</b> z metalowymi wspornikami śrubowymi pod każdą kartę RTX.<br>
+                <span class="dim">Koszt: ok. 1 200 – 1 800 zł.</span>
+              </p>
+            </div>
+          </div>
+
+          <div style="background:#090915;border:1pt solid var(--border);padding:8pt 12pt;font-size:10pt;">
+            <span class="tag r">PODSUMOWANIE KOSZTÓW PRZERÓBKI AUTA:</span> Dodatkowe <b>6 000 – 9 000 zł</b> wydane na akumulatory LiFePO4, przetwornice, kable 35mm² i montaż skrzyni z tłumieniem drgań. To więcej, niż kosztuje cała baza serwera!
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <!-- MODUŁ 4: NAJLEPSZE ROZWIĄZANIE NA ŚWIECIE (JAK TO ROBIĄ PROSI) -->
+    <table class="blk" style="margin-top:12pt;">
+      <tr><td class="hd hc">🚀 4. ROZWIĄZANIE DLA ZAWODOWCÓW // MOC SUPERKOMPUTERA W KABINIE ZA 0 ZŁ</td></tr>
+      <tr>
+        <td class="bd bc">
+          <p class="ox c" style="font-size:14pt;margin:2pt 0 6pt 0;">SERWER STOI W DOMU, A TY W TRASIE KORZYSTASZ Z NIEGO JAK Z CHATGPT</p>
+          <p style="font-size:11pt;line-height:1.65;margin:0 0 10pt 0;">
+            Seba, w XXI wieku <b>nikt nie wozi wielkiego serwera stacjonarnego w ciężarówce</b>, tak samo jak nikt nie wozi pralki ani pieca kaflowego w kabinie. Rozwiązanie, które dla Ciebie wdrażamy, jest 100 razy prostsze, bezpieczniejsze i całkowicie darmowe:
+          </p>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:12pt;margin-bottom:12pt;">
+            <div style="background:#090915;border:1pt solid var(--c);padding:10pt 12pt;border-radius:3pt;">
+              <p class="ox c" style="font-size:12.5pt;margin:0 0 6pt 0;">🏠 U CIEBIE W DOMU / W BIURZE:</p>
+              <ul style="font-size:10pt;line-height:1.65;margin:0;padding-left:14pt;">
+                <li>Serwer stoi w suchym, bezpiecznym kącie (garaż, piwnica, wolny pokój).</li>
+                <li>Podłączony do zwykłego gniazdka 230V (stabilny, tani prąd domowy).</li>
+                <li>Podłączony kablem do domowego routera ze stałym łączem / światłowodem.</li>
+                <li><b>Gdy z niego nie korzystasz:</b> przechodzi w tryb uśpienia i bierze 15W (jak lampka nocna).</li>
+                <li><b>Gdy chcesz go użyć:</b> budzi się przez internet w kilkanaście sekund (Wake-on-LAN).</li>
+                <li>Zero wibracji, idealna temperatura, zero hałasu w Twoim otoczeniu.</li>
+              </ul>
+            </div>
+
+            <div style="background:#090915;border:1pt solid var(--g);padding:10pt 12pt;border-radius:3pt;">
+              <p class="ox g" style="font-size:12.5pt;margin:0 0 6pt 0;">🚛 U CIEBIE W CIĘŻARÓWCE (W TRASIE):</p>
+              <ul style="font-size:10pt;line-height:1.65;margin:0;padding-left:14pt;">
+                <li>W kabinie masz tylko <b>swój zwykły laptop</b>, tablet na podszybiu albo smartfon.</li>
+                <li>Łączysz się z internetem przez zwykłą kartę SIM w telefonie (LTE / 5G) lub router w kabinie.</li>
+                <li>Wchodzisz na bezpieczny, prywatny adres (np. przez tunel Tailscale — skonfiguruję Ci to za darmo).</li>
+                <li>Wpisujesz pytanie, wrzucasz zlecenia spedycyjne, liczysz frachty, generujesz pisma odwoławcze od kar.</li>
+                <li><b>Obliczenia wykonują 4 karty RTX w Twoim domu</b>, a wynik w sekundę pojawia się na Twoim ekranie w kabinie!</li>
+                <li><b>Pobór prądu w kabinie:</b> tylko ładowarka do laptopa (45W z gniazda zapalniczki). Akumulatory ciężarówki są 100% bezpieczne!</li>
+              </ul>
+            </div>
+          </div>
+
+          <div style="background:#05050A;border:1pt solid var(--g);padding:10pt 12pt;border-radius:3pt;font-size:10.5pt;line-height:1.6;">
+            <b class="g ox">WERDYKT DLA CIEBIE:</b><br>
+            W ten sposób zyskujesz <b>wszystkie zalety prywatnego superkomputera</b> (177 miliardów parametrów, brak abonamentów, pełna prywatność, nielimitowane analizy prawne i tacho), nie narażając ciężarówki na awarię zasilania, nie ryzykując rozładowania akumulatorów w Niemczech i nie niszcząc cennego sprzętu wstrząsami na drodze.
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <!-- MODUŁ 5: TABELA PORÓWNAWCZA: DOM VS CIĘŻARÓWKA -->
+    <table class="blk sum" style="margin-top:12pt;margin-bottom:14pt;">
+      <tr><td colspan="3" class="hd hg">📊 PODSUMOWANIE DLA SEBY // PORÓWNANIE ROZWIĄZAŃ</td></tr>
+      <tr style="background:#090915;font-weight:bold;font-size:10pt;" class="ox">
+        <td style="padding:6pt 10pt;border:1pt solid var(--border);width:30%;">PARAMETR</td>
+        <td style="padding:6pt 10pt;border:1pt solid var(--border);width:35%;color:var(--g);">SERWER W DOMU + DOSTĘP W AUCIE (ZALECANE)</td>
+        <td style="padding:6pt 10pt;border:1pt solid var(--border);width:35%;color:var(--r);">SERWER FIZYCZNIE W CIĘŻARÓWCE</td>
+      </tr>
+      <tr>
+        <td style="background:#12121F;border:1pt solid #2A2A40;padding:6pt 10pt;font-weight:bold;">Koszt prądu na dobę</td>
+        <td style="background:#12121F;border:1pt solid #2A2A40;padding:6pt 10pt;color:var(--g);">~1 – 3 zł (tani prąd z gniazdka 230V)</td>
+        <td style="background:#12121F;border:1pt solid #2A2A40;padding:6pt 10pt;color:var(--r);">Do 117 zł / noc (jeśli silnik chodzi na pauzie)</td>
+      </tr>
+      <tr>
+        <td style="background:#12121F;border:1pt solid #2A2A40;padding:6pt 10pt;font-weight:bold;">Akumulatory rozruchowe auta</td>
+        <td style="background:#12121F;border:1pt solid #2A2A40;padding:6pt 10pt;color:var(--g);">100% bezpieczne (brak obciążenia)</td>
+        <td style="background:#12121F;border:1pt solid #2A2A40;padding:6pt 10pt;color:var(--r);">Ryzyko rozładowania do zera po 4–15h postoju</td>
+      </tr>
+      <tr>
+        <td style="background:#12121F;border:1pt solid #2A2A40;padding:6pt 10pt;font-weight:bold;">Bezpieczeństwo kart RTX 3070</td>
+        <td style="background:#12121F;border:1pt solid #2A2A40;padding:6pt 10pt;color:var(--g);">Maksymalne (brak wstrząsów, sucho i czysto)</td>
+        <td style="background:#12121F;border:1pt solid #2A2A40;padding:6pt 10pt;color:var(--r);">Wysokie ryzyko pęknięcia lutów BGA od wibracji</td>
+      </tr>
+      <tr>
+        <td style="background:#12121F;border:1pt solid #2A2A40;padding:6pt 10pt;font-weight:bold;">Temperatura i hałas w kabinie</td>
+        <td style="background:#12121F;border:1pt solid #2A2A40;padding:6pt 10pt;color:var(--g);">Cicho i chłodno (zero dodatkowego ciepła)</td>
+        <td style="background:#12121F;border:1pt solid #2A2A40;padding:6pt 10pt;color:var(--r);">Piekarnik 600W za plecami + szum 15 wentylatorów</td>
+      </tr>
+      <tr>
+        <td style="background:#12121F;border:1pt solid #2A2A40;padding:6pt 10pt;font-weight:bold;">Dodatkowe koszty instalacji</td>
+        <td style="background:#12121F;border:1pt solid #2A2A40;padding:6pt 10pt;color:var(--g);"><b>0 zł</b> (darmowy tunel VPN skonfiguruje Alex)</td>
+        <td style="background:#12121F;border:1pt solid #2A2A40;padding:6pt 10pt;color:var(--r);"><b>+6 000 – 9 000 zł</b> (LiFePO4, Victron, skrzynia)</td>
+      </tr>
+      <tr>
+        <td style="background:#12121F;border:1pt solid #2A2A40;padding:6pt 10pt;font-weight:bold;">Wygoda obsługi w trasie</td>
+        <td style="background:#12121F;border:1pt solid #2A2A40;padding:6pt 10pt;color:var(--g);">Wygodny laptop / tablet na stoliku kierowcy</td>
+        <td style="background:#12121F;border:1pt solid #2A2A40;padding:6pt 10pt;color:var(--y);">Ciężki stelaż zabierający miejsce w schowku/kabinie</td>
       </tr>
     </table>
 
