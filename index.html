@@ -717,8 +717,30 @@
 
           </div>
 
-          <div style="background:#05050A;border:1pt dashed var(--y);padding:9pt;margin-top:10pt;">
-            <b class="y">💡 PAMIĘTAJ:</b> Serwer ma pobór prądu obniżony o ~280W dzięki ograniczeniu kart do 150W. Gdy z niego nie korzystasz, przechodzi w tryb uśpienia i pobiera tyle prądu co zwykła żarówka.
+          <!-- ZARZĄDZANIE ENERGIĄ I WAKE ON LAN -->
+          <div style="background:rgba(5,5,14,0.85);border:1pt solid var(--g);padding:11pt;margin-top:12pt;border-radius:3pt;">
+            <p class="ox g" style="font-size:13pt;margin:0 0 6pt 0;">⚡ JAK DZIAŁA OSZCZĘDZANIE ENERGII I WYBUDZANIE (WAKE ON LAN)</p>
+            <p style="margin:0 0 8pt 0;font-size:10.8pt;line-height:1.6;">
+              Nie musisz się martwić o rachunki za prąd. Serwer ma pobór obniżony o ~280W i dwa inteligentne tryby oszczędzania:
+            </p>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:8pt;margin-bottom:8pt;">
+              <div style="background:#090916;border:1pt solid var(--border);padding:9pt;border-radius:2pt;">
+                <b class="c">1. Tryb Czuwania (Zawsze gotowy):</b><br>
+                <span class="dim" style="font-size:10pt;">Gdy nikt z niego nie korzysta, karty wyłączają wentylatory (0 dB ciszy) i zbijają pobór prądu. Serwer czuwa i odpowiada w ułamku sekundy, gdy tylko wejdziesz na stronę na laptopie (0 sekund czekania).</span>
+              </div>
+              <div style="background:#090916;border:1pt solid var(--border);padding:9pt;border-radius:2pt;">
+                <b class="y">2. Głęboki Sen (Pobór jak żarówka ~10W):</b><br>
+                <span class="dim" style="font-size:10pt;">W nocy lub przy dłuższym braku zapytań serwer może przejść w tryb uśpienia pamięci (S3). Karty i dyski są wyłączone, a minimalny prąd podtrzymuje jedynie pamięć RAM z załadowanym modelem.</span>
+              </div>
+            </div>
+            <div style="background:#090916;border:1pt solid var(--border);padding:9pt;border-radius:2pt;">
+              <b class="g">🚀 Jak wybudzić serwer, gdy zaśnie? (Wake on LAN):</b>
+              <ul style="margin:4pt 0 0 0;padding-left:14pt;font-size:10.2pt;line-height:1.6;">
+                <li><b>Z laptopa w domu:</b> Klikasz przygotowany skrót na pulpicie <i>„Obudź Serwer”</i> — laptop wysyła sygnał sieciowy (tzw. Magic Packet) i po 5 sekundach serwer stoi na nogach z modelem gotowym do pracy!</li>
+                <li><b>Z telefonu:</b> Jedno dotknięcie w bezpłatnej aplikacji na telefonie (np. <i>Wake On Lan</i> po domowym Wi-Fi).</li>
+                <li><b>Zdalnie poza domem:</b> Możesz użyć taniego inteligentnego gniazdka Wi-Fi (np. Tuya / Tapo za ~35 zł) — w aplikacji na telefonie klikasz włącz/wyłącz i serwer sam wstaje z dowolnego miejsca na świecie (dzięki funkcji BIOS <i>Restore AC Power Loss</i>)!</li>
+              </ul>
+            </div>
           </div>
         </td>
       </tr>

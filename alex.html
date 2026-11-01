@@ -908,8 +908,50 @@ Pozdrawiam!</p>
 <tr><td><span class="cb" data-id="b4">☐</span></td><td>Ai Tweaker → <b>Ai Overclock Tuner</b></td><td><b>Auto</b> (bez XMP)</td><td>Pamięć serwerowa ECC RDIMM pracuje stabilnie na profilu JEDEC 2400T</td></tr>
 <tr><td><span class="cb" data-id="b5">☐</span></td><td>Advanced → APM Configuration → <b>Restore AC Power Loss</b></td><td><span class="g"><b>Power On</b></span></td><td>Po zaniku prądu serwer sam automatycznie wstanie</td></tr>
 <tr><td><span class="cb" data-id="b6">☐</span></td><td>Boot → CSM (Compatibility Support Module) → <b>Launch CSM</b></td><td><span class="r"><b>Disabled</b></span></td><td>Czysty tryb UEFI wymagany przy 4 kartach RTX 3070</td></tr>
+<tr><td><span class="cb" data-id="b7">☐</span></td><td>Advanced → APM Configuration → <b>Power On By PCI-E/PCI</b></td><td><span class="g"><b>Enabled</b></span></td><td><b>Wake-on-LAN:</b> włącza wybudzanie pakietem Magic Packet przez zintegrowane karty Intel I210/I218</td></tr>
+<tr><td><span class="cb" data-id="b8">☐</span></td><td>Advanced → CPU Configuration → <b>CPU C-States &amp; EIST</b></td><td><span class="g"><b>Enabled</b></span></td><td>Zrzucanie zegara do 1.2 GHz i usypianie rdzeni C6 w stanie bezczynności (~15W CPU)</td></tr>
 </table>
 <p style="margin:0;">Na koniec naciśnij <b>F10 (Save &amp; Reset)</b> → <b>Yes</b>.</p>
+</td></tr></table>
+
+<table class="blk"><tr><td class="hd hg">⚡ // ZARZĄDZANIE ENERGIĄ, TRYB UŚPIENIA S3 I WYBUDZANIE WAKE ON LAN (WoL)</td></tr><tr><td class="bd bg">
+<p>Platforma ma zoptymalizowane zarządzanie zasilaniem na 3 poziomach:</p>
+<ul style="line-height:1.6;font-size:10.2pt;">
+  <li><b>Poziom 1 — Stan Bezczynności (Idle / Standby ~100–120W):</b> Karty RTX 3070 przechodzą w P-State P8 (~11W na kartę, 0 RPM fan stop), Xeon w stany C6. Czas reakcji na zapytanie API to <b>0 sekund</b> (brak opóźnień).</li>
+  <li><b>Poziom 2 — Uśpienie Pamięci ACPI S3 (Suspend-to-RAM ~8–15W):</b> Karty GPU, dyski i wentylatory są całkowicie odcięte od zasilania. Podtrzymywane jest jedynie minimalne napięcie na 128 GB RAM z załadowanym modelem. Pobór prądu jak pojedyncza żarówka LED. Czas wybudzenia: <b>5–7 sekund</b>.</li>
+  <li><b>Poziom 3 — Całkowite Wyłączenie (Soft-Off S5 ~2–3W):</b> Zasilacz czuwa w trybie Standby 5VSB.</li>
+</ul>
+<p class="ox y" style="margin:8pt 0 4pt 0;">PROCEDURA KONFIGURACJI WAKE ON LAN W UBUNTU:</p>
+<pre class="mono" style="background:#05050A;padding:8pt;border:1pt solid var(--border);font-size:9pt;color:var(--c);">
+# 1. Sprawdzenie nazwy interfejsu sieciowego Intel (np. enp5s0):
+ip link show
+
+# 2. Włączenie nasłuchu Magic Packet (flaga 'g'):
+sudo apt install -y ethtool
+sudo ethtool -s enp5s0 wol g
+
+# 3. Utrwalenie w usłudze systemd (aby flaga nie znikała po restarcie):
+sudo bash -c 'cat &lt;&lt;EOF &gt; /etc/systemd/system/wol.service
+[Unit]
+Description=Enable Wake-on-LAN on Intel NIC
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/sbin/ethtool -s enp5s0 wol g
+
+[Install]
+WantedBy=basic.target
+EOF'
+
+sudo systemctl daemon-reload &amp;&amp; sudo systemctl enable wol.service
+</pre>
+<p class="ox g" style="margin:8pt 0 4pt 0;">METODY WYBUDZANIA SERWERA:</p>
+<ul style="line-height:1.6;font-size:10.2pt;">
+  <li><b>Lokalnie w sieci domowej:</b> Z laptopa skryptem <code>wakeonlan &lt;MAC_ADRES&gt;</code> lub ze smartfona przez darmową apkę <i>Wake On Lan</i> po Wi-Fi.</li>
+  <li><b>Zdalnie (Smart Gniazdko Wi-Fi — Złoty Standard):</b> Podpięcie zasilacza pod gniazdko Tuya/Tapo (~35 zł). Dzięki opcji BIOS <code>Restore AC Power Loss = Power On</code>, wystarczy w aplikacji w telefonie kliknąć wyłącz/włącz gniazdko, aby serwer automatycznie wstał z dowolnego miejsca na Ziemi!</li>
+  <li><b>Zdalnie przez panel routera:</b> Wysłanie pakietu Magic Packet przez wbudowaną zakładkę Wake on LAN w routerze domowym.</li>
+</ul>
 </td></tr></table>
 
 <table class="blk"><tr><td class="hd hc">🔄 // JAK ZAKTUALIZOWAĆ BIOS BEZ PROCESORA (TYLKO JEŚLI PŁYTA MA BIOS PONIŻEJ 3002)</td></tr><tr><td class="bd bc">
