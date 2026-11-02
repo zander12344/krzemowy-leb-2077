@@ -624,7 +624,7 @@ I'm interested in the ASUS X99-E WS motherboard. Before purchasing, I have two q
 
 Thank you!</p>
 </td></tr></table>
-<p class="dim" style="margin:0;">Jak odpisze: wersja <b>3002 lub wyższa</b> (np. 3004, 3801, 4001) = idealnie, procesor ruszy od razu. Jeśli niższa lub nie wie = też OK, zaktualizujemy sami z pendrive’a przyciskiem z tyłu płyty (zakładka 04).</p>
+<p class="dim" style="margin:0;">Jak odpisze: wersja <b>3004 lub wyższa</b> (np. 3004, 3801, 4001) = idealnie, procesor ruszy od razu. Jeśli niższa lub nie wie = też OK, zaktualizujemy sami z pendrive’a przyciskiem z tyłu płyty (zakładka 04).</p>
 </td></tr></table>
 
 <!-- 02 PROCESOR -->
@@ -805,7 +805,7 @@ Pozdrawiam!</p>
 <p><span class="cb" data-id="sata" data-p="5">☐</span> &nbsp;<a href="https://allegro.pl/oferta/kabel-gembird-cc-satam-data-13045036934" target="_blank" rel="noopener">Kabel SATA 50 cm (2 szt. × 2,66 zł)</a> — <span class="y">5,32 zł</span> <span class="dim">(do połączenia dysku SSD z płytą)</span></p>
 <p><span class="cb" data-id="cr2032" data-p="12">☐</span> &nbsp;<a href="https://allegro.pl/oferta/bateria-litowa-duracell-cr2032-3v-do-pilota-zegarka-guzikowa-5szt-18876839749" target="_blank" rel="noopener">Baterie Duracell CR2032 (5 szt.)</a> — <span class="y">11,99 zł</span> <span class="dim">(nowa bateria do płyty, żeby BIOS nie gubił ustawień)</span></p>
 <p><span class="cb" data-id="lan" data-p="20">☐</span> &nbsp;<a href="https://allegro.pl/oferta/kabel-ethernet-sieciowy-internetowy-patchcord-skretka-lan-rj45-utp-cat6-10m-6855553650" target="_blank" rel="noopener">Kabel sieciowy LAN Cat.6 (10 m)</a> — <span class="y">19,90 zł</span> <span class="dim">(stabilny internet z routera do serwera)</span></p>
-<p><span class="cb" data-id="molex" data-p="4">☐</span> &nbsp;<a href="https://allegro.pl/oferta/adapter-molex-pci-express-akyga-ak-ca-13-0-15-m-17852260888" target="_blank" rel="noopener">Przejściówka 2× Molex → PCIe 6-pin (zapas)</a> — <span class="y">4,35 zł</span><br><span class="dim">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;zapasowy adapter pomocniczy PCIe 6-pin (samo gniazdo <span class="mono">EZ_PLUG_1</span> na dole płyty X99-E WS to 4-pin Molex zasilany wprost z zasilacza — <span class="r">nigdy nie mylić z 8-pin CPU!</span>)</span></p>
+<p><span class="cb" data-id="molex" data-p="4">☐</span> &nbsp;<a href="https://allegro.pl/oferta/adapter-molex-pci-express-akyga-ak-ca-13-0-15-m-17852260888" target="_blank" rel="noopener">Przejściówka 2× Molex → PCIe 6-pin (WYMAGANA)</a> — <span class="y">4,35 zł</span><br><span class="dim">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;zasila 6-pin EATX12V_1 na X99-E WS (gniazdo obok dwóch 8-pin CPU). Cztery karty zajmują wszystkie 8 wtyczek PCIe z HX1200, więc to złącze nie dostanie nic innego. <span class="r">Nigdy nie mylić z 8-pin CPU — inny pinout!</span></span></p>
 <p><span class="cb" data-id="ipa" data-p="20">☐</span> &nbsp;<a href="https://allegro.pl/oferta/alkohol-izopropylowy-izopropanol-odtluszczacz-ipa-99-9-1l-14274597288" target="_blank" rel="noopener">Alkohol izopropylowy IPA 99,9% (1 litr)</a> — <span class="y">19,99 zł</span> <span class="dim">(odtłuszczenie procesora pod nową pastę)</span></p>
 <p><span class="cb" data-id="air" data-p="9">☐</span> &nbsp;<a href="https://allegro.pl/oferta/sprezone-powietrze-400-ml-17423349480" target="_blank" rel="noopener">Sprężone powietrze 400 ml</a> — <span class="y">9,39 zł</span> <span class="dim">(wydmuchanie kurzu z radiatorów kart RTX 3070)</span></p>
 <p><span class="cb" data-id="esd" data-p="11">☐</span> &nbsp;<a href="https://allegro.pl/oferta/opaska-esd-safe-na-reke-antystatyczna-aele-004-6056599042" target="_blank" rel="noopener">Opaska antystatyczna ESD na rękę</a> — <span class="y">10,90 zł</span> <span class="dim">(ochrona płyty i kości RAM przed przeskokiem iskry z dłoni)</span></p>
@@ -942,7 +942,7 @@ Pozdrawiam!</p>
     </div>
 
     <div class="mb-spot warn" data-spot="ezplug">
-      <span>⚠️ <b>Gniazdo EZ_PLUG_1 (wspomaganie slotów PCIe)</b></span>
+      <span>⚠️ <b>6-pin EATX12V_1 (GÓRNA krawędź, nie EZ_PLUG)</b></span>
       <span class="r">4-PIN MOLEX Z PSU!</span>
     </div>
 
@@ -963,9 +963,9 @@ Pozdrawiam!</p>
   </div>
 
   <div class="mb-detail" id="mbDetail">
-    <p class="ox y" style="font-size:12pt;margin:0 0 6pt 0;" id="mbTitle">⚡ 2× Gniazda 8-pin CPU (EATX12V_1 oraz EATX12V_2)</p>
+    <p class="ox y" style="font-size:12pt;margin:0 0 6pt 0;" id="mbTitle">⚡ 2× 8-pin CPU + 6-pin PCIe (EATX12V, EATX12V1, EATX12V_1)</p>
     <div id="mbBody">
-      <p>Na górnej krawędzi płyty są <b>DWA 8-pinowe gniazda zasilania procesora</b> (<span class="mono">EATX12V_1</span> i <span class="mono">EATX12V_2</span>).</p>
+      <p>Na górnej krawędzi płyty są <b>DWA 8-pinowe gniazda zasilania procesora</b> (<span class="mono">EATX12V</span> i <span class="mono">EATX12V1</span>; tuż obok jest osobne <span class="mono">6-pin EATX12V_1</span>).</p>
       <p><span class="g">✔ CO WPIĄĆ:</span> Podłącz <b>OBA</b> gniazda dwoma kablami 8-pin opisanych na wtyczce jako <b>CPU</b> (lub EPS).</p>
       <p style="margin:0;"><span class="r">✖ ZAKAZ:</span> Nigdy nie wciskaj w te górne gniazda kabli od kart graficznych (PCIe 6+2) ani przejściówki z Molexa — mają odwrotnie ułożone +12V i masę!</p>
     </div>
@@ -983,7 +983,7 @@ Pozdrawiam!</p>
 
 <table class="blk"><tr><td class="hd hy">B // UZBROJENIE NOWEJ PŁYTY ASUS X99-E WS (NA STOLE PRZED WKŁADANIEM)</td></tr><tr><td class="bd by">
 <p><span class="cb" data-id="m6">☐</span> &nbsp;<b>1. Nowa bateria:</b> wyjmij starą pastylkę CR2032 z płyty i włóż nową Duracell CR2032 (plusem do góry).</p>
-<p><span class="cb" data-id="m7">☐</span> &nbsp;<b>2. Aktualizacja BIOS-u (tylko jeśli sprzedawca podał wersję poniżej 3002):</b> wykonujemy USB BIOS Flashback z pendrive’a przed włożeniem procesora (instrukcja w zakładce <a href="#" data-go="bios">04 BIOS</a>).</p>
+<p><span class="cb" data-id="m7">☐</span> &nbsp;<b>2. Aktualizacja BIOS-u (tylko jeśli sprzedawca podał wersję poniżej 3004):</b> wykonujemy USB BIOS Flashback z pendrive’a przed włożeniem procesora (instrukcja w zakładce <a href="#" data-go="bios">04 BIOS</a>).</p>
 <p><span class="cb" data-id="m8">☐</span> &nbsp;<b>3. Montaż procesora Xeon E5-2690 v4:</b> odepnij dwie metalowe dźwignie gniazda LGA 2011-3. Dopasuj <b>złoty trójkąt w rogu procesora</b> do trójkąta na ramce gniazda. Połóż procesor pionowo z góry (nie przesuwaj po złotych pinach!) i zamknij obie dźwignie w kolejności wytłoczonej na blaszce.</p>
 <p><span class="cb" data-id="m9">☐</span> &nbsp;<b>4. Montaż RAM 4× 32 GB:</b> włóż 4 kości w <b>4 szare sloty: A1, B1, C1, D1</b> (wskazane w instrukcji dla 4 modułów Quad-Channel). Dociśnij równomiernie, aż zatrzaski klikną.</p>
 <p><span class="cb" data-id="m10">☐</span> &nbsp;<b>5. Pasta i chłodzenie Fera 5:</b> przetrzyj wierzch procesora wacikiem z IPA. Wkręć w narożniki gniazda <b>4 gwintowane kołki M4 (LGA 2011)</b> z pudełka Fera 5. Wyciśnij na środek procesora kroplę pasty MX-4 wielkości ziarnka grochu, <b>zerwij folię ochronną ze stopy radiatora</b>, przykręć chłodzenie i podepnij wtyczkę wentylatorów do <span class="mono">CPU_FAN</span>.</p>
@@ -994,8 +994,8 @@ Pozdrawiam!</p>
 <table class="grid">
 <tr><th>Kabel / Element</th><th>Gdzie dokładnie wpiąć</th></tr>
 <tr><td><b>Szeroka wtyczka 24-pin ATX</b></td><td>Główne gniazdo zasilania na prawej krawędzi płyty</td></tr>
-<tr><td><b>2× wtyczka 8-pin CPU (EPS)</b></td><td>Oba 8-pinowe gniazda <span class="mono">EATX12V_1</span> i <span class="mono">EATX12V_2</span> na górze płyty — <b>podłącz oba!</b></td></tr>
-<tr><td><b>Wtyczka 4-pin Molex z zasilacza (ew. adapter 6-pin w zapasie)</b></td><td>Gniazdo <span class="mono">EZ_PLUG_1</span> na dolnej krawędzi płyty (wspomaga zasilanie slotów PCIe przy 4 kartach; <span class="r">nigdy nie wpinaj żadnych przejściówek w 8-pin CPU!</span>)</td></tr>
+<tr><td><b>2× wtyczka 8-pin CPU (EPS)</b></td><td>Oba 8-pinowe gniazda <span class="mono">EATX12V</span> i <span class="mono">EATX12V1</span> na górze płyty — <b>podłącz oba!</b></td></tr>
+<tr><td><b>Przejściówka 2× Molex → PCIe 6-pin (Akyga)</b></td><td>Gniazdo <span class="mono">6-pin EATX12V_1</span> na górnej krawędzi, obok dwóch 8-pin. <b>X99-E WS nie ma EZ_PLUG</b> — to gniazdo z tanich chińskich X99. Ta przejściówka jest <b>wymagana</b>: 4 karty zajmują wszystkie 8 wtyczek PCIe zasilacza, więc 6-pin nie dostanie nic innego. <span class="r">Nigdy nie wpinać tu kabla EPS!</span></td></tr>
 <tr><td><b>4× Riser taśmowy PCIe x16</b></td><td>Wepnij w sloty <b>nr 1, 3, 5 oraz 7</b> (licząc od procesora w dół). Sloty 2, 4, 6 zostają puste</td></tr>
 <tr><td><b>Zasilanie 4× RTX 3070</b></td><td>Do każdej karty podepnij <b>2× wtyczki PCIe 8-pin (6+2)</b> z zasilacza (razem 8 wtyczek)</td></tr>
 <tr><td><b>Dysk SSD 1 TB + Hub wentylatorów</b></td><td>Kabel zasilający SATA z zasilacza do dysku i do Huba; kabel danych SATA z dysku do szarego portu <span class="mono">SATA6G_1</span> na płycie</td></tr>
@@ -1074,7 +1074,7 @@ sudo systemctl daemon-reload &amp;&amp; sudo systemctl enable wol.service
 </ul>
 </td></tr></table>
 
-<table class="blk"><tr><td class="hd hc">🔄 // JAK ZAKTUALIZOWAĆ BIOS BEZ PROCESORA (TYLKO JEŚLI PŁYTA MA BIOS PONIŻEJ 3002)</td></tr><tr><td class="bd bc">
+<table class="blk"><tr><td class="hd hc">🔄 // JAK ZAKTUALIZOWAĆ BIOS BEZ PROCESORA (TYLKO JEŚLI PŁYTA MA BIOS PONIŻEJ 3004)</td></tr><tr><td class="bd bc">
 <p>Płyta ASUS X99-E WS potrafi sama wgrać nowy BIOS z pendrive’a (tzw. <b>USB BIOS Flashback</b>) — wystarczy podpiąć do niej sam zasilacz (24-pin + 8-pin CPU), nawet bez wkładania procesora i RAM-u:</p>
 <p>1. Pobierz najnowszy BIOS ze strony ASUS wsparcia dla Twojej dokładnej wersji płyty (<b>X99-E WS</b> lub <b>X99-E WS/USB 3.1</b>).</p>
 <p>2. Uruchom z paczki <span class="mono y">BIOSRenamer.exe</span> — sam nada plikowi właściwą nazwę (dla zwykłej X99-E WS to <span class="mono y">X99EWS.CAP</span>). <b>Nie zmieniaj nazwy ręcznie</b> — literówka kończy się tak, że dioda Flashback mignie 5 sekund i przejdzie w światło ciągłe, czyli błąd.</p>
@@ -1193,7 +1193,7 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
 <table class="blk"><tr><td class="hd hc">⚡ // 4 ZASADY BEZPIECZEŃSTWA SPRZĘTU</td></tr><tr><td class="bd bc">
 <p><span class="r">✖ 1.</span> Nigdy nie wpinaj ani nie wyjmuj riserów, kart i RAM-u, gdy zasilacz jest pod prądem.</p>
 <p><span class="r">✖ 2.</span> Nigdy nie mieszaj kabli modularnych od różnych zasilaczy.</p>
-<p><span class="r">✖ 3.</span> Do gniazda <span class="mono">EZ_PLUG_1</span> na dole płyty wpinamy bezpośrednio 4-pinowy wtyk Molex z zasilacza (przejściówka 2× Molex → 6-pin zostaje w zapasie) — nigdy nie wpinaj żadnych przejściówek do 8-pinowych gniazd procesora <span class="mono">EATX12V_1/2</span>.</p>
+<p><span class="r">✖ 3.</span> Do gniazda <span class="mono">6-pin EATX12V_1</span> (górna krawędź, obok dwóch 8-pin) wchodzi <b>przejściówka 2× Molex → PCIe 6-pin</b> — jest wymagana, bo wszystkie 8 wtyczek PCIe idzie do kart. Nigdy nie wpinać tam EPS ani przejściówki w 8-pinowe gniazda CPU <span class="mono">EATX12V/EATX12V1</span>.</p>
 <p style="margin:0;"><span class="r">✖ 4.</span> Płyta główna musi stać na metalowych dystansach wkręconych dokładnie w miejsca otworów na śrubki.</p>
 </td></tr></table>
 
@@ -1731,12 +1731,12 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
   // Interaktywna mapa płyty ASUS X99-E WS
   var SPOTS = {
     eatx: {
-      title: '⚡ 2× Gniazda 8-pin CPU (EATX12V_1 oraz EATX12V_2)',
-      body: '<p>Na samej górze płyty znajdują się <b>DWA 8-pinowe gniazda zasilania procesora</b> (<span class="mono">EATX12V_1</span> i <span class="mono">EATX12V_2</span>).</p><p><span class="g">✔ CO WPIĄĆ:</span> Podłącz <b>OBA gniazda</b> dwoma kablami 8-pin z zasilacza opisanymi jako <b>CPU / EPS</b>.</p><p style="margin:0;"><span class="r">✖ ZAKAZ:</span> Nigdy nie wpinaj w nie kabli od kart graficznych (PCIe 6+2) ani przejściówki z Molexa!</p>'
+      title: '⚡ 2× 8-pin CPU + 6-pin PCIe (EATX12V, EATX12V1, EATX12V_1)',
+      body: '<p>Na samej górze płyty znajdują się <b>DWA 8-pinowe gniazda zasilania procesora</b> (<span class="mono">EATX12V</span> i <span class="mono">EATX12V1</span>; tuż obok jest osobne <span class="mono">6-pin EATX12V_1</span>).</p><p><span class="g">✔ CO WPIĄĆ:</span> Podłącz <b>OBA gniazda</b> dwoma kablami 8-pin z zasilacza opisanymi jako <b>CPU / EPS</b>.</p><p style="margin:0;"><span class="r">✖ ZAKAZ:</span> Nigdy nie wpinaj w nie kabli od kart graficznych (PCIe 6+2) ani przejściówki z Molexa!</p>'
     },
     flash: {
       title: '🔄 Port i przycisk USB BIOS Flashback (tył płyty)',
-      body: '<p>Pozwala zaktualizować BIOS płyty z pendrive’a <b>nawet bez włożonego procesora i pamięci RAM</b>.</p><p style="margin:0;">Jeśli sprzedawca z eBaya napisze, że płyta ma BIOS starszy niż <b>3002</b>, wkładamy tu pendrive z plikiem <span class="mono">X99EWS.CAP</span> / <span class="mono">X99EWU31.CAP</span> i przytrzymujemy przycisk Flashback przez 3 sekundy (instrukcja w zakładce 04 BIOS).</p>'
+      body: '<p>Pozwala zaktualizować BIOS płyty z pendrive’a <b>nawet bez włożonego procesora i pamięci RAM</b>.</p><p style="margin:0;">Jeśli sprzedawca z eBaya napisze, że płyta ma BIOS starszy niż <b>3004</b>, wkładamy tu pendrive z plikiem <span class="mono">X99EWS.CAP</span> (nazwę nada BIOSRenamer.exe z paczki ASUS) i przytrzymujemy przycisk Flashback przez 3 sekundy (instrukcja w zakładce 04 BIOS).</p>'
     },
     ram1: {
       title: '🟩 4× Szare sloty RAM: A1, B1, C1, D1 (Quad-Channel)',
@@ -1755,8 +1755,8 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
       body: '<p>• <b>24-pin EATXPWR:</b> najszersza wtyczka z zasilacza.</p><p>• <b>Wyświetlacz Q-Code (2 cyfry LED):</b> pokazuje etap uruchamiania płyty. Jeśli płyta stanie na jakimś kodzie, wpisz go w zakładce <b>06 Q-CODE</b>.</p><p style="margin:0;">• <b>Przycisk MemOK!:</b> jeśli przy pierwszym starcie z nowym RAM-em płyta nie wyświetla obrazu, przytrzymaj ten przycisk przez 3 sekundy — płyta sama dobierze bezpieczne parametry pamięci.</p>'
     },
     ezplug: {
-      title: '⚠️ Gniazdo EZ_PLUG_1 (dodatkowe zasilanie slotów PCIe)',
-      body: '<p>To jest <b>4-pinowe gniazdo Molex</b> na dolnej krawędzi płyty ASUS X99-E WS, które dostarcza dodatkowy prąd +12V do slotów PCIe przy pracy 4 kart graficznych.</p><p><span class="g">✔ CO WPIĄĆ:</span> Wpinamy tu bezpośrednio <b>wtyczkę 4-pin Molex (Peripheral)</b> z wiązki zasilacza (natomiast kupiona przejściówka 2× Molex → 6-pin zostaje w zapasie). Wszystkie 8 fabrycznych wtyczek PCIe 6+2 zasilacza idzie bezpośrednio do 4 kart RTX 3070.</p><p style="margin:0;"><span class="r">✖ UWAGA:</span> Nigdy nie wpinaj żadnych przejściówek w 8-pinowe gniazda procesora (<span class="mono">EATX12V_1/2</span>) na górze płyty!</p>'
+      title: '⚠️ 6-pin EATX12V_1 (dodatkowe zasilanie slotów PCIe)',
+      body: '<p>Na górnej krawędzi ASUS X99-E WS są <b>dwa 8-pin (EATX12V, EATX12V1)</b> i obok nich osobne <b>6-pin EATX12V_1</b>. To trzecie złącze dokłada +12 V dla slotów PCIe, gdy pracują 4 karty. <b>X99-E WS nie ma EZ_PLUG</b> — to złącze z tanich chińskich X99, na tej płycie go nie ma.</p><p><span class=\"g\">✔ CO WPIĄĆ:</span> Cztery RTX 3070 zużywają wszystkie <b>8 wtyczek PCIe 6+2</b> z HX1200 (4 kable × 2 wtyczki), więc do 6-pinu wchodzi <b>przejściówka 2× Molex → PCIe 6-pin</b> — i jest <b>wymagana</b>, nie zapasowa. Alternatywa: kabel Corsair Type 4 PCIe (~35 zł), jeśli zostanie wolny port na panelu.</p><p style=\"margin:0;\"><span class=\"r\">✖ UWAGA:</span> Nigdy nie wpinać tu kabla EPS ani przejściówki w 8-pinowe gniazda procesora — inny pinout, +12 V na masę.</p>'
     },
     pcie: {
       title: '🟦 Sloty PCIe x16 nr 1, 3, 5, 7 (tu wpinamy 4 karty RTX 3070)',
@@ -1789,7 +1789,7 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
     'A0': { t: 'Kod A0 lub AA — Wszystko działa wzorowo!', d: 'Płyta przeszła test POST i przekazała sterowanie do systemu Ubuntu. Tak ma świecić podczas normalnej pracy.' },
     '53': { t: 'Kod 53 / b0 / b7 / AF — Problem z pamięcią RAM', d: 'Płyta nie wykryła poprawnie kości RAM. Wyłącz zasilacz, dociśnij mocno wszystkie 4 kości w szarych slotach A1, B1, C1, D1 (aż klikną oba zatrzaski). Jeśli nadal stoi, zostaw na próbę 1 kość w slocie A1 i wciśnij przycisk MemOK! na płycie.' },
     'd6': { t: 'Kod d6 lub 97 — Nie wykryto karty graficznej / monitora', d: '1) Sprawdź, czy taśma risera w slocie nr 1 jest wciśnięta do końca i równo.<br>2) Sprawdź, czy do karty RTX 3070 są wpięte OBIE wtyczki zasilania 8-pin (6+2).<br>3) Upewnij się, że monitor jest podłączony do karty w slocie nr 1 i włączony.' },
-    '00': { t: 'Kod 00 — Brak startu procesora / zasilania CPU', d: '1) Sprawdź, czy na górze płyty podłączone są OBA 8-pinowe kable zasilania procesora (EATX12V_1 i EATX12V_2).<br>2) Jeśli oba są wpięte, a nadal jest 00 — płyta może mieć stary BIOS (<3002) i wymaga szybkiej aktualizacji z pendrive’a przyciskiem USB BIOS Flashback (zakładka 04 BIOS).' },
+    '00': { t: 'Kod 00 — Brak startu procesora / zasilania CPU', d: '1) Sprawdź, czy na górze płyty podłączone są OBA 8-pinowe kable zasilania procesora (8-pin EATX12V i EATX12V1) + 6-pin EATX12V_1.<br>2) Jeśli oba są wpięte, a nadal jest 00 — płyta może mieć stary BIOS (<3004) i wymaga szybkiej aktualizacji z pendrive’a przyciskiem USB BIOS Flashback (zakładka 04 BIOS).' },
     'A2': { t: 'Kod A2 / 99 / AE — Oczekiwanie w BIOS-ie lub brak systemu na dysku', d: 'Płyta działa poprawnie i czeka na podjęcie akcji na ekranie (np. wciśnięcie F1/DEL po wymianie baterii CR2032 albo włożenie pendrive’a z instalatorem Ubuntu).' },
     'bd': { t: 'Kod bd / bf / b1 — Trening pamięci DDR4 ECC (poczekaj!)', d: 'Przy pierwszym włączeniu z 128 GB serwerowego RAM-u płyta testuje wszystkie 4 kanały pamięci. Może to trwać od 60 do 120 sekund — NIE WYŁĄCZAJ zasilania, po chwili przeskoczy dalej!' }
   };
