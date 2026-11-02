@@ -912,7 +912,7 @@ Pozdrawiam!</p>
     <div style="text-align:center;color:var(--c);font-weight:bold;margin-bottom:6pt;border-bottom:1pt solid var(--border);padding-bottom:4pt;">[ SCHEMAT PŁYTY: ASUS X99-E WS ]</div>
 
     <div class="mb-spot warn act" data-spot="eatx">
-      <span>⚡ <b>2× CPU 8-pin (EATX12V_1 + EATX12V_2)</b></span>
+      <span>⚡ <b>2× 8-pin (EATX12V + EATX12V1) + 6-pin (EATX12V_1)</b></span>
       <span class="y">GÓRA PŁYTY</span>
     </div>
 
@@ -1077,7 +1077,7 @@ sudo systemctl daemon-reload &amp;&amp; sudo systemctl enable wol.service
 <table class="blk"><tr><td class="hd hc">🔄 // JAK ZAKTUALIZOWAĆ BIOS BEZ PROCESORA (TYLKO JEŚLI PŁYTA MA BIOS PONIŻEJ 3002)</td></tr><tr><td class="bd bc">
 <p>Płyta ASUS X99-E WS potrafi sama wgrać nowy BIOS z pendrive’a (tzw. <b>USB BIOS Flashback</b>) — wystarczy podpiąć do niej sam zasilacz (24-pin + 8-pin CPU), nawet bez wkładania procesora i RAM-u:</p>
 <p>1. Pobierz najnowszy BIOS ze strony ASUS wsparcia dla Twojej dokładnej wersji płyty (<b>X99-E WS</b> lub <b>X99-E WS/USB 3.1</b>).</p>
-<p>2. Rozpakuj plik i zmień jego nazwę na: <span class="mono y">X99EWS.CAP</span> (dla zwykłej X99-E WS) lub <span class="mono y">X99EWU31.CAP</span> (dla wersji USB 3.1).</p>
+<p>2. Uruchom z paczki <span class="mono y">BIOSRenamer.exe</span> — sam nada plikowi właściwą nazwę (dla zwykłej X99-E WS to <span class="mono y">X99EWS.CAP</span>). <b>Nie zmieniaj nazwy ręcznie</b> — literówka kończy się tak, że dioda Flashback mignie 5 sekund i przejdzie w światło ciągłe, czyli błąd.</p>
 <p>3. Skopiuj ten plik na pendrive sformatowany jako <b>FAT32</b>.</p>
 <p>4. Przy wyłączonej płycie (zasilacz włączony na „I”) włóż pendrive do dedykowanego portu <b>BIOS Flashback USB</b> z tyłu płyty i przytrzymaj przycisk <b>BIOSirt / Flashback</b> przez 3 sekundy, aż dioda zacznie migać.</p>
 <p style="margin:0;">5. Dioda miga przez ok. 2 minuty. <b>Kiedy całkowicie zgaśnie — aktualizacja jest skończona!</b></p>
