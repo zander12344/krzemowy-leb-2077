@@ -28,3 +28,12 @@ alex.html     # Strona Alex (pełen panel techniczny, montaż, BIOS, Q-Code, Sig
 .nojekyll     # Wyłącza Jekyll na GitHub Pages
 robots.txt    # Blokada robotów indeksujących
 ```
+
+## Sync secret (v4)
+
+Otwórz stronę raz z fragmentem `#k=<długi sekret>` (min. 24 znaki), np.
+`index.html#k=...`. Fragment nie jest wysyłany do ntfy; jest zapisywany w
+localStorage. Obie strony muszą użyć tego samego sekretu. Starsze wiadomości v3
+są nadal odczytywane starym kluczem, ale nowe są szyfrowane wyłącznie sekretem
+v4. 4-cyfrowy PIN pozostaje bramką UI, nie kluczem E2EE.
+
