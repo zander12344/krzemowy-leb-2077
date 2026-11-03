@@ -1831,7 +1831,7 @@
   }
 
   function cleanUser(u){
-    if (!u) return 'Seba';
+    if (typeof u !== 'string' || !u) return 'Seba';
     return u.indexOf('Alex') !== -1 ? 'Alex' : 'Seba';
   }
 
@@ -1972,7 +1972,7 @@
   }
 
   function pollRecentSync(){
-    if (!hasSubtle()) return;
+    if (!hasSubtle() || !isVaultUnlocked()) return;
     fetch(SYNC_URL + '/json?poll=1&since=12h').then(function(r){ return r.text(); }).then(async function(txt){
       updateSyncBadge(true);
       var lines = txt.trim().split('\n');
@@ -1991,6 +1991,10 @@
 
   function connectLiveSync(){
     if (!hasSubtle()) {
+      updateSyncBadge(false);
+      return;
+    }
+    if (!isVaultUnlocked()) {
       updateSyncBadge(false);
       return;
     }
@@ -2287,15 +2291,26 @@
   // ZERO-KNOWLEDGE AUTHENTICATION & E2EE SYNC CORE (PBKDF2 + AES-GCM-256)
   // =========================================================================
   var _AUTH_TOKEN_KEY = 'krzemowy_sec_vault_token_v3';
-  var _ENC_JWK_KEY = 'krzemowy_sec_aes_jwk_v3';
   var _AUTH_SALT = 'krzemowy-leb-2077-quantum-salt-x99ews';
-  var _ENC_SALT = 'krzemowy-leb-2077-aes-gcm-sync-salt-v3';
+  // Public per-deployment salt (both pages must match). Not a secret.
+  var _ENC_SALT = 'krzemowy-leb-2077-aes-gcm-sync-salt-v4-bb4d80002dc18e85074375d11318e622';
+  var _ENC_SALT_LEGACY = 'krzemowy-leb-2077-aes-gcm-sync-salt-v3';
   var _SYNC_PASSPHRASE = atob('MjEzNw==');
   var _AUTH_ITERATIONS = 100000;
+  // 4-digit PIN hash is shipped in the page; this gate is client-side only.
   var _VAULT_SIGNATURE = '7327f449cc755bd172a66775f7cc5c7349f40dfb1f06060de234e28e64ab3ee1';
   var _FAIL_KEY = 'krzemowy_sec_fail_count';
   var _LOCK_UNTIL_KEY = 'krzemowy_sec_lock_until';
-  var _cachedAesKey = null;
+  var _LAST_FAIL_KEY = 'krzemowy_sec_last_fail';
+  var _LEGACY_JWK_KEYS = ['krzemowy_sec_aes_jwk_v3', 'krzemowy_sec_aes_jwk_alex_v3'];
+  var _syncKeyCache = { v4: null, v3: null };
+  var _pinBusy = false;
+
+  // Strona jest publiczna: _SYNC_PASSPHRASE nie jest sekretem. E2EE chroni
+  // przed ntfy.sh / pasywnym obserwatorem, nie przed czytelnikiem źródła.
+  try {
+    _LEGACY_JWK_KEYS.forEach(function(k){ localStorage.removeItem(k); });
+  } catch (e) {}
 
   function constantTimeEqual(a, b) {
     if (typeof a !== 'string' || typeof b !== 'string' || a.length !== b.length) return false;
@@ -2412,52 +2427,41 @@
     return Array.from(new Uint8Array(raw)).map(function(b){ return b.toString(16).padStart(2, '0'); }).join('');
   }
 
-  async function deriveAndCacheSyncKey(val) {
-    try {
-      if (!hasSubtle()) return;
-      var enc = new TextEncoder();
-      var keyMaterial = await crypto.subtle.importKey(
-        'raw',
-        enc.encode(val),
-        { name: 'PBKDF2' },
-        false,
-        ['deriveKey']
-      );
-      var aesKey = await crypto.subtle.deriveKey(
-        {
-          name: 'PBKDF2',
-          salt: enc.encode(_ENC_SALT),
-          iterations: _AUTH_ITERATIONS,
-          hash: 'SHA-256'
-        },
-        keyMaterial,
-        { name: 'AES-GCM', length: 256 },
-        true,
-        ['encrypt', 'decrypt']
-      );
-      _cachedAesKey = aesKey;
-      var jwk = await crypto.subtle.exportKey('jwk', aesKey);
-      localStorage.setItem(_ENC_JWK_KEY, JSON.stringify(jwk));
-    } catch (e) {}
+  async function deriveSyncKey(material, salt) {
+    if (!hasSubtle()) return null;
+    var enc = new TextEncoder();
+    var keyMaterial = await crypto.subtle.importKey(
+      'raw',
+      enc.encode(material),
+      { name: 'PBKDF2' },
+      false,
+      ['deriveKey']
+    );
+    return crypto.subtle.deriveKey(
+      {
+        name: 'PBKDF2',
+        salt: enc.encode(salt),
+        iterations: _AUTH_ITERATIONS,
+        hash: 'SHA-256'
+      },
+      keyMaterial,
+      { name: 'AES-GCM', length: 256 },
+      false,
+      ['encrypt', 'decrypt']
+    );
   }
 
-  async function getSyncAesKey() {
-    if (_cachedAesKey) return _cachedAesKey;
+  async function getSyncAesKey(version) {
+    if (!isVaultUnlocked()) return null;
+    var v = version === 'v3' ? 'v3' : 'v4';
+    if (_syncKeyCache[v]) return _syncKeyCache[v];
     if (!hasSubtle()) return null;
     try {
-      var rawJwk = localStorage.getItem(_ENC_JWK_KEY);
-      if (rawJwk) {
-        _cachedAesKey = await crypto.subtle.importKey(
-          'jwk',
-          JSON.parse(rawJwk),
-          { name: 'AES-GCM', length: 256 },
-          false,
-          ['encrypt', 'decrypt']
-        );
-        return _cachedAesKey;
-      }
-      await deriveAndCacheSyncKey(_SYNC_PASSPHRASE);
-      return _cachedAesKey;
+      _syncKeyCache[v] = await deriveSyncKey(
+        _SYNC_PASSPHRASE,
+        v === 'v3' ? _ENC_SALT_LEGACY : _ENC_SALT
+      );
+      return _syncKeyCache[v];
     } catch (e) {
       return null;
     }
@@ -2479,7 +2483,7 @@
   async function encryptSyncPayload(stateObj) {
     var plain = JSON.stringify(stateObj);
     try {
-      var key = await getSyncAesKey();
+      var key = await getSyncAesKey('v4');
       if (!key) return null;
       var iv = crypto.getRandomValues(new Uint8Array(12));
       var ctBuf = await crypto.subtle.encrypt(
@@ -2488,11 +2492,10 @@
         new TextEncoder().encode(plain)
       );
       return JSON.stringify({
-        v: 3,
+        v: 4,
         e2e: true,
         iv: bytesToB64(iv),
-        ct: bytesToB64(new Uint8Array(ctBuf)),
-        updatedAt: stateObj.updatedAt
+        ct: bytesToB64(new Uint8Array(ctBuf))
       });
     } catch (e) {
       return null;
@@ -2501,20 +2504,28 @@
 
   async function decryptSyncPayload(obj) {
     if (!obj || typeof obj !== 'object') return null;
-    if (obj.checks) return obj;
-    if (obj.e2e && obj.iv && obj.ct) {
+    if (obj.e2e !== true || typeof obj.iv !== 'string' || typeof obj.ct !== 'string') return null;
+    var iv, ct;
+    try {
+      iv = b64ToBytes(obj.iv);
+      ct = b64ToBytes(obj.ct);
+    } catch (e) {
+      return null;
+    }
+    if (iv.length !== 12 || ct.length < 16) return null;
+    var order = Number(obj.v) >= 4 ? ['v4', 'v3'] : ['v3', 'v4'];
+    for (var i = 0; i < order.length; i++) {
+      var key = await getSyncAesKey(order[i]);
+      if (!key) continue;
       try {
-        var key = await getSyncAesKey();
-        if (!key) return null;
         var ptBuf = await crypto.subtle.decrypt(
-          { name: 'AES-GCM', iv: b64ToBytes(obj.iv) },
+          { name: 'AES-GCM', iv: iv },
           key,
-          b64ToBytes(obj.ct)
+          ct
         );
-        return JSON.parse(new TextDecoder().decode(ptBuf));
-      } catch (e) {
-        return null;
-      }
+        var parsed = JSON.parse(new TextDecoder().decode(ptBuf));
+        if (parsed && typeof parsed === 'object') return parsed;
+      } catch (e) {}
     }
     return null;
   }
@@ -2549,11 +2560,16 @@
 
   function recordFailedAttempt() {
     try {
-      var fails = (Number(localStorage.getItem(_FAIL_KEY)) || 0) + 1;
+      var now = Date.now();
+      var last = Number(localStorage.getItem(_LAST_FAIL_KEY)) || 0;
+      var fails = Number(localStorage.getItem(_FAIL_KEY)) || 0;
+      if (now - last > 24 * 60 * 60 * 1000) fails = 0;
+      fails += 1;
       localStorage.setItem(_FAIL_KEY, fails);
+      localStorage.setItem(_LAST_FAIL_KEY, now);
       if (fails >= 3) {
-        var lockSec = fails >= 10 ? 900 : (fails >= 5 ? 120 : 30);
-        localStorage.setItem(_LOCK_UNTIL_KEY, Date.now() + (lockSec * 1000));
+        var lockSec = Math.min(30 * Math.pow(2, fails - 3), 900);
+        localStorage.setItem(_LOCK_UNTIL_KEY, now + (lockSec * 1000));
         checkLockout();
       }
     } catch(e) {}
@@ -2563,6 +2579,7 @@
     try {
       localStorage.removeItem(_FAIL_KEY);
       localStorage.removeItem(_LOCK_UNTIL_KEY);
+      localStorage.removeItem(_LAST_FAIL_KEY);
     } catch(e) {}
   }
 
@@ -2668,6 +2685,7 @@
   });
 
   async function checkPin(val){
+    if (_pinBusy) return;
     if (checkLockout()) return;
     var err = document.getElementById('pinError');
     if (!val || val.length !== 4) {
@@ -2700,45 +2718,78 @@
       return;
     }
 
-    if (!hasSubtle() && err) {
-      err.textContent = '⏳ WERYFIKACJA PBKDF2-SHA256 (100 000 iteracji)...';
-      err.style.color = 'var(--c)';
-      err.style.display = 'block';
-      await new Promise(function(res){ setTimeout(res, 30); });
-    }
-    var sig = await deriveVaultSignature(val);
-    if (constantTimeEqual(sig, _VAULT_SIGNATURE)) {
-      resetFailedAttempts();
-      if (err) { err.textContent = ''; err.style.display = 'none'; }
-      try { localStorage.setItem(_AUTH_TOKEN_KEY, sig); } catch (e) {}
-      await deriveAndCacheSyncKey(_SYNC_PASSPHRASE);
-      unlockPage();
-      if (typeof CyberAudio !== 'undefined' && CyberAudio.unlock) CyberAudio.unlock();
-      showToast('DOSTĘP PRZYZNANY 🔓');
-      pollRecentSync();
-    } else {
-      recordFailedAttempt();
-      if (typeof CyberAudio !== 'undefined' && CyberAudio.error) CyberAudio.error();
-      if (err) {
-        var fails = Math.min(Number(localStorage.getItem(_FAIL_KEY)) || 1, 3);
-        err.textContent = '⚠ BŁĘDNY KOD (' + fails + '/3) :: ODMOWA DOSTĘPU';
-        err.style.color = 'var(--r)';
-        err.style.display = 'block';
+    _pinBusy = true;
+    var pinEl = document.getElementById('pinInput');
+    if (pinEl) pinEl.disabled = true;
+    try {
+      // Progressive UI delay after failures. Offline brute force is still
+      // bounded only by PBKDF2 and the 4-digit keyspace.
+      var priorFails = 0;
+      try { priorFails = Number(localStorage.getItem(_FAIL_KEY)) || 0; } catch (e) {}
+      if (priorFails > 0) {
+        await new Promise(function(res){ setTimeout(res, Math.min(300 * priorFails, 1500)); });
       }
-      var inp = document.getElementById('pinInput');
-      if (inp) {
-        inp.value = '';
-        inp.style.borderColor = 'var(--r)';
-        setTimeout(function(){ inp.style.borderColor = ''; if (!checkLockout()) inp.focus(); }, 600);
+
+      if (!hasSubtle() && err) {
+        err.textContent = '⏳ WERYFIKACJA PBKDF2-SHA256 (100 000 iteracji)...';
+        err.style.color = 'var(--c)';
+        err.style.display = 'block';
+        await new Promise(function(res){ setTimeout(res, 30); });
+      }
+      var sig;
+      try {
+        sig = await deriveVaultSignature(val);
+      } catch (e) {
+        if (err) {
+          err.textContent = '⚠ BŁĄD WERYFIKACJI KRYPTOGRAFICZNEJ';
+          err.style.color = 'var(--r)';
+          err.style.display = 'block';
+        }
+        return;
+      }
+      if (constantTimeEqual(sig, _VAULT_SIGNATURE)) {
+        resetFailedAttempts();
+        if (err) { err.textContent = ''; err.style.display = 'none'; }
+        try { localStorage.setItem(_AUTH_TOKEN_KEY, sig); } catch (e) {}
+        await getSyncAesKey('v4');
+        unlockPage();
+        if (typeof CyberAudio !== 'undefined' && CyberAudio.unlock) CyberAudio.unlock();
+        showToast('DOSTĘP PRZYZNANY 🔓');
+        connectLiveSync();
+      } else {
+        recordFailedAttempt();
+        if (typeof CyberAudio !== 'undefined' && CyberAudio.error) CyberAudio.error();
+        if (err) {
+          var fails = Math.min(Number(localStorage.getItem(_FAIL_KEY)) || 1, 3);
+          err.textContent = '⚠ BŁĘDNY KOD (' + fails + '/3) :: ODMOWA DOSTĘPU';
+          err.style.color = 'var(--r)';
+          err.style.display = 'block';
+        }
+        if (pinEl) {
+          pinEl.value = '';
+          pinEl.style.borderColor = 'var(--r)';
+          setTimeout(function(){ pinEl.style.borderColor = ''; if (!checkLockout()) pinEl.focus(); }, 600);
+        }
+      }
+    } finally {
+      _pinBusy = false;
+      if (pinEl) {
+        if (checkLockout()) {
+          pinEl.disabled = true;
+        } else {
+          pinEl.disabled = false;
+          if (!isVaultUnlocked()) pinEl.focus();
+        }
       }
     }
   }
 
   window.lockTerminal = function(){
-    _cachedAesKey = null;
+    _syncKeyCache = { v4: null, v3: null };
+    if (activeEs) { try { activeEs.close(); } catch (e) {} activeEs = null; }
     try {
       localStorage.removeItem(_AUTH_TOKEN_KEY);
-      localStorage.removeItem(_ENC_JWK_KEY);
+      _LEGACY_JWK_KEYS.forEach(function(k){ localStorage.removeItem(k); });
     } catch(e){}
     lockPage();
   };
