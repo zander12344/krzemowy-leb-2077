@@ -1901,6 +1901,7 @@
     render();
     clearTimeout(pushTimer);
     pushTimer = setTimeout(async function(){
+      if (!ensureSyncSecret()) { updateSyncBadge(false); return; }
       var bodyStr = await encryptSyncPayload(state);
       if (!bodyStr) { updateSyncBadge(false); return; }
       fetch(SYNC_URL, {
@@ -1995,6 +1996,10 @@
       return;
     }
     if (!isVaultUnlocked()) {
+      updateSyncBadge(false);
+      return;
+    }
+    if (!ensureSyncSecret()) {
       updateSyncBadge(false);
       return;
     }
@@ -2295,7 +2300,12 @@
   // Public per-deployment salt (both pages must match). Not a secret.
   var _ENC_SALT = 'krzemowy-leb-2077-aes-gcm-sync-salt-v4-bb4d80002dc18e85074375d11318e622';
   var _ENC_SALT_LEGACY = 'krzemowy-leb-2077-aes-gcm-sync-salt-v3';
-  var _SYNC_PASSPHRASE = atob('MjEzNw==');
+  // v3 legacy: only to decrypt old messages. v4 requires a real secret.
+  var _SYNC_PASSPHRASE_LEGACY = atob('MjEzNw==');
+  var _SYNC_SECRET_KEY = 'krzemowy_sync_secret_v4';
+  var _SYNC_SECRET_MIN = 24;
+  var _SYNC_SECRET = '';
+  var _SYNC_SECRET_PROMPTED = false;
   var _AUTH_ITERATIONS = 100000;
   // 4-digit PIN hash is shipped in the page; this gate is client-side only.
   var _VAULT_SIGNATURE = '7327f449cc755bd172a66775f7cc5c7349f40dfb1f06060de234e28e64ab3ee1';
@@ -2306,8 +2316,68 @@
   var _syncKeyCache = { v4: null, v3: null };
   var _pinBusy = false;
 
-  // Strona jest publiczna: _SYNC_PASSPHRASE nie jest sekretem. E2EE chroni
-  // przed ntfy.sh / pasywnym obserwatorem, nie przed czytelnikiem źródła.
+  function _readSyncSecretFromHash() {
+    try {
+      var m = (location.hash || '').match(/(?:^#|&)k=([^&]+)/);
+      return m ? decodeURIComponent(m[1]).trim() : '';
+    } catch (e) { return ''; }
+  }
+
+  function _initSyncSecret() {
+    var fromHash = _readSyncSecretFromHash();
+    if (fromHash) {
+      try { localStorage.setItem(_SYNC_SECRET_KEY, fromHash); } catch (e) {}
+      try {
+        history.replaceState(null, '', location.pathname + location.search);
+      } catch (e) {}
+      return fromHash;
+    }
+    try { return (localStorage.getItem(_SYNC_SECRET_KEY) || '').trim(); } catch (e) { return ''; }
+  }
+
+  _SYNC_SECRET = _initSyncSecret();
+
+  function _syncSecretReady() {
+    return typeof _SYNC_SECRET === 'string' && _SYNC_SECRET.length >= _SYNC_SECRET_MIN;
+  }
+
+  function _syncLink(secret) {
+    return location.origin + location.pathname + '#k=' + encodeURIComponent(secret);
+  }
+
+  function ensureSyncSecret() {
+    if (_syncSecretReady()) return true;
+    if (_SYNC_SECRET_PROMPTED) return false;
+    _SYNC_SECRET_PROMPTED = true;
+    var entered = window.prompt(
+      'Wspolny klucz sync (min. ' + _SYNC_SECRET_MIN + ' znakow). ' +
+      'Ten sam na obu stronach; nie jest wysylany do ntfy.'
+    );
+    if (!entered) return false;
+    var clean = String(entered).trim();
+    if (clean.length < _SYNC_SECRET_MIN) {
+      window.alert('Klucz jest za krotki (minimum ' + _SYNC_SECRET_MIN + ' znakow).');
+      return false;
+    }
+    _SYNC_SECRET = clean;
+    try { localStorage.setItem(_SYNC_SECRET_KEY, clean); } catch (e) {}
+    _syncKeyCache.v4 = null;
+    window.alert('Link dla drugiej osoby:\n' + _syncLink(clean));
+    return true;
+  }
+
+  window.setSyncSecret = function(value) {
+    var clean = String(value || '').trim();
+    if (clean.length < _SYNC_SECRET_MIN) return false;
+    _SYNC_SECRET = clean;
+    try { localStorage.setItem(_SYNC_SECRET_KEY, clean); } catch (e) {}
+    _syncKeyCache.v4 = null;
+    return _syncLink(clean);
+  };
+
+  // E2EE v4: key material is a long shared secret supplied via #k=...
+  // (URL fragment, never sent to ntfy) or localStorage. The old 4-digit
+  // passphrase is legacy-decrypt only; new messages require the secret.
   try {
     _LEGACY_JWK_KEYS.forEach(function(k){ localStorage.removeItem(k); });
   } catch (e) {}
@@ -2456,9 +2526,10 @@
     var v = version === 'v3' ? 'v3' : 'v4';
     if (_syncKeyCache[v]) return _syncKeyCache[v];
     if (!hasSubtle()) return null;
+    if (v === 'v4' && !_syncSecretReady()) return null;
     try {
       _syncKeyCache[v] = await deriveSyncKey(
-        _SYNC_PASSPHRASE,
+        v === 'v3' ? _SYNC_PASSPHRASE_LEGACY : _SYNC_SECRET,
         v === 'v3' ? _ENC_SALT_LEGACY : _ENC_SALT
       );
       return _syncKeyCache[v];
