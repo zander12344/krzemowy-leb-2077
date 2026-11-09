@@ -16,6 +16,9 @@
     --bg: #04050b;
     --panel: rgba(13, 14, 28, 0.78);
     --panel2: rgba(9, 10, 20, 0.88);
+    /* Prawie nieprzezroczysty wariant panelu — używany na przewijanych powierzchniach
+       zamiast backdrop-filter (czytelność ta sama, brak kosztownego rozmywania tła). */
+    --panel-solid: rgba(11, 12, 23, 0.97);
     --border: rgba(0, 240, 255, 0.28);
     --border-glow: rgba(0, 240, 255, 0.65);
     --c: #00f0ff;
@@ -71,8 +74,7 @@
   /* Bloki informacyjne w stylu Glassmorphism */
   table.blk {
     width: 100%; border-collapse: collapse; margin: 0 0 13pt 0;
-    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-    background: var(--panel);
+    background: var(--panel-solid);
     box-shadow: 0 10px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.06);
     border-radius: 4px; overflow: hidden;
   }
@@ -81,7 +83,7 @@
     font-weight: bold; color: #05050A; letter-spacing: .4pt;
     vertical-align: middle;
   }
-  td.bd { background: var(--panel); padding: 11pt; }
+  td.bd { background: transparent; padding: 11pt; }
   .hc { background: var(--c); border: 1pt solid var(--c); } .bc { border: 1pt solid var(--c); }
   .hm { background: var(--m); border: 1pt solid var(--m); } .bm { border: 1pt solid var(--m); }
   .hy { background: var(--y); border: 1pt solid var(--y); } .by { border: 1pt solid var(--y); }
@@ -97,8 +99,7 @@
   /* Pasek nawigacji i live sync */
   .bar {
     position: sticky; top: 0; z-index: 15;
-    background: rgba(8, 8, 16, 0.88);
-    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    background: rgba(8, 8, 16, 0.97);
     padding: 6pt 0 8pt 0; border-bottom: 1.5pt solid var(--c);
     margin-bottom: 12pt; box-shadow: 0 6px 25px rgba(0,0,0,0.7);
   }
@@ -155,7 +156,7 @@
   /* KPI Boxy */
   .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8pt; margin: 8pt 0 10pt 0; }
   .kpi {
-    background: var(--panel); backdrop-filter: blur(14px);
+    background: var(--panel-solid);
     border: 1pt solid var(--border); padding: 8pt 10pt; border-radius: 3pt;
     position: relative; overflow: hidden;
     transition: transform .2s ease-out, border-color .2s;
@@ -164,7 +165,7 @@
   .kpi .val { font-family: 'JetBrains Mono', monospace; font-size: 15.5pt; font-weight: bold; margin-top: 2pt; }
 
   .calc-box {
-    background: rgba(7, 7, 16, 0.85); backdrop-filter: blur(10px);
+    background: rgba(7, 7, 16, 0.97);
     border: 1pt solid var(--y); padding: 9pt; margin-top: 8pt; border-radius: 3pt;
   }
   .calc-row {
@@ -198,10 +199,10 @@
   .cb.done { color: var(--g); text-shadow: 0 0 8px var(--g); }
 
   .item-card {
-    background: var(--panel); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    background: var(--panel-solid);
     border: 1pt solid var(--border); padding: 10pt 12pt; margin-bottom: 9pt;
     border-left: 3.5pt solid var(--c); border-radius: 3pt;
-    position: relative; overflow: hidden; transform-style: preserve-3d;
+    position: relative; overflow: hidden;
     transition: transform .15s ease-out, border-color .2s, box-shadow .2s;
   }
   .item-card.got { border-left-color: var(--g); opacity: .88; }
@@ -402,6 +403,15 @@
   }
   .pin-pad button:hover { background: #1B1B30; border-color: var(--c); color: var(--c); box-shadow: 0 0 10px rgba(0,240,255,0.25); }
   .pin-pad button:active { background: var(--c); color: #000; }
+
+  /* ---- OGRANICZONE ANIMACJE (prefers-reduced-motion) ---- */
+  @media (prefers-reduced-motion: reduce) {
+    .sync-dot.live { animation: none; }
+    .pane.show { animation: none; }
+    .prog i { transition: none; }
+    .item-card, .kpi { transition: border-color .2s; }
+    .item-card::after { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -420,7 +430,7 @@
     <div class="lock-tag">// KRZEMOWY ŁEB 2077 :: TERMINAL OCHRONNY</div>
     <svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/><line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/></svg>
     <div class="ox c" style="font-size:15pt;margin-bottom:4pt;">DOSTĘP ZASTRZEŻONY</div>
-    <p class="dim" style="font-size:10pt;margin-bottom:12pt;">Wpisz 4-cyfrowy kod PIN, aby odblokować panel:</p>
+    <p class="dim" style="font-size:10pt;margin-bottom:12pt;">Wpisz 4-cyfrowy PIN (pierwsze użycie ustawia go lokalnie):</p>
     
     <div>
       <input type="password" id="pinInput" class="pin-input" maxlength="4" placeholder="••••" autofocus inputmode="numeric">
@@ -1860,24 +1870,23 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
   // ZERO-KNOWLEDGE AUTHENTICATION & E2EE SYNC CORE (PBKDF2 + AES-GCM-256)
   // =========================================================================
   var _AUTH_TOKEN_KEY = 'krzemowy_sec_vault_token_alex_v4';
+  var _PIN_HASH_KEY = 'krzemowy_pin_hash_v4_alex';
   var _AUTH_SALT = 'krzemowy-leb-2077-quantum-salt-x99ews';
   // Public per-deployment salt (both pages must match). Not a secret.
   var _ENC_SALT = 'krzemowy-leb-2077-aes-gcm-sync-salt-v4-bb4d80002dc18e85074375d11318e622';
-  var _ENC_SALT_LEGACY = 'krzemowy-leb-2077-aes-gcm-sync-salt-v3';
-  // v3 legacy: only to decrypt old messages. v4 requires a real secret.
-  var _SYNC_PASSPHRASE_LEGACY = atob('MjEzNw==');
   var _SYNC_SECRET_KEY = 'krzemowy_sync_secret_v4';
   var _SYNC_SECRET_MIN = 24;
   var _SYNC_SECRET = '';
   var _SYNC_SECRET_PROMPTED = false;
   var _AUTH_ITERATIONS = 100000;
-  // 4-digit PIN hash is shipped in the page; this gate is client-side only.
-  var _VAULT_SIGNATURE = '013195503135a64ed366adaacc0872e00e8dd3759b1dce7fe9084e98f84c2b7c';
+  // PIN hash is created locally on first unlock; never shipped in the repo.
+  var _VAULT_SIGNATURE = '';
+  try { _VAULT_SIGNATURE = localStorage.getItem(_PIN_HASH_KEY) || ''; } catch (e) {}
   var _FAIL_KEY = 'krzemowy_sec_fail_count_alex';
   var _LOCK_UNTIL_KEY = 'krzemowy_sec_lock_until_alex';
   var _LAST_FAIL_KEY = 'krzemowy_sec_last_fail_alex';
   var _LEGACY_JWK_KEYS = ['krzemowy_sec_aes_jwk_v3', 'krzemowy_sec_aes_jwk_alex_v3'];
-  var _syncKeyCache = { v4: null, v3: null };
+  var _syncKeyCache = { v4: null };
   var _pinBusy = false;
 
   function _readSyncSecretFromHash() {
@@ -1940,8 +1949,7 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
   };
 
   // E2EE v4: key material is a long shared secret supplied via #k=...
-  // (URL fragment, never sent to ntfy) or localStorage. The old 4-digit
-  // passphrase is legacy-decrypt only; new messages require the secret.
+  // (URL fragment, never sent to ntfy) or localStorage.
   try {
     _LEGACY_JWK_KEYS.forEach(function(k){ localStorage.removeItem(k); });
   } catch (e) {}
@@ -1956,6 +1964,7 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
   }
 
   function isVaultUnlocked() {
+    if (!_VAULT_SIGNATURE) return false;
     try {
       return constantTimeEqual(localStorage.getItem(_AUTH_TOKEN_KEY) || '', _VAULT_SIGNATURE);
     } catch (e) {
@@ -2085,18 +2094,14 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
     );
   }
 
-  async function getSyncAesKey(version) {
+  async function getSyncAesKey() {
     if (!isVaultUnlocked()) return null;
-    var v = version === 'v3' ? 'v3' : 'v4';
-    if (_syncKeyCache[v]) return _syncKeyCache[v];
+    if (_syncKeyCache.v4) return _syncKeyCache.v4;
     if (!hasSubtle()) return null;
-    if (v === 'v4' && !_syncSecretReady()) return null;
+    if (!_syncSecretReady()) return null;
     try {
-      _syncKeyCache[v] = await deriveSyncKey(
-        v === 'v3' ? _SYNC_PASSPHRASE_LEGACY : _SYNC_SECRET,
-        v === 'v3' ? _ENC_SALT_LEGACY : _ENC_SALT
-      );
-      return _syncKeyCache[v];
+      _syncKeyCache.v4 = await deriveSyncKey(_SYNC_SECRET, _ENC_SALT);
+      return _syncKeyCache.v4;
     } catch (e) {
       return null;
     }
@@ -2118,7 +2123,7 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
   async function encryptSyncPayload(stateObj) {
     var plain = JSON.stringify(stateObj);
     try {
-      var key = await getSyncAesKey('v4');
+      var key = await getSyncAesKey();
       if (!key) return null;
       var iv = crypto.getRandomValues(new Uint8Array(12));
       var ctBuf = await crypto.subtle.encrypt(
@@ -2148,20 +2153,18 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
       return null;
     }
     if (iv.length !== 12 || ct.length < 16) return null;
-    var order = Number(obj.v) >= 4 ? ['v4', 'v3'] : ['v3', 'v4'];
-    for (var i = 0; i < order.length; i++) {
-      var key = await getSyncAesKey(order[i]);
-      if (!key) continue;
-      try {
-        var ptBuf = await crypto.subtle.decrypt(
-          { name: 'AES-GCM', iv: iv },
-          key,
-          ct
-        );
-        var parsed = JSON.parse(new TextDecoder().decode(ptBuf));
-        if (parsed && typeof parsed === 'object') return parsed;
-      } catch (e) {}
-    }
+    if (Number(obj.v) !== 4) return null;
+    var key = await getSyncAesKey();
+    if (!key) return null;
+    try {
+      var ptBuf = await crypto.subtle.decrypt(
+        { name: 'AES-GCM', iv: iv },
+        key,
+        ct
+      );
+      var parsed = JSON.parse(new TextDecoder().decode(ptBuf));
+      if (parsed && typeof parsed === 'object') return parsed;
+    } catch (e) {}
     return null;
   }
 
@@ -2380,14 +2383,19 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
         }
         return;
       }
+      var firstPin = !_VAULT_SIGNATURE;
+      if (firstPin) {
+        _VAULT_SIGNATURE = sig;
+        try { localStorage.setItem(_PIN_HASH_KEY, sig); } catch (e) {}
+      }
       if (constantTimeEqual(sig, _VAULT_SIGNATURE)) {
         resetFailedAttempts();
         if (err) { err.textContent = ''; err.style.display = 'none'; }
         try { localStorage.setItem(_AUTH_TOKEN_KEY, sig); } catch (e) {}
-        await getSyncAesKey('v4');
+        await getSyncAesKey();
         unlockPage();
         if (typeof CyberAudio !== 'undefined' && CyberAudio.unlock) CyberAudio.unlock();
-        showToast('DOSTĘP PRZYZNANY 🔓');
+        showToast(firstPin ? 'PIN USTAWIONY LOKALNIE 🔐' : 'DOSTĘP PRZYZNANY 🔓');
         connectLiveSync();
       } else {
         recordFailedAttempt();
@@ -2418,7 +2426,7 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
   }
 
   window.lockTerminal = function(){
-    _syncKeyCache = { v4: null, v3: null };
+    _syncKeyCache = { v4: null };
     if (activeEs) { try { activeEs.close(); } catch (e) {} activeEs = null; }
     try {
       localStorage.removeItem(_AUTH_TOKEN_KEY);
@@ -2473,26 +2481,41 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
 <script>
 
   // --- COSMIC STARFIELD & NEBULA CANVAS ---
+  // Wydajność: 30 fps, brak shadowBlur, brak save/restore na gwiazdę,
+  // rysowanie wstrzymane podczas aktywnego przewijania i przy ukrytej karcie.
   (function initSpace(){
     var canvas = document.getElementById('spaceCanvas');
     if (!canvas) return;
     var ctx = canvas.getContext('2d');
     var width, height;
     var mouse = { x: -1000, y: -1000 };
-    var STAR_COUNT = 130;
+    var STAR_COUNT = 78;
     var stars = [];
+    var mqMotion = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+    var mqHover = window.matchMedia ? window.matchMedia('(hover: hover) and (pointer: fine)') : null;
+    var reduced = !!(mqMotion && mqMotion.matches);
+    var finePointer = !!(mqHover && mqHover.matches);
+    var FRAME_MS = 33;          // ~30 fps
+    var SCROLL_PAUSE_MS = 160;  // pauza rysowania w trakcie scrolla
+    var lastDraw = 0;
+    var pausedUntil = 0;
+    var rafId = null;
+    var running = false;
 
     function resize(){
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
+      if (reduced && stars.length) render(false);
     }
     window.addEventListener('resize', resize);
     resize();
 
-    window.addEventListener('mousemove', function(e){
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
-    });
+    if (finePointer) {
+      window.addEventListener('mousemove', function(e){
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+      }, { passive: true });
+    }
 
     var COLORS = ['#00F0FF', '#FF2BD6', '#FCEE0A', '#FFFFFF', '#8B5CF6'];
 
@@ -2521,112 +2544,188 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
       };
     }
     setInterval(function(){
-      if (!meteor && Math.random() > 0.35) spawnMeteor();
+      if (!reduced && !document.hidden && !meteor && Math.random() > 0.35) spawnMeteor();
     }, 4500);
 
-    function animate(){
-      if (document.hidden) {
-        requestAnimationFrame(animate);
-        return;
-      }
+    function render(advance, step){
+      var stepScale = step || 1;
       ctx.clearRect(0, 0, width, height);
 
-      // Connecting constellation lines (squared-distance prefilter avoids 8000+ Math.hypot calls/frame)
+      // Linie konstelacji — krótszy promień (65 px) i tańsze kryterium odległości
       for (var i = 0; i < stars.length; i++) {
+        var a = stars[i];
         for (var j = i + 1; j < stars.length; j++) {
-          var dx = stars[i].x - stars[j].x;
-          var dy = stars[i].y - stars[j].y;
+          var b = stars[j];
+          var dx = a.x - b.x;
+          var dy = a.y - b.y;
           var d2 = dx * dx + dy * dy;
-          if (d2 < 6400) {
+          if (d2 < 4225) {
             var dist = Math.sqrt(d2);
-            ctx.strokeStyle = 'rgba(0, 240, 255, ' + (0.12 * (1 - dist / 80)) + ')';
+            ctx.strokeStyle = 'rgba(0, 240, 255, ' + (0.12 * (1 - dist / 65)).toFixed(3) + ')';
             ctx.lineWidth = 0.5;
             ctx.beginPath();
-            ctx.moveTo(stars[i].x, stars[i].y);
-            ctx.lineTo(stars[j].x, stars[j].y);
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
             ctx.stroke();
           }
         }
-        var mdx = stars[i].x - mouse.x;
-        var mdy = stars[i].y - mouse.y;
-        var md2 = mdx * mdx + mdy * mdy;
-        if (md2 < 10000) {
-          var mdist = Math.sqrt(md2);
-          ctx.strokeStyle = 'rgba(255, 43, 214, ' + (0.3 * (1 - mdist / 100)) + ')';
-          ctx.lineWidth = 0.8;
-          ctx.beginPath();
-          ctx.moveTo(stars[i].x, stars[i].y);
-          ctx.lineTo(mouse.x, mouse.y);
-          ctx.stroke();
+        if (finePointer && advance) {
+          var mdx = a.x - mouse.x;
+          var mdy = a.y - mouse.y;
+          var md2 = mdx * mdx + mdy * mdy;
+          if (md2 < 10000) {
+            var mdist = Math.sqrt(md2);
+            ctx.strokeStyle = 'rgba(255, 43, 214, ' + (0.3 * (1 - mdist / 100)).toFixed(3) + ')';
+            ctx.lineWidth = 0.8;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(mouse.x, mouse.y);
+            ctx.stroke();
+          }
         }
       }
 
-      // Stars
-      for (var k = 0; k < stars.length; k++) {
-        var s = stars[k];
-        s.x += s.vx;
-        s.y += s.vy;
-        if (s.x < 0) s.x = width;
-        if (s.x > width) s.x = 0;
-        if (s.y < 0) s.y = height;
-        if (s.y > height) s.y = 0;
+      // Gwiazdy — bez save/restore i bez shadowBlur
+      for (var si = 0; si < stars.length; si++) {
+        var s = stars[si];
+        if (advance) {
+          s.x += s.vx * stepScale;
+          s.y += s.vy * stepScale;
+          if (s.x < 0) s.x = width;
+          if (s.x > width) s.x = 0;
+          if (s.y < 0) s.y = height;
+          if (s.y > height) s.y = 0;
 
-        s.alpha += s.alphaSpeed;
-        if (s.alpha > 0.95 || s.alpha < 0.2) s.alphaSpeed = -s.alphaSpeed;
-
-        ctx.save();
+          s.alpha += s.alphaSpeed * stepScale;
+          if (s.alpha > 0.95 || s.alpha < 0.2) s.alphaSpeed = -s.alphaSpeed;
+        }
         ctx.globalAlpha = Math.max(0.1, s.alpha);
         ctx.fillStyle = s.color;
-        if (s.size > 1.2) {
-          ctx.shadowBlur = 6;
-          ctx.shadowColor = s.color;
-        }
         ctx.beginPath();
-        ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+        ctx.arc(s.x, s.y, s.size, 0, 6.2832);
         ctx.fill();
-        ctx.restore();
       }
+      ctx.globalAlpha = 1;
 
       // Meteor
-      if (meteor) {
-        ctx.save();
+      if (advance && meteor) {
         ctx.strokeStyle = 'rgba(255, 255, 255, ' + meteor.opacity + ')';
         ctx.lineWidth = 1.6;
         ctx.beginPath();
         ctx.moveTo(meteor.x, meteor.y);
         ctx.lineTo(meteor.x - Math.cos(meteor.angle) * meteor.length, meteor.y - Math.sin(meteor.angle) * meteor.length);
         ctx.stroke();
-        ctx.restore();
 
         meteor.x += Math.cos(meteor.angle) * meteor.speed;
         meteor.y += Math.sin(meteor.angle) * meteor.speed;
         meteor.opacity -= 0.02;
         if (meteor.opacity <= 0 || meteor.x > width || meteor.y > height) meteor = null;
       }
-
-      requestAnimationFrame(animate);
     }
-    animate();
+
+    function loop(ts){
+      rafId = null;
+      if (document.hidden) { running = false; return; }
+      if (ts < pausedUntil || ts - lastDraw < FRAME_MS) {
+        rafId = requestAnimationFrame(loop);
+        return;
+      }
+      var dt = lastDraw ? (ts - lastDraw) : 16.7;
+      lastDraw = ts;
+      render(true, Math.min(dt / 16.7, 3));
+      rafId = requestAnimationFrame(loop);
+    }
+
+    function start(){
+      if (reduced || running) return;
+      running = true;
+      lastDraw = 0;
+      rafId = requestAnimationFrame(loop);
+    }
+
+    // Płynny scroll: chowamy rysowanie na czas przewijania
+    window.addEventListener('scroll', function(){
+      var now = (window.performance && performance.now) ? performance.now() : Date.now();
+      pausedUntil = now + SCROLL_PAUSE_MS;
+    }, { passive: true });
+
+    document.addEventListener('visibilitychange', function(){
+      if (document.hidden) {
+        running = false;
+        if (rafId) cancelAnimationFrame(rafId);
+        rafId = null;
+      } else {
+        start();
+      }
+    });
+
+    if (mqMotion && mqMotion.addEventListener) {
+      mqMotion.addEventListener('change', function(e){
+        reduced = e.matches;
+        if (reduced) {
+          running = false;
+          if (rafId) cancelAnimationFrame(rafId);
+          rafId = null;
+          render(false);
+        } else {
+          start();
+        }
+      });
+    }
+
+    if (reduced) render(false);
+    else start();
   })();
 
   // --- 3D TILT EFFECT & SPECULAR SHINE ---
+  // Tylko dla myszki (hover + precyzyjny wskaźnik) i tylko bez prefers-reduced-motion.
   (function initTilt(){
+    if (!window.matchMedia) return;
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
     function attachTilt(el){
-      el.addEventListener('mousemove', function(e){
+      var pending = null;
+      var ticking = false;
+      var active = false;
+
+      function apply(){
+        ticking = false;
+        if (!pending || !active) return;
+        var px = pending.x;
+        var py = pending.y;
+        pending = null;
         var rect = el.getBoundingClientRect();
-        var x = e.clientX - rect.left;
-        var y = e.clientY - rect.top;
+        var x = px - rect.left;
+        var y = py - rect.top;
         var centerX = rect.width / 2;
         var centerY = rect.height / 2;
+        if (!centerX || !centerY) return;
         var rotateX = ((y - centerY) / centerY) * -4.5;
         var rotateY = ((x - centerX) / centerX) * 4.5;
         el.style.transform = 'perspective(900px) rotateX(' + rotateX.toFixed(2) + 'deg) rotateY(' + rotateY.toFixed(2) + 'deg) scale3d(1.008, 1.008, 1.008)';
         el.style.setProperty('--shine-x', x + 'px');
         el.style.setProperty('--shine-y', y + 'px');
-      });
+      }
+
+      el.addEventListener('mouseenter', function(){
+        active = true;
+      }, { passive: true });
+
+      el.addEventListener('mousemove', function(e){
+        active = true;
+        pending = { x: e.clientX, y: e.clientY };
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(apply);
+        }
+      }, { passive: true });
+
       el.addEventListener('mouseleave', function(){
+        active = false;
+        pending = null;
         el.style.transform = '';
-      });
+      }, { passive: true });
     }
     document.querySelectorAll('.item-card, .laptop-card, .kpi').forEach(attachTilt);
   })();

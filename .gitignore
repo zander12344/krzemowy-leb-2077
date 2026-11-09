@@ -1,0 +1,9 @@
+# Sekrety i dane lokalne — nigdy nie trafiają do publicznego repo
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*.pfx
+*.kdbx
+secrets/

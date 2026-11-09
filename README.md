@@ -31,9 +31,10 @@ robots.txt    # Blokada robotów indeksujących
 
 ## Sync secret (v4)
 
-Otwórz stronę raz z fragmentem `#k=<długi sekret>` (min. 24 znaki), np.
-`index.html#k=...`. Fragment nie jest wysyłany do ntfy; jest zapisywany w
-localStorage. Obie strony muszą użyć tego samego sekretu. Starsze wiadomości v3
-są nadal odczytywane starym kluczem, ale nowe są szyfrowane wyłącznie sekretem
-v4. 4-cyfrowy PIN pozostaje bramką UI, nie kluczem E2EE.
+Repozytorium nie zawiera żadnego klucza E2EE. Otwórz stronę raz z fragmentem
+`#k=<długi sekret>` (min. 24 znaki), np. `index.html#k=...`. Fragment nie jest
+wysyłany do ntfy; jest zapisywany wyłącznie w localStorage przeglądarki. Obie
+strony muszą użyć tego samego sekretu. 4-cyfrowy PIN jest ustawiany lokalnie
+przy pierwszym odblokowaniu i nigdy nie trafia do repo; to bramka UI, nie klucz
+E2EE.
 
