@@ -560,6 +560,7 @@
       </div>
       <div style="font-size:9.5pt;" class="ox">
         <span class="dim">UŻYTKOWNIK:</span> <span class="c">SEBA</span>
+      <button id="syncLinkBtn" class="st-btn" onclick="copySyncLink()" style="background:#090914;color:var(--dim);border-color:var(--border);padding:2pt 6pt;font-size:8.5pt;" title="Kopiuj link sync dla drugiej osoby">🔗 LINK SYNC</button>
       <button id="soundToggle" class="sound-btn on" title="Efekty dźwiękowe">🔊 DŹWIĘK: WŁ</button>
       <button onclick="lockTerminal()" class="st-btn" style="background:#090914;color:var(--dim);border-color:var(--border);padding:2pt 6pt;font-size:8.5pt;" title="Zablokuj stronę">🔒 ZABLOKUJ</button>
       </div>
@@ -2314,7 +2315,6 @@
   var _SYNC_SECRET_KEY = 'krzemowy_sync_secret_v4';
   var _SYNC_SECRET_MIN = 24;
   var _SYNC_SECRET = '';
-  var _SYNC_SECRET_PROMPTED = false;
   var _AUTH_ITERATIONS = 100000;
   // PIN hash is created locally on first unlock; never shipped in the repo.
   var _VAULT_SIGNATURE = '';
@@ -2355,24 +2355,24 @@
     return location.origin + location.pathname + '#k=' + encodeURIComponent(secret);
   }
 
+  function _newSyncSecret() {
+    var bytes = new Uint8Array(32);
+    if (window.crypto && window.crypto.getRandomValues) {
+      window.crypto.getRandomValues(bytes);
+    } else {
+      for (var i = 0; i < bytes.length; i++) bytes[i] = Math.floor(Math.random() * 256);
+    }
+    var raw = '';
+    for (var j = 0; j < bytes.length; j++) raw += String.fromCharCode(bytes[j]);
+    return btoa(raw).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  }
+
+  // Klucz jest tworzony lokalnie przy pierwszym syncu; nie ma prompta.
   function ensureSyncSecret() {
     if (_syncSecretReady()) return true;
-    if (_SYNC_SECRET_PROMPTED) return false;
-    _SYNC_SECRET_PROMPTED = true;
-    var entered = window.prompt(
-      'Wspolny klucz sync (min. ' + _SYNC_SECRET_MIN + ' znakow). ' +
-      'Ten sam na obu stronach; nie jest wysylany do ntfy.'
-    );
-    if (!entered) return false;
-    var clean = String(entered).trim();
-    if (clean.length < _SYNC_SECRET_MIN) {
-      window.alert('Klucz jest za krotki (minimum ' + _SYNC_SECRET_MIN + ' znakow).');
-      return false;
-    }
-    _SYNC_SECRET = clean;
-    try { localStorage.setItem(_SYNC_SECRET_KEY, clean); } catch (e) {}
+    _SYNC_SECRET = _newSyncSecret();
+    try { localStorage.setItem(_SYNC_SECRET_KEY, _SYNC_SECRET); } catch (e) {}
     _syncKeyCache.v4 = null;
-    window.alert('Link dla drugiej osoby:\n' + _syncLink(clean));
     return true;
   }
 
@@ -2383,6 +2383,36 @@
     try { localStorage.setItem(_SYNC_SECRET_KEY, clean); } catch (e) {}
     _syncKeyCache.v4 = null;
     return _syncLink(clean);
+  };
+
+  window.copySyncLink = function() {
+    ensureSyncSecret();
+    var link = _syncLink(_SYNC_SECRET);
+
+    function fallback() {
+      var ta = document.createElement('textarea');
+      ta.value = link;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast('LINK SYNC SKOPIOWANY ✔');
+      } catch (e) {
+        window.prompt('Skopiuj link sync:', link);
+      }
+      document.body.removeChild(ta);
+    }
+
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(link).then(
+        function(){ showToast('LINK SYNC SKOPIOWANY ✔'); },
+        fallback
+      );
+    } else {
+      fallback();
+    }
   };
 
   // E2EE v4: key material is a long shared secret supplied via #k=...

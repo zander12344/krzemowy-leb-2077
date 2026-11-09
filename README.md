@@ -31,10 +31,10 @@ robots.txt    # Blokada robotów indeksujących
 
 ## Sync secret (v4)
 
-Repozytorium nie zawiera żadnego klucza E2EE. Otwórz stronę raz z fragmentem
-`#k=<długi sekret>` (min. 24 znaki), np. `index.html#k=...`. Fragment nie jest
-wysyłany do ntfy; jest zapisywany wyłącznie w localStorage przeglądarki. Obie
-strony muszą użyć tego samego sekretu. 4-cyfrowy PIN jest ustawiany lokalnie
-przy pierwszym odblokowaniu i nigdy nie trafia do repo; to bramka UI, nie klucz
-E2EE.
+Repozytorium nie zawiera żadnego klucza E2EE. Przy pierwszym syncu przeglądarka
+generuje losowy sekret (32 bajty) i zapisuje go wyłącznie w localStorage — nie
+ma prompta o klucz. Na drugim urządzeniu kliknij `🔗 LINK SYNC` i otwórz
+skopiowany link `#k=...`; fragment nie jest wysyłany do ntfy. Obie strony muszą
+użyć tego samego sekretu. 4-cyfrowy PIN jest ustawiany lokalnie przy pierwszym
+odblokowaniu i nigdy nie trafia do repo; to bramka UI, nie klucz E2EE.
 
