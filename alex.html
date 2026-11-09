@@ -527,22 +527,22 @@
 <div class="kpi-grid">
   <div class="kpi">
     <div class="kpi-label">Koszt części łącznie</div>
-    <div class="val y" id="kpiTotal">4 864 zł</div>
+    <div class="val y" id="kpiTotal">5 048 zł</div>
     <div class="dim" id="kpiSub">pełny zestaw z zasilaczem</div>
   </div>
   <div class="kpi">
     <div class="kpi-label">Już kupione (odhaczone)</div>
     <div class="val g" id="kpiSpent">0 zł</div>
-    <div class="dim" id="kpiCount">0 z 9 pozycji</div>
+    <div class="dim" id="kpiCount">0 z 8 pozycji</div>
   </div>
   <div class="kpi">
     <div class="kpi-label">Zostało do wydania</div>
-    <div class="val c" id="kpiLeft">4 864 zł</div>
+    <div class="val c" id="kpiLeft">5 048 zł</div>
     <div class="dim">reszta listy zakupowej</div>
   </div>
   <div class="kpi">
     <div class="kpi-label">Po sprzedaży starej bazy</div>
-    <div class="val m" id="kpiNet">4 514 zł</div>
+    <div class="val m" id="kpiNet">4 698 zł</div>
     <div class="dim">odzysk z Biostar + CPU + RAM (~350 zł)</div>
   </div>
 </div>
@@ -551,11 +551,11 @@
   <p class="ox y" style="margin:0 0 4pt 0;font-size:10.5pt;">⚙ PRZEŁĄCZNIKI OSZCZĘDNOŚCI (kliknij, aby przeliczyć budżet dla nas obu):</p>
   <div class="calc-row">
     <label><input type="checkbox" id="cPsu"> <b>Nasz zasilacz z koparki pasuje</b> (ma min. 1000 W i 8 wtyczek PCIe 6+2) — nie kupujemy Corsaira</label>
-    <span class="mono g">− 399 zł</span>
+    <span class="mono g">− 699 zł</span>
   </div>
   <div class="calc-row">
-    <label><input type="checkbox" id="cSsd"> <b>Dysk SSD 1 TB z koparki zostaje</b> (sprawny 2,5" SATA z DRAM) — nie kupujemy nowego</label>
-    <span class="mono g">− 429 zł</span>
+    <label><input type="checkbox" id="cSsd" checked disabled> <b>Dysk 1 TB już mamy</b> (2,5" SATA) — nie kupujemy nowego</label>
+    <span class="mono g">0 zł (dysk już jest)</span>
   </div>
   <div class="calc-row">
     <label><input type="checkbox" id="cSellRig"> <b>Sprzedajemy starą płytę i procesor z koparki</b> (odzysk po złożeniu nowego serwera)</label>
@@ -564,9 +564,8 @@
   <div class="calc-row">
     <span><b>Cena za 128 GB RAM</b> (rynek OLX sprawdzony 3.11 — Allegro i eBay.de są 50–90% droższe):</span>
     <div>
-      <button class="ram-btn" data-ram="1750">1 750 zł (Wyszków — 4× 32 GB, najtaniej)</button>
-      <button class="ram-btn" data-ram="1800">1 800 zł (Rzeszów — cena z 7.10)</button>
-      <button class="ram-btn" data-ram="2000">2 000 zł (Kaski — 2× komplet nowych, Memtest PASS)</button>
+      <button class="ram-btn on" data-ram="2000">2 000 zł (Kaski — 2× nowy komplet 2400, wysyłka)</button>
+      <button class="ram-btn" data-ram="1920">1 920 zł (Warszawa — 4× Hynix 2400, odbiór; sprawdź dostępność)</button>
     </div>
   </div>
   <div class="calc-row">
@@ -574,7 +573,7 @@
     <span class="mono y">+ 229 zł</span>
   </div>
   <div class="calc-row">
-    <label><input type="checkbox" id="cWifi"> Dodaj opcjonalną <b>kartę Wi-Fi 6 Intel AX210</b> (tylko jeśli nie dociągniemy kabla LAN)</label>
+    <label><input type="checkbox" id="cWifi"> Dodaj opcjonalną <b>kartę Wi-Fi 6 Intel AX210</b> (slot 2/4/6 obniża GPU do x8; do pełnego x16 użyj USB Wi-Fi)</label>
     <span class="mono y">+ 125 zł</span>
   </div>
 </div>
@@ -651,7 +650,7 @@ Thank you!</p>
 </div>
 <p><span class="dim">CO TO:</span> serwerowy procesor <b>20 rdzeni / 40 wątków</b> (135 W, 50 MB L3). Zostawiamy 2 rdzenie na kolejki CUDA, PCIe i Tailscale, a <b>18 rdzeni liczy chybienia ekspertów MoE</b> — w Strata 0.2.10 to właśnie moc AVX2 jest wąskim gardłem, nie pasmo RAM. Na metalowej pokrywie musi mieć wygrawerowany kod <b>SR2JW</b>.<br>
 <span class="r">✖ NIE KUPUJ</span>, jeśli na procesorze lub w opisie jest napis „ES”, „QS” albo „Intel Confidential” (to niestabilne próbki testowe).</p>
-<p style="margin-top:8pt;"><span class="tag g">[ KUP TEN ]</span><br><a href="https://allegro.pl/oferta/intel-xeon-e5-2698-v4-20-core-40-ht-2-2-3-6-ghz-sr2jw-pasta-18785457393" target="_blank" rel="noopener">▶ Allegro — Intel Xeon E5-2698 v4 SR2JW, 20C/40T, 50 MB, 135 W — 262,00 zł (+7,99 zł dostawa), pasta w zestawie</a><br><span class="dim">Sprzedawca adbit_pl · używany · 7 szt. sprzedanych · Allegro Ochrona Kupujących</span></p>
+<p style="margin-top:8pt;"><span class="tag g">[ KUP TEN ]</span><br><a href="https://allegro.pl/oferta/intel-xeon-e5-2698-v4-20-core-40-ht-2-2-3-6-ghz-sr2jw-pasta-18785457393" target="_blank" rel="noopener">▶ Allegro — Intel Xeon E5-2698 v4 SR2JW, 20C/40T, 50 MB, 135 W — 262,00 zł (+7,99 zł dostawa), pasta w zestawie</a><br><span class="dim">Sprzedawca adbit_pl · używany · 7 szt. sprzedanych · Allegro Ochrona Kupujących.</span><br><span class="ox">AliExpress: 182–243 zł, ale 0–204 zamówień i brak lokalnej gwarancji. 262 zł to najlepszy kompromis.</span></p>
 <p style="margin-top:6pt;"><span class="tag dim">[ ZAPAS 1 ]</span><br><a href="https://allegro.pl/oferta/intel-xeon-18c-e5-2697-v4-2-30-ghz-45m-145w-sr2jv-18795442727" target="_blank" rel="noopener" style="font-weight:normal;">▶ Allegro — Xeon E5-2697 v4 SR2JV, 18C/36T, 45 MB — 240,47 zł (+15 zł dostawa)</a></p>
 <p style="margin-top:4pt;"><span class="tag dim">[ ZAPAS 2 — budżet ]</span><br><a href="https://allegro.pl/oferta/intel-xeon-14c-e5-2690-v4-2-60-ghz-35m-135w-sr2n2-18795441982" target="_blank" rel="noopener" style="font-weight:normal;">▶ Allegro — Xeon E5-2690 v4 SR2N2, 14C/28T — 147,60 zł</a></p>
 <table class="msg"><tr><td>
@@ -668,8 +667,8 @@ Pozdrawiam!</p>
 </td></tr></table>
 
 <!-- 03 RAM -->
-<table class="blk"><tr><td class="hd hy">03 // PAMIĘĆ RAM 128 GB (4× 32 GB ECC RDIMM 2Rx4) &nbsp;—&nbsp; <span id="ramHdrPrice">1 750 – 2 000 zł</span></td></tr><tr><td class="bd by">
-<p><span class="cb" data-id="ram" data-p="1750" id="ramCb">☐</span> &nbsp;<b>KUPIONE (komplet 4 sztuk = 128 GB)</b></p>
+<table class="blk"><tr><td class="hd hy">03 // PAMIĘĆ RAM 128 GB (4× 32 GB ECC RDIMM 2Rx4) &nbsp;—&nbsp; <span id="ramHdrPrice">2 000 zł</span></td></tr><tr><td class="bd by">
+<p><span class="cb" data-id="ram" data-p="2000" id="ramCb">☐</span> &nbsp;<b>KUPIONE (komplet 4 sztuk = 128 GB)</b></p>
 <div class="st-bar ui" data-item="ram">
   <span class="mono dim" style="font-size:9pt;">STATUS:</span>
   <button class="st-btn s-todo" data-st="todo">Do kupienia</button>
@@ -681,30 +680,28 @@ Pozdrawiam!</p>
 <p><span class="dim">CO TO:</span> pamięć robocza, w której siedzą eksperci modelu AI 177B. Potrzebujemy 4 identycznych kości po 32 GB od jednego sprzedawcy (tryb 4-kanałowy Quad-Channel).</p>
 <p>Na naklejce kości muszą być <b>DWA oznaczenia</b>: <b>„2Rx4”</b> oraz litera <b>„R”</b> na końcu kodu (np. <span class="mono">PC4-2400T-R</span>).<br>
 <span class="r">✖ NIE KUPUJ</span>, jeśli kod kończy się na „-L” (`LRDIMM`) albo ma „4Rx4”.</p>
-<p style="margin-top:8pt;"><span class="tag g">[ KUP TEN KOMPLET — 1 750 zł ]</span><br><a href="https://www.olx.pl/d/oferta/ddr4-ecc-32-gb-4-kosci-128gb-CID99-ID1cWNZ2.html" target="_blank" rel="noopener">▶ OLX Wyszków — 4× SK hynix HMA84GR7MFR4N-UH, 32GB 2Rx4 PC4-2400T-RB1-11 — 1 750 zł (437,50 zł/kość)</a><br><span class="dim">Sprzedawca kulesza.jakub (5,0/5, 4 oceny, na OLX od 2021). Zdjęcie w ogłoszeniu <b>potwierdza</b>: 4 moduły 2Rx4 PC4-2400T-R, układ rejestru widoczny na laminacie. To <b>lot mieszany</b> — 3 kości Cisco-OEM (Korea, rev AC, 2016) + 1 China (rev AA, 2017).</span></p>
-<p style="margin-top:6pt;"><span class="tag dim">[ OPCJA „BEZPIECZNA" — 2 000 zł ]</span><br><a href="https://www.olx.pl/d/oferta/pamiec-ram-serwerowa-2x32gb-ddr4-ecc-registered-rdimm-2400mhz-samsung-CID99-ID1cVaNF.html" target="_blank" rel="noopener" style="font-weight:normal;">▶ OLX Kaski — 2× komplet 2× 32 GB Samsung DDR4-2400 ECC RDIMM, NOWE — 2 × 1 000 zł</a><br><span class="dim">Sprzedawca dołączył zrzut z <b>Memtest86+ PASS</b> na dwuprocesorowym X99 (Machinist X99 MD8, Xeon E5-2680 v4 ×2, 255 GB, przebieg 4 h 18 min, 0 błędów). Najmocniejszy dowód jakości, jaki można dostać na rynku wtórnym. Dwa komplety = 4 kości z jednej partii.</span></p>
-<p style="margin-top:6pt;"><span class="y ox">₿ CZEGO NIE BRAĆ:</span> Rzeszów (4× 32 GB za 1 800 zł) ma ogłoszenie z 7 października, a <b>ten sam sprzedawca podniósł</b> cenę drugiego ogłoszenia (8× 32 GB) z 3 200 zł na <b>3 500 zł</b> — +9,4% w miesiąc. Stara cena 1 800 zł przy kontakcie prawdopodobnie już nie obowiązuje.</p>
-<p style="margin-top:4pt;"><span class="r ox">✖ NIE KUPUJ NA ALLEGRO ANI NA EBAY.DE:</span> pojedyncza kość 32 GB PC4-2400T RDIMM to tam <b>649–849 zł</b> (2 600–3 400 zł za 128 GB), a na eBay.de od sprzedawców z UE <b>€120–150</b> (528–660 zł/szt.), przy czym większość to 2Rx8 albo LRDIMM. Realny rynek na tę kość to dziś OLX: <b>437–500 zł/szt.</b></p>
+<p style="margin-top:8pt;"><span class="tag g">[ KUP TEN KOMPLET — 2 000 zł ]</span><br><a href="https://www.olx.pl/d/oferta/pamiec-ram-serwerowa-2x32gb-ddr4-ecc-registered-rdimm-2400mhz-samsung-CID99-ID1cVaNF.html" target="_blank" rel="noopener">▶ OLX Kaski — 2× komplet 2× 32 GB Samsung DDR4-2400 ECC RDIMM, NOWE — 2 × 1 000 zł</a><br><span class="dim">Dwa komplety = 4 kości. Przed zakupem potwierdź na naklejce <b>2Rx4</b> i czy oba komplety są z jednej partii. Sprzedawca nie ma jeszcze ocen; płać przez Przesyłkę OLX.</span></p>
+<p style="margin-top:6pt;"><span class="tag dim">[ OPCJA TANIA — 1 920 zł ]</span><br><a href="https://www.olx.pl/d/oferta/pamiec-ram-32gb-ddr4-sk-hynix-2rx4-pc4-2400t-rb1-11-hma84gr7mfr4n-uh-td-aa-ecc-serwerowa-mam-6-sztuk-CID99-ID1dalB4.html" target="_blank" rel="noopener" style="font-weight:normal;">▶ OLX Warszawa — 4× SK hynix HMA84GR7MFR4N-UH, 32GB 2Rx4 PC4-2400T-RB1-11 — 480 zł/szt. (1 920 zł)</a><br><span class="dim">Odbiór osobisty Mokotów, 6 szt. na stanie; 4 były zarezerwowane 09.11 do 17:30 — potwierdź dostępność przed jazdą.</span></p>
+<p style="margin-top:6pt;"><span class="y ox">₿ RYNEK:</span> 32 GB 2400 RDIMM to dziś <b>480–580 zł/szt.</b> na OLX; 1 750 zł za 4 kości już nie występuje. Najtaniej dostępne 4×32 GB to 1 920 zł (Hynix, odbiór) albo 2 000 zł za nowe Samsungi z wysyłką.</p>
+<p style="margin-top:4pt;"><span class="r ox">✖ NIE KUPUJ NA ALLEGRO ANI NA EBAY.DE:</span> pojedyncza kość 32 GB 2400 RDIMM to tam <b>490–650 zł</b> (1 960–2 600 zł za 128 GB); na eBay.de <b>528–660 zł/szt.</b> i często 2Rx8/LRDIMM. OLX 480–580 zł/szt. jest nadal najtańszy.</p>
 <table class="msg"><tr><td>
-<div class="mh"><span>&gt;_ WIADOMOŚĆ DO SPRZEDAWCY (OLX Wyszków)</span> <button class="cp ui">KOPIUJ WIADOMOŚĆ</button></div>
+<div class="mh"><span>&gt;_ WIADOMOŚĆ DO SPRZEDAWCY (OLX Kaski)</span> <button class="cp ui">KOPIUJ WIADOMOŚĆ</button></div>
 <p class="mt">Dzień dobry,
 
-Chciałbym kupić komplet 4 kości 32 GB z Pana ogłoszenia (128 GB).
+Chcę kupić 2 komplety po 2×32 GB (razem 4 kości, 128 GB) z Pana ogłoszenia.
 
-Przed zakupem chciałbym potwierdzić:
-1. Czy wszystkie 4 moduły to ECC Registered RDIMM, dokładnie PC4-2400T-R, organizacja 2Rx4? Mogę prosić o zdjęcie naklejki z pełnym P/N?
-2. Widzę na zdjęciu, że trzy kości są brandowane Cisco (HMA84GR7MFR4N-UH, rev AC, 2016), a czwarta to ten sam P/N ale rev AA z 2017. Czy wszystkie cztery pracowały razem w jednej maszynie i przechodziły test pamięci (np. Memtest86+) bez błędów?
-3. Czy sprzedaje Pan je jako komplet 4 sztuk, czy pojedynczo? Czy cena 1 750 zł za wszystkie cztery jest aktualna?
-
-Jeśli tak, poproszę ofertę z Przesyłką OLX — opłacam od razu po potwierdzeniu.
+Przed zakupem proszę o potwierdzenie:
+1. Czy moduły to ECC Registered RDIMM PC4-2400T-R i organizacja 2Rx4? Poproszę zdjęcie naklejki z pełnym P/N.
+2. Czy dwa komplety są z jednej partii i czy wszystkie 4 kości przechodziły test pamięci (np. Memtest86+) bez błędów?
+3. Czy cena 2 000 zł za 4 kości i wysyłka przez Przesyłkę OLX są aktualne?
 
 Pozdrawiam!</p>
 </td></tr></table>
 </td></tr></table>
 
 <!-- 04 DYSK -->
-<table class="blk" id="blkSsd"><tr><td class="hd hc">04 // DYSK SSD 1 TB 2,5" SATA (z DRAM) &nbsp;—&nbsp; 429 zł</td></tr><tr><td class="bd bc">
-<p><span class="cb" data-id="ssd" data-p="429">☐</span> &nbsp;<b>KUPIONE</b> <span class="dim" id="ssdSkipBadge"></span></p>
+<table class="blk" id="blkSsd"><tr><td class="hd hc">04 // DYSK SSD 1 TB 2,5" SATA — MASZ, 0 zł</td></tr><tr><td class="bd bc">
+<p><span class="cb" data-id="ssd" data-p="0">☐</span> &nbsp;<b>MAMY 1 TB</b> <span class="dim" id="ssdSkipBadge"></span></p>
 <div class="st-bar ui" data-item="ssd">
   <span class="mono dim" style="font-size:9pt;">STATUS:</span>
   <button class="st-btn s-todo" data-st="todo">Do kupienia</button>
@@ -713,24 +710,9 @@ Pozdrawiam!</p>
   <button class="st-btn s-got" data-st="got">Kupione ✔</button>
   <input type="text" class="note-in" data-note="ssd" placeholder="Notatka (np. zdrowie dysku z CrystalDiskInfo)...">
 </div>
-<p><span class="dim">CO TO:</span> dysk na system Ubuntu i pliki modelu AI (~85,5 GB). Wpinamy go zwykłym kablem SATA, żeby nie zabierał linii PCIe kartom graficznym.</p>
-<p style="margin-top:8pt;"><span class="tag g">[ KUP TEN ]</span><br><a href="https://www.olx.pl/d/oferta/dysk-ssd-1tb-2-5-sata-sandisk-ultra-3d-sdssdh31000g-dram-stan-95-gwarancja-faktura-vat-marza-CID99-ID1cRAY0.html" target="_blank" rel="noopener">▶ OLX — SanDisk Ultra 3D 1 TB, 2,5" SATA (z DRAM), stan 95%, gwarancja i faktura, Przesyłka OLX — 429 zł</a></p>
-<p style="margin-top:6pt;"><span class="tag dim">[ DLACZEGO NIE SAMSUNG 870 EVO ]</span><br><span class="dim">Ogłoszenie Samsunga za 300 zł zostało już sprzedane, a aktualne ceny 870 EVO 1 TB to 569–700 zł. SanDisk Ultra 3D ma kontroler z DRAM i w zupełności wystarczy na system oraz pliki modelu.</span></p>
-<p style="margin-top:6pt;"><span class="r">✖ NIE KUPUJ tanich zamienników bez DRAM:</span> Goodram CX400, Kingston A400, Crucial BX500, Crucial E100, PNY CS900. Nie kupuj też małej płytki „M.2 SATA” — musi być klasyczny dysk 2,5 cala.</p>
-<table class="msg"><tr><td>
-<div class="mh"><span>&gt;_ WIADOMOŚĆ DO SPRZEDAWCY DYSKU</span> <button class="cp ui">KOPIUJ WIADOMOŚĆ</button></div>
-<p class="mt">Dzień dobry,
-
-Jestem zainteresowany dyskiem SSD 1TB z Pana/Pani ogłoszenia. Czy możliwa jest wysyłka Przesyłką OLX?
-
-Przed zakupem proszę o zrzut ekranu z programu CrystalDiskInfo, na którym widać:
-1. Stan zdrowia dysku (Health Status).
-2. Sumę zapisów (Total Host Writes) i liczbę godzin pracy (Power On Hours).
-
-Jeśli dysk ma zdrowie powyżej 90% i 0 uszkodzonych sektorów, zamawiam od razu.
-
-Pozdrawiam!</p>
-</td></tr></table>
+<p><span class="dim">CO TO:</span> dysk na system Ubuntu i pliki modelu AI (~85,5 GB). Seba ma 1 TB 2,5" SATA — zostaje. Wpinamy go zwykłym kablem SATA, żeby nie zabierał linii PCIe kartom graficznym.</p>
+<p style="margin-top:8pt;"><span class="tag g">[ MASZ — NIE KUPUJ ]</span><br><span class="dim">Jeśli kiedyś padnie: tylko klasyczny 2,5" SATA z DRAM (np. SanDisk Ultra 3D / Samsung 870 EVO). Nie kupuj M.2 — zabiera linie PCIe.</span></p>
+<p style="margin-top:6pt;"><span class="r">✖ NIE KUPUJ tanich zamienników bez DRAM:</span> Goodram CX400, Kingston A400, Crucial BX500, Crucial E100, PNY CS900.</p>
 </td></tr></table>
 
 <!-- 05 CHŁODZENIE -->
@@ -748,8 +730,8 @@ Pozdrawiam!</p>
 </td></tr></table>
 
 <!-- 06 ZASILACZ -->
-<table class="blk" id="blkPsu"><tr><td class="hd hy">06 // ZASILACZ CORSAIR HX1200 (1200W PLATINUM) &nbsp;—&nbsp; 399 zł</td></tr><tr><td class="bd by">
-<p><span class="cb" data-id="psu" data-p="399">☐</span> &nbsp;<b>KUPIONE</b> <span class="dim" id="psuSkipBadge">(albo nie trzeba, jeśli nasz z koparki wystarczy)</span></p>
+<table class="blk" id="blkPsu"><tr><td class="hd hy">06 // ZASILACZ CORSAIR HX1200 (1200W PLATINUM) &nbsp;—&nbsp; 699 zł</td></tr><tr><td class="bd by">
+<p><span class="cb" data-id="psu" data-p="699">☐</span> &nbsp;<b>KUPIONE</b> <span class="dim" id="psuSkipBadge">(albo nie trzeba, jeśli nasz z koparki wystarczy)</span></p>
 <div class="st-bar ui" data-item="psu">
   <span class="mono dim" style="font-size:9pt;">STATUS:</span>
   <button class="st-btn s-todo" data-st="todo">Wstrzymane — sprawdzamy nasz z koparki</button>
@@ -758,9 +740,9 @@ Pozdrawiam!</p>
   <button class="st-btn s-got" data-st="got">Kupione / Mamy swój ✔</button>
   <input type="text" class="note-in" data-note="psu" placeholder="Notatka (np. jaki zasilacz siedzi teraz w koparce)...">
 </div>
-<p><span class="m ox">⏸ ZANIM KUPISZ:</span> zrób zdjęcie tabliczki naszego zasilacza z koparki (zakładka <a href="#" data-go="mamy">02 Z KOPARKI</a>). Jeśli ma <b>min. 1000 W</b>, <b>8 wtyczek PCIe 8-pin (6+2)</b> do kart i <b>2 wtyczki CPU 8-pin (EPS)</b> — zostaje nasz i oszczędzamy 399 zł!</p>
-<p style="margin-top:8pt;"><span class="tag g">[ KUP TEN, JEŚLI NASZ Z KOPARKI NIE WYSTARCZY ]</span><br><a href="https://allegro.pl/oferta/zasilacz-corsair-hx1200-1200-w-80-plus-platinum-19032704470" target="_blank" rel="noopener">▶ Allegro — Corsair HX1200 1200W 80+ Platinum — 399 zł, Super Sprzedawca</a></p>
-<p style="margin-top:6pt;"><span class="tag dim">[ ZAPAS ]</span><br><a href="https://allegro.pl/oferta/zasilacz-thermaltake-toughpower-1200w-modular-1200-w-80-plus-gold-19052899533" target="_blank" rel="noopener" style="font-weight:normal;">▶ Allegro — Thermaltake Toughpower 1200W 80+ Gold — 469 zł</a></p>
+<p><span class="m ox">⏸ ZANIM KUPISZ:</span> zrób zdjęcie tabliczki naszego zasilacza z koparki (zakładka <a href="#" data-go="mamy">02 Z KOPARKI</a>). Jeśli ma <b>min. 1000 W</b>, <b>8 wtyczek PCIe 8-pin (6+2)</b> do kart i <b>2 wtyczki CPU 8-pin (EPS)</b> — zostaje nasz i oszczędzamy 699 zł!</p>
+<p style="margin-top:8pt;"><span class="tag g">[ KUP TEN, JEŚLI NASZ Z KOPARKI NIE WYSTARCZY ]</span><br><a href="https://allegro.pl/oferta/zasilacz-corsair-hx1200-1200-w-80-plus-platinum-19032704470" target="_blank" rel="noopener">▶ Allegro — Corsair HX1200 1200W 80+ Platinum — od 655 zł (używany) / 777 zł (nowy)</a><br><span class="dim">Cena 399 zł z poprzedniej wersji była nieaktualna. HX1200 ma 4 kable PCIe × 2 = 8 wtyczek; 4 karty po 2×8 zajmują wszystkie. Jeśli któraś 3070 ma tylko 1×8, zostaje zapas.</span></p>
+<p style="margin-top:6pt;"><span class="tag dim">[ ZAPAS ]</span><br><a href="https://allegro.pl/oferta/zasilacz-thermaltake-toughpower-1200w-modular-1200-w-80-plus-gold-19052899533" target="_blank" rel="noopener" style="font-weight:normal;">▶ Allegro — Thermaltake Toughpower 1200W 80+ Gold — od 612 zł</a></p>
 <p style="margin-top:6pt;"><span class="r">⚠ BARDZO WAŻNE:</span> nigdy nie używaj kabli modularnych od innego zasilacza (mają inne ułożenie żył od strony zasilacza i palą karty). Kupujemy wyłącznie z kompletem oryginalnych kabli.</p>
 <table class="msg"><tr><td>
 <div class="mh"><span>&gt;_ WIADOMOŚĆ DO SPRZEDAWCY ZASILACZA</span> <button class="cp ui">KOPIUJ WIADOMOŚĆ</button></div>
@@ -786,8 +768,8 @@ Pozdrawiam!</p>
 </div>
 <p><span class="dim">CO TO:</span> szerokie, 164-żyłowe taśmy łączące płytę główną z 4 kartami na górnej belce stelaża.<br>
 <span class="r">✖ Czerwone risery z kablem USB z naszej koparki odpadają</span> — mają tylko 1 linię PCIe (16× za wolno do przerzucania warstw modelu AI między kartami).</p>
-<p class="y" style="font-size:10.2pt;">⚠ Przed kliknięciem przyłóż miarkę od tacki płyty do dolnej krawędzi najdalszej karty RTX 3070. Jeśli jest do 27–28 cm, poniższe taśmy 30 cm będą idealne.</p>
-<p style="margin-top:8pt;"><span class="tag g">[ KUP 4 SZTUKI ]</span><br><a href="https://allegro.pl/oferta/tasma-riser-pci-e-pcie-3-0-express-x16-x16-30cm-12432322718" target="_blank" rel="noopener">▶ Allegro — Taśma Riser PCIe 3.0 x16-x16 30 cm — 69 zł/szt. (weź 4 szt. = 276 zł)</a></p>
+<p class="y" style="font-size:10.2pt;">⚠ Najpierw przyłóż miarkę od tacki płyty do dolnej krawędzi najdalszej karty RTX 3070. Jeśli 4 karty wejdą bezpośrednio — <b>nie kupuj riserów (0 zł)</b>. Tania taśma 69 zł nie jest ekranowana; przy 75 W na slot może być niestabilna.</p>
+<p style="margin-top:8pt;"><span class="tag g">[ OPCJA TANIA — TYLKO PO TEŚCIE ]</span><br><a href="https://allegro.pl/oferta/tasma-riser-pci-e-pcie-3-0-express-x16-x16-30cm-12432322718" target="_blank" rel="noopener">▶ Allegro — Taśma Riser PCIe 3.0 x16-x16 30 cm — 69 zł/szt. (4 szt. = 276 zł; kupuj tylko jeśli direct mount nie wchodzi)</a></p>
 <p style="margin:6pt 0 0 0;"><span class="tag dim">[ OPCJA PREMIUM ]</span><br><a href="https://www.amazon.de/dp/B09NKQB2QJ" target="_blank" rel="noopener" style="font-weight:normal;">▶ Amazon — EZDIY-FAB PCIe 4.0 x16 ekranowany — ok. 182 zł/szt.</a></p>
 </td></tr></table>
 
@@ -831,23 +813,23 @@ Pozdrawiam!</p>
 <!-- OPCJONALNE -->
 <table class="blk"><tr><td class="hd hx">+ // OPCJONALNE DODATKI</td></tr><tr><td class="bd bx">
 <p><span class="cb" data-id="apc" data-p="229" data-opt="1">☐</span> &nbsp;<a href="https://allegro.pl/oferta/listwa-zasilajaca-apc-pmf83vt-fr-8-gniazd-3-m-bialy-19044403121" target="_blank" rel="noopener">Listwa przeciwprzepięciowa APC (8 gniazd, 3 m)</a> — <span class="y">229 zł</span> <span class="dim">(ochrona serwera przed przepięciami z sieci)</span></p>
-<p style="margin:0;"><span class="cb" data-id="wifi" data-p="125" data-opt="1">☐</span> &nbsp;<a href="https://allegro.pl/oferta/karta-sieciowa-z-intel-ax210-wifi-6-i-bluetooth-5-3-pci-e-do-komputera-pc-18328437509" target="_blank" rel="noopener">Karta Wi-Fi 6 + BT 5.3 PCIe (Intel AX210)</a> — <span class="y">124,95 zł</span> <span class="dim">(wpinana w wolny slot 2/4/6 — tylko jeśli nie da się podpiąć kabla LAN)</span></p>
+<p style="margin:0;"><span class="cb" data-id="wifi" data-p="125" data-opt="1">☐</span> &nbsp;<a href="https://allegro.pl/oferta/karta-sieciowa-z-intel-ax210-wifi-6-i-bluetooth-5-3-pci-e-do-komputera-pc-18328437509" target="_blank" rel="noopener">Karta Wi-Fi 6 + BT 5.3 PCIe (Intel AX210)</a> — <span class="y">124,95 zł</span> <span class="dim">(slot 2/4/6 dzieli linie z 1/3/5 i obniża sparowany GPU do x8; do pełnego x16 użyj USB Wi-Fi)</span></p>
 </td></tr></table>
 
 <!-- TABELA PODSUMOWANIA -->
 <table class="blk sum">
-<tr><td colspan="2" class="hd hg">Σ // PODSUMOWANIE KOSZYKA (ceny zweryfikowane 03.11)</td></tr>
+<tr><td colspan="2" class="hd hg">Σ // PODSUMOWANIE KOSZYKA (ceny zweryfikowane 09.11)</td></tr>
 <tr><td style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">01 Płyta główna ASUS X99-E WS (eBay z VAT)</td><td class="num" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">~1 340 zł</td></tr>
 <tr><td style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">02 Procesor Intel Xeon E5-2698 v4 (SR2JW, 20C/40T)</td><td class="num" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">262 zł</td></tr>
-<tr><td style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">03 Pamięć RAM 4× 32 GB = 128 GB RDIMM 2Rx4</td><td class="num" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;" id="sumRamCell">1 750 – 2 000 zł</td></tr>
-<tr><td style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">04 Dysk SSD 1 TB 2,5" SATA z DRAM (SanDisk Ultra 3D)</td><td class="num" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;" id="sumSsdCell">429 zł</td></tr>
+<tr><td style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">03 Pamięć RAM 4× 32 GB = 128 GB RDIMM 2Rx4</td><td class="num" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;" id="sumRamCell">2 000 zł</td></tr>
+<tr><td style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">04 Dysk SSD 1 TB 2,5" SATA — mamy</td><td class="num" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;" id="sumSsdCell">0 zł (mamy 1 TB)</td></tr>
 <tr><td style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">05 Chłodzenie Endorfy Fera 5 Dual + pasta MX-4</td><td class="num" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">150 zł</td></tr>
-<tr><td style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">06 Zasilacz Corsair HX1200 Platinum</td><td class="num" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;" id="sumPsuCell">399 zł (lub 0 zł)</td></tr>
+<tr><td style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">06 Zasilacz Corsair HX1200 Platinum</td><td class="num" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;" id="sumPsuCell">699 zł (lub 0 zł)</td></tr>
 <tr><td style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">07 Risery taśmowe PCIe x16 30 cm (×4)</td><td class="num" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">276 zł</td></tr>
 <tr><td style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">08 Nawiew stelaża (5× Arctic P12 + Hub + Dummy)</td><td class="num" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">155 zł</td></tr>
 <tr><td style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">09 Pakiet montażowy (pendrive, kable, IPA, watomierz)</td><td class="num" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">166 zł</td></tr>
-<tr><td class="ox g" style="background:#05050A;border:1pt solid #39FF14;padding:7pt 10pt;">RAZEM DO WYDANIA (WG KALKULATORA)</td><td class="ox g" style="background:#05050A;border:1pt solid #39FF14;padding:7pt 10pt;text-align:right;" id="sumTotalCell">4 664 – 4 864 zł</td></tr>
-<tr><td class="dim" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">jeśli zasilacz z koparki wystarczy</td><td class="dim" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;text-align:right;">4 265 – 4 465 zł</td></tr>
+<tr><td class="ox g" style="background:#05050A;border:1pt solid #39FF14;padding:7pt 10pt;">RAZEM DO WYDANIA (WG KALKULATORA)</td><td class="ox g" style="background:#05050A;border:1pt solid #39FF14;padding:7pt 10pt;text-align:right;" id="sumTotalCell">5 048 zł</td></tr>
+<tr><td class="dim" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">jeśli zasilacz z koparki wystarczy</td><td class="dim" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;text-align:right;">4 349 zł</td></tr>
 <tr><td class="dim" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;">zwrot ze sprzedaży starej płyty Biostar + CPU + RAM</td><td class="dim" style="background:#12121F;border:1pt solid #2A2A40;padding:5pt 10pt;text-align:right;">− ok. 300 – 450 zł</td></tr>
 </table>
 
@@ -1233,10 +1215,10 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
       updatedAt: 0,
       updatedBy: 'lokalnie',
       checks: {},
-      statuses: {},
+      statuses: { ssd: 'got' },
       notes: {},
       rigInfo: { psuModel:'', psuPcieCount:'', gpuModels:'', ssdModel:'', riserDistanceCm:'' },
-      calc: { psuFromRig:false, ssdFromRig:false, sellOldRig:false, ramPrice:1800, optApc:false, optWifi:false }
+      calc: { psuFromRig:false, ssdFromRig:true, sellOldRig:false, ramPrice:2000, optApc:false, optWifi:false }
     };
   }
 
@@ -1252,6 +1234,9 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
     });
     var calSrc = (out.calc && typeof out.calc === 'object' && !Array.isArray(out.calc)) ? out.calc : {};
     out.calc = Object.assign(defaultState().calc, calSrc);
+    out.calc.ssdFromRig = true;
+    if (!out.calc.ramPrice || out.calc.ramPrice < 1900) out.calc.ramPrice = 2000;
+    out.statuses.ssd = 'got';
     out.calc.optApc = !!(out.checks.apc || out.calc.optApc);
     out.calc.optWifi = !!(out.checks.wifi || out.calc.optWifi);
     if (out.calc.optApc) out.checks.apc = true;
@@ -1491,7 +1476,7 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
   function render(){
     syncGroupFlags(state);
     var c = state.calc || defaultState().calc;
-    var ramPrice = Number(c.ramPrice) || 1750;
+    var ramPrice = Number(c.ramPrice) || 2000;
 
     // Ustawienie ceny RAM na przycisku/checkboxie
     var ramCb = document.getElementById('ramCb');
@@ -1514,7 +1499,7 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
     var psuSkip = document.getElementById('psuSkipBadge');
     if (psuSkip) psuSkip.textContent = c.psuFromRig ? '✔ MAMY SWÓJ Z KOPARKI (0 zł)' : '(albo nie trzeba, jeśli nasz z koparki wystarczy)';
     var ssdSkip = document.getElementById('ssdSkipBadge');
-    if (ssdSkip) ssdSkip.textContent = c.ssdFromRig ? '✔ MAMY SWÓJ Z KOPARKI (0 zł)' : '';
+    if (ssdSkip) ssdSkip.textContent = c.ssdFromRig ? '0 zł (dysk już jest)' : '';
     var sellBadge = document.getElementById('sellRigBadge');
     if (sellBadge) sellBadge.textContent = c.sellOldRig ? '✔ ODLICZONO −350 zł' : '− 350 zł';
 
@@ -1563,17 +1548,17 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
     // Obliczenia budżetowe (spójne 1:1 z panelem Seby: 9 pozycji głównych + opcjonalne APC/Wi-Fi)
     var hasApc = !!(c.optApc || state.checks['apc']);
     var hasWifi = !!(c.optWifi || state.checks['wifi']);
-    var baseTotal = 1340 + 149 + ramPrice + (c.ssdFromRig ? 0 : 429) + 150 + (c.psuFromRig ? 0 : 399) + 276 + 155 + 166;
+    var baseTotal = 1340 + 262 + ramPrice + (c.ssdFromRig ? 0 : 429) + 150 + (c.psuFromRig ? 0 : 699) + 276 + 155 + 166;
     if (hasApc) baseTotal += 229;
     if (hasWifi) baseTotal += 125;
 
     var canonicalItems = [
       { id:'mb', price: 1340 },
-      { id:'cpu', price: 149 },
+      { id:'cpu', price: 262 },
       { id:'ram', price: ramPrice },
       { id:'ssd', price: c.ssdFromRig ? 0 : 429, skip: c.ssdFromRig },
       { id:'cool', price: 150 },
-      { id:'psu', price: c.psuFromRig ? 0 : 399, skip: c.psuFromRig },
+      { id:'psu', price: c.psuFromRig ? 0 : 699, skip: c.psuFromRig },
       { id:'riser', price: 276 },
       { id:'fan', price: 155 },
       { id:'parts', price: 166 },
@@ -1628,8 +1613,8 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
     document.getElementById('kpiNet').textContent = netAfterSell.toLocaleString('pl-PL') + ' zł';
 
     document.getElementById('sumRamCell').textContent = ramPrice.toLocaleString('pl-PL') + ' zł';
-    document.getElementById('sumSsdCell').textContent = c.ssdFromRig ? '0 zł (z koparki)' : '429 zł';
-    document.getElementById('sumPsuCell').textContent = c.psuFromRig ? '0 zł (z koparki)' : '399 zł';
+    document.getElementById('sumSsdCell').textContent = c.ssdFromRig ? '0 zł (mamy 1 TB)' : '429 zł';
+    document.getElementById('sumPsuCell').textContent = c.psuFromRig ? '0 zł (z koparki)' : '699 zł';
     document.getElementById('sumTotalCell').textContent = effectiveTotal.toLocaleString('pl-PL') + ' zł';
 
     document.getElementById('progTxt').textContent =
@@ -1673,7 +1658,7 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
       }
       pushToServer(false);
     } else if (t.classList.contains('ram-btn')) {
-      state.calc.ramPrice = Number(t.dataset.ram) || 1750;
+      state.calc.ramPrice = Number(t.dataset.ram) || 2000;
       pushToServer(false);
     } else if (t.dataset && t.dataset.go) {
       ev.preventDefault();
@@ -1787,8 +1772,8 @@ python scripts/test_chat.py      # benchmark TTFT + prędkości generowania (tok
       body: '<p>Licząc od procesora w dół, płyta ma 7 długich slotów PCIe x16.</p><p><span class="g">✔ CO WPIĄĆ:</span> Nasze 4 taśmy Riser PCIe x16 wpinamy <b>co drugi slot: w gniazda nr 1, 3, 5 oraz 7</b>. Dzięki układom PLX na tej płycie każda z 4 kart dostaje pełne pasmo x16!</p><p style="margin:0;">Na pierwszy testowy start podepnij tylko <b>1 kartę w slocie nr 1</b>.</p>'
     },
     pcie_free: {
-      title: '⬛ Sloty PCIe nr 2, 4, 6 (wolne)',
-      body: '<p>Zostają wolne między riserami. Jeśli kiedyś będziesz chciał dołożyć kartę Wi-Fi 6 PCIe (Intel AX210), wpinasz ją właśnie w jeden z tych wolnych slotów.</p>'
+      title: '⬛ Sloty PCIe nr 2, 4, 6 (wolne, ale dzielą linie)',
+      body: '<p>Zostają wolne między riserami, ale dzielą linie z slotami 1/3/5. Karta Wi-Fi PCIe w slocie 2/4/6 obniży sparowany GPU do x8. Do pełnego x16 użyj karty USB Wi-Fi.</p>'
     },
     sata: {
       title: '💾 Szary port SATA6G_1 + piny przycisku PWR_SW',
